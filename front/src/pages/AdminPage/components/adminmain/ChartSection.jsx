@@ -37,13 +37,14 @@ const ChartSection = () => {
         setTotalVolume(totalVolumeData);
         setCinemaVolume(cinemaVolumeData);
 
-        // 날짜별 전체 유저 수 계산 (오늘부터 7일 전까지)
-        const today = new Date();
+        // 날짜별 전체 유저 수 계산 (오늘부터 7일 전까지) - 한국 시간대 기준
+        const now = new Date();
+        const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC + 9시간
         const dailyCounts = [];
 
         for (let i = 6; i >= 0; i--) {
-          const date = new Date(today);
-          date.setDate(today.getDate() - i);
+          const date = new Date(koreaTime);
+          date.setDate(koreaTime.getDate() - i);
           const dateStr = date.toISOString().split("T")[0]; // YYYY-MM-DD 형식
 
           // 해당 날짜까지의 전체 유저 수 계산 (누적)
@@ -184,4 +185,3 @@ const ChartSection = () => {
 };
 
 export default ChartSection;
-

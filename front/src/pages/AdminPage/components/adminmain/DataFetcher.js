@@ -15,19 +15,19 @@ export const useSalesData = () => {
   const [userCount, setUserCount] = useState(0);
   const [increaseUserCount, setIncreaseUserCount] = useState(0);
 
-  const today = new Date().toISOString().split("T")[0];
-  const yesterday = new Date(
-    new Date(today).setDate(new Date(today).getDate() - 1)
-  )
-    .toISOString()
-    .split("T")[0];
+  // 한국 시간대 기준으로 날짜 계산
+  const now = new Date();
+  const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000); // UTC + 9시간
+  const today = koreaTime.toISOString().split("T")[0];
+  const yesterdayTime = new Date(koreaTime.getTime() - 24 * 60 * 60 * 1000);
+  const yesterday = yesterdayTime.toISOString().split("T")[0];
 
   useEffect(() => {
     const fetchReservation = async () => {
       try {
         const reservationView = await getReservation();
 
-        // 날짜 비교 로직 수정 - reservationtime이 LocalDateTime 형태이므로 날짜 부분만 추출
+        // 날짜 비교 로직 - reservationtime이 LocalDateTime 형태이므로 날짜 부분만 추출
         const todayReservation = reservationView.filter((reservation) => {
           if (!reservation.reservationtime) return false;
           const reservationDate = reservation.reservationtime.split("T")[0];
@@ -85,6 +85,7 @@ export const useSalesData = () => {
           yesterdayReservationCount > 0
             ? yesterdayTotalVolume / yesterdayReservationCount
             : 0;
+
         const increaseAveragePrice =
           yesterdayAveragePrice > 0
             ? (
@@ -163,4 +164,3 @@ export const useSalesData = () => {
     increaseUserCount,
   };
 };
-
