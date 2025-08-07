@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.projectreactor/reactor-core/3.7.7/bee553bf17e911f6c20fe45caa890b9a3fd19c/reactor-core-3.7.7.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.projectreactor/reactor-core/3.7.7/e90dcf85e4254ca3d1e6493e51801f9af218b784/reactor-core-3.7.7-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.projectreactor/reactor-core/3.7.7/9601c0249886664d45e6352d14323b804a2bf94f/reactor-core-3.7.7-sources.jar!/" />
     </SOURCES>

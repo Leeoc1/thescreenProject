@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-module-swagger-2/4.35.0/4917637f88dde7d33bd21480a8b15f0c1f0e908a/jsonschema-module-swagger-2-4.35.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-module-swagger-2/4.35.0/8e5d99dc9b5e48acf0d0d181b3b1c0dee685c2b/jsonschema-module-swagger-2-4.35.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-module-swagger-2/4.35.0/17eee20fdeb5c960681db8fa559ff86294945f2c/jsonschema-module-swagger-2-4.35.0-sources.jar!/" />
     </SOURCES>

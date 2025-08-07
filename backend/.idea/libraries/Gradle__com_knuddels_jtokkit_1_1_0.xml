@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.knuddels/jtokkit/1.1.0/b7370f801db3eb8c7c6a2c2c06231909ac6de0b0/jtokkit-1.1.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.knuddels/jtokkit/1.1.0/f93b15e0a91985b8dd7ca3e87409bd3b7aaf2f8/jtokkit-1.1.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.knuddels/jtokkit/1.1.0/6db56d331f7b6aad85726dfe229ab2ef9fc4b0ac/jtokkit-1.1.0-sources.jar!/" />
     </SOURCES>

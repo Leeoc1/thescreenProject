@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.swagger.core.v3/swagger-annotations/2.2.20/532ae607f9014c3bd4beb9893a0b392553c64cef/swagger-annotations-2.2.20.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.swagger.core.v3/swagger-annotations/2.2.20/4da9832888c2fa2a27f1816cce39b2c89c3bc17c/swagger-annotations-2.2.20-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.swagger.core.v3/swagger-annotations/2.2.20/ebda02434dbf1fa5e5b9ede7f9710026e32d72b3/swagger-annotations-2.2.20-sources.jar!/" />
     </SOURCES>

@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.rest-assured/rest-assured-common/5.5.5/4454a7397dd5dcd139ab0363c24c506c0ffb39ab/rest-assured-common-5.5.5.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.rest-assured/rest-assured-common/5.5.5/f015ac8861a01a98c6ef0672b6c992096ca96c27/rest-assured-common-5.5.5-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.rest-assured/rest-assured-common/5.5.5/72f828d8da39ece1bb975a2cfb3db0060837e3a8/rest-assured-common-5.5.5-sources.jar!/" />
     </SOURCES>

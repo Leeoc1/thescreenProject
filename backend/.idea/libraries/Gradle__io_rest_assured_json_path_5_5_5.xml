@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.rest-assured/json-path/5.5.5/3efb6812c5bdd31ae58cc591e6b1d76bc2618b0f/json-path-5.5.5.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.rest-assured/json-path/5.5.5/5b6735f03d8ff416f762e7b6b99b0b8d751561c5/json-path-5.5.5-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.rest-assured/json-path/5.5.5/c58d57b085c136b7af3067eede5d8985261495da/json-path-5.5.5-sources.jar!/" />
     </SOURCES>

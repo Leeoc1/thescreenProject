@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.122.Final/d5798d560039426a5c8c69fbe187c0f8cb6ec0ae/netty-buffer-4.1.122.Final.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.122.Final/ccde310115ff6cc6b1ede908899fc6e420c6a039/netty-buffer-4.1.122.Final-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.122.Final/ccce5cdbd2fc18482b037a63a43e4c83ed24c43e/netty-buffer-4.1.122.Final-sources.jar!/" />
     </SOURCES>

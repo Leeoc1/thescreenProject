@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-generator/4.35.0/f216f7f5296d01a6d8ddb37085fb3cabb06c163b/jsonschema-generator-4.35.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-generator/4.35.0/39ea480f11b984eaa83d138a4a0d2efb1346489f/jsonschema-generator-4.35.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-generator/4.35.0/ba892214258ef970d67fe87a3684c01ca0144628/jsonschema-generator-4.35.0-sources.jar!/" />
     </SOURCES>

@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-unix-common/4.1.122.Final/27ce9402817d5578c6b14c31a02d781e3b4fa5b5/netty-transport-native-unix-common-4.1.122.Final.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-unix-common/4.1.122.Final/d3090d709f21aa3294b1d712b23c91af8ee1f582/netty-transport-native-unix-common-4.1.122.Final-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-unix-common/4.1.122.Final/fc0bb4cbbd7ef0a4b4d48004326077127412cf47/netty-transport-native-unix-common-4.1.122.Final-sources.jar!/" />
     </SOURCES>

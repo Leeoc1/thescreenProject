@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.paulschwarz/spring-dotenv/4.0.0/e0180f80e685a9506d1942e6836a16dee050ebaf/spring-dotenv-4.0.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.paulschwarz/spring-dotenv/4.0.0/a8faa327df1a7b81fcae2792dc80d4691f27188f/spring-dotenv-4.0.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.paulschwarz/spring-dotenv/4.0.0/831ef2c9ba7976d7bc835a6c68225a0c4d89b8b7/spring-dotenv-4.0.0-sources.jar!/" />
     </SOURCES>

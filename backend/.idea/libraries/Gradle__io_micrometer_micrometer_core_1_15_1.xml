@@ -4,7 +4,9 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micrometer/micrometer-core/1.15.1/52959bd15d21f9a9dd55ac59f0149b16c6d5a06e/micrometer-core-1.15.1.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micrometer/micrometer-core/1.15.1/bb9489621767b7a8df801426e5d1775546b3ca9e/micrometer-core-1.15.1-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.micrometer/micrometer-core/1.15.1/219e41b1370b20368ba8736d23b9271318115291/micrometer-core-1.15.1-sources.jar!/" />
     </SOURCES>
