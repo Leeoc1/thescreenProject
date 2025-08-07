@@ -12,6 +12,7 @@ import lombok.Setter;
 @Table(name = "review_view")
 @Getter
 @Setter
+@org.hibernate.annotations.Immutable
 public class ReviewView {
 
     @Id

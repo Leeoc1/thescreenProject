@@ -15,13 +15,13 @@ public class DataService {
 
     private final FaqRepository faqRepository;
     private final NoticeRepository noticeRepository;
-    private final MovieViewRepository movieViewRepository;
+    private final MovieViewRepository movieViewRepository; // MovieView 사용으로 변경
     private final CinemaRepository cinemaRepository;
     private final ScheduleViewRepository scheduleViewRepository;
 
     public DataService(FaqRepository faqRepository,
             NoticeRepository noticeRepository,
-            MovieViewRepository movieViewRepository,
+            MovieViewRepository movieViewRepository, // MovieViewRepository 주입
             CinemaRepository cinemaRepository,
             ScheduleViewRepository scheduleViewRepository) {
         this.faqRepository = faqRepository;
@@ -40,7 +40,7 @@ public class DataService {
         return noticeRepository.findAll();
     }
 
-    public List<MovieView> getAllMovies() {
+    public List<MovieView> getAllMovies() { // MovieView 반환으로 변경
         return movieViewRepository.findAll();
     }
 

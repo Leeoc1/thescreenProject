@@ -1,9 +1,9 @@
 package com.example.thescreen.chatbot;
 
 import com.example.thescreen.entity.Faq;
-import com.example.thescreen.entity.MovieView;
+import com.example.thescreen.entity.Movie;
 import com.example.thescreen.repository.FaqRepository;
-import com.example.thescreen.repository.MovieViewRepository;
+import com.example.thescreen.repository.MovieRepository;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.vectorstore.VectorStore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class VectorStoreInitializer {
     private FaqRepository faqRepository;
 
     @Autowired
-    private MovieViewRepository movieViewRepository;
+    private MovieRepository movieRepository;
 
     @Autowired
     private VectorStore vectorStore;
@@ -39,11 +39,11 @@ public class VectorStoreInitializer {
                     .collect(Collectors.toList());
 
             // 영화 데이터를 벡터로 변환
-            List<MovieView> movies = movieViewRepository.findAll();
+            List<Movie> movies = movieRepository.findAll();
             List<Document> movieDocuments = movies.stream()
                     .map(movie -> new Document(
                             movie.getMovienm() + " (장르: " + movie.getGenre() + ", 개봉일: " +
-                                    (movie.getReleasedate() != null ? new SimpleDateFormat("yyyy-MM-dd").format(movie.getReleasedate()) : "미공개") + "): " +
+                                    (movie.getReleasedate() != null ? movie.getReleasedate().toString() : "미공개") + "): " +
                                     movie.getDescription(),
                             Map.of("type", "movie", "moviecd", movie.getMoviecd())))
                     .collect(Collectors.toList());

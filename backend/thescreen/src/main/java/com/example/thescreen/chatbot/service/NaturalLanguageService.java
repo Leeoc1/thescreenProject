@@ -1,7 +1,7 @@
 package com.example.thescreen.chatbot.service;
 
 import com.example.thescreen.entity.Cinema;
-import com.example.thescreen.entity.MovieView;
+import com.example.thescreen.entity.MovieView; // MovieView import 추가
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -25,7 +25,7 @@ public class NaturalLanguageService {
     /**
      * 하이브리드 방식: 패턴 매칭 우선, 실패 시 AI 사용
      */
-    public Map<String, Object> extractBookingInfo(String userInput, List<Cinema> cinemas, List<MovieView> movies) {
+    public Map<String, Object> extractBookingInfo(String userInput, List<Cinema> cinemas, List<MovieView> movies) { // MovieView 사용
         // 1단계: 패턴 매칭 시도
         Map<String, Object> patternResult = extractBookingInfoWithPatterns(userInput, cinemas, movies);
 
@@ -88,7 +88,7 @@ public class NaturalLanguageService {
      * 복잡한 자연어를 위한 OpenAI API 호출
      */
     private Map<String, Object> callOpenAIForComplexQuery(String userInput, List<Cinema> cinemas,
-            List<MovieView> movies) {
+            List<MovieView> movies) { // MovieView 사용
         try {
             // TODO: OpenAI API 키 설정 및 RestTemplate 추가 필요
             // String prompt = buildSmartPrompt(userInput, cinemas, movies);
@@ -107,7 +107,7 @@ public class NaturalLanguageService {
      * 패턴 매칭을 통한 예매 정보 추출
      */
     private Map<String, Object> extractBookingInfoWithPatterns(String userInput, List<Cinema> cinemas,
-            List<MovieView> movies) {
+            List<MovieView> movies) { // MovieView 사용
         String lowerInput = userInput.toLowerCase();
         Map<String, Object> result = new HashMap<>();
 
@@ -118,7 +118,7 @@ public class NaturalLanguageService {
         }
 
         // 영화 찾기
-        MovieView matchedMovie = findBestMatchingMovie(lowerInput, movies);
+        MovieView matchedMovie = findBestMatchingMovie(lowerInput, movies); // MovieView 사용
         if (matchedMovie == null) {
             return createResponse("error", Map.of("message", "해당 영화를 찾을 수 없습니다."));
         }
@@ -195,7 +195,7 @@ public class NaturalLanguageService {
     /**
      * 최적 매칭 영화 찾기
      */
-    public MovieView findBestMatchingMovie(String input, List<MovieView> movies) {
+    public MovieView findBestMatchingMovie(String input, List<MovieView> movies) { // MovieView 사용
         // 1. 정확한 제목 매칭
         for (MovieView movie : movies) {
             String movieName = movie.getMovienm().toLowerCase();

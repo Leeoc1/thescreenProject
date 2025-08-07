@@ -103,4 +103,7 @@ public interface ScheduleRepository extends JpaRepository<Schedule, String> {
     boolean existsByMoviecd(String moviecd);
     boolean existsById(String schedulecd);
     List<Schedule> findByScreencdAndStartdateBetween(String screencd, LocalDate start, LocalDate end);
+    
+    // 날짜별 스케줄 개수 조회 (ScheduleInitService에서 사용)
+    long countByStartdateEquals(LocalDate startdate);
 }

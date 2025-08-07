@@ -19,7 +19,7 @@ public class SearchService {
 
     private final FaqRepository faqRepository;
     private final NoticeRepository noticeRepository;
-    private final MovieViewRepository movieViewRepository;
+    private final MovieViewRepository movieViewRepository; // MovieViewRepository 사용으로 변경
     private final CinemaRepository cinemaRepository;
     private final ScheduleViewRepository scheduleViewRepository;
 
@@ -30,7 +30,7 @@ public class SearchService {
             ScheduleViewRepository scheduleViewRepository) {
         this.faqRepository = faqRepository;
         this.noticeRepository = noticeRepository;
-        this.movieViewRepository = movieViewRepository;
+        this.movieViewRepository = movieViewRepository; // MovieViewRepository 주입
         this.cinemaRepository = cinemaRepository;
         this.scheduleViewRepository = scheduleViewRepository;
     }
@@ -56,11 +56,11 @@ public class SearchService {
     /** ========================== TOP10 영화 검색 ========================== */
     public Map<String, Object> searchTopMovies(String cleanQuestion) {
         if (cleanQuestion.contains("탑10") || cleanQuestion.contains("top10") || cleanQuestion.contains("인기 영화")) {
-            List<MovieView> topMovies = movieViewRepository.findMoviesWithRank();
+            List<MovieView> topMovies = movieViewRepository.findTop10ByMovierankIsNotNullOrderByMovierankAsc(); // MovieView 사용
             if (!topMovies.isEmpty()) {
                 List<Map<String, String>> movieList = topMovies.stream()
                         .limit(10)
-                        .map(m -> Map.of("name", m.getMovienm(), "rank", m.getMovierank(), "moviecd", m.getMoviecd()))
+                        .map(m -> Map.of("name", m.getMovienm(), "rank", String.valueOf(m.getMovierank()), "moviecd", m.getMoviecd()))
                         .collect(Collectors.toList());
                 return createResponse("top10", Map.of("movies", movieList));
             }
@@ -70,11 +70,11 @@ public class SearchService {
 
     /** ========================== 영화 검색 ========================== */
     public Map<String, Object> searchMovie(String cleanQuestion) {
-        return movieViewRepository.findByMovienmContainingIgnoreCase(cleanQuestion).stream()
+        return movieViewRepository.findByMovienmContainingIgnoreCase(cleanQuestion).stream() // MovieView 사용
                 .findFirst()
                 .map(this::createMovieResponse)
                 .orElseGet(() -> findByWordMatch(movieViewRepository.findAll(), cleanQuestion,
-                        MovieView::getMovienm, this::createMovieResponse, null));
+                        MovieView::getMovienm, this::createMovieResponse, null)); // MovieView 사용
     }
 
     /** ========================== 극장 검색 ========================== */
@@ -179,8 +179,8 @@ public class SearchService {
         return Map.of("type", type, "data", data);
     }
 
-    private Map<String, Object> createMovieResponse(MovieView movie) {
-        String releaseDateStr = movie.getReleasedate() != null ? dateFormat.format(movie.getReleasedate()) : "미공개";
+    private Map<String, Object> createMovieResponse(MovieView movie) { // MovieView 파라미터로 변경
+        String releaseDateStr = movie.getReleasedate() != null ? movie.getReleasedate().toString() : "미공개";
         return createResponse("movie", Map.of(
                 "name", movie.getMovienm(),
                 "genre", movie.getGenre(),

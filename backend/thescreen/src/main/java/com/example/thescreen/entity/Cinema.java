@@ -33,7 +33,4 @@ public class Cinema {
     @Column(length = 20)
     private String regioncd; // 지역 코드 (FK는 설정하지 않고 역할만)
 
-
-
-
 }

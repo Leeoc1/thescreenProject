@@ -4,10 +4,7 @@ import com.example.thescreen.chatbot.service.AiService;
 import com.example.thescreen.chatbot.service.BookingService;
 import com.example.thescreen.chatbot.service.DataService;
 import com.example.thescreen.chatbot.service.SearchService;
-import com.example.thescreen.entity.Cinema;
-import com.example.thescreen.entity.Faq;
-import com.example.thescreen.entity.MovieView;
-import com.example.thescreen.entity.Notice;
+import com.example.thescreen.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -63,7 +60,7 @@ public class ChatBotService {
     /** ========================== 예매 기능 위임 ========================== */
     public Map<String, Object> processNaturalLanguageBooking(String userInput) {
         List<Cinema> allCinemas = dataService.getAllCinemas();
-        List<MovieView> allMovies = dataService.getAllMovies();
+        List<MovieView> allMovies = dataService.getAllMovies(); // MovieView 사용
         return bookingService.processNaturalLanguageBooking(userInput, allCinemas, allMovies);
     }
 
@@ -104,7 +101,7 @@ public class ChatBotService {
         return dataService.getAllNotices();
     }
 
-    public List<MovieView> getAllMovies() {
+    public List<MovieView> getAllMovies() { // MovieView 반환으로 변경
         return dataService.getAllMovies();
     }
 

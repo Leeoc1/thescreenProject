@@ -1,305 +1,289 @@
-//package com.example.thescreen.service;
-//
-//import com.example.thescreen.entity.Movie;
-//import com.example.thescreen.repository.MovieRepository;
-//import com.fasterxml.jackson.databind.JsonNode;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import jakarta.annotation.PostConstruct;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-//import org.springframework.web.client.RestTemplate;
-//
-//import java.time.LocalDate;
-//import java.time.format.DateTimeFormatter;
-//import java.time.format.DateTimeParseException;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.stream.Collectors;
-//import java.util.stream.StreamSupport;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class FetchMovieService {
-//
-//    private final RestTemplate restTemplate;
-//    private final ObjectMapper objectMapper;
-//    private final MovieRepository movieRepository;
-//
-//    @Value("${kobis.api.key}")
-//    private String kobisApiKey;
-//
-//    @Value("${kmdb.api.key}")
-//    private String kmdbApiKey;
-//
-//    @Value("${kmdb.api.key}")
-//    private String apiKey2;
-//
-//    // KMDB API로 KOBIS/ KMDB 제목을 콘솔에 출력하는 유틸 메서드
-//    private void printKobisAndKmdbTitle(String kobisTitle, String openDt) {
-//        System.out.println("=== 함수 진입 ===");
-//        System.out.println("KOBIS Title: " + kobisTitle);
-//        System.out.println("openDt: " + openDt);
-//        System.out.println("API Key2: " + (apiKey2 != null ? "설정됨" : "NULL"));
-//
-//        try {
-//            // URL 인코딩 추가
-//            String encodedTitle = java.net.URLEncoder.encode(kobisTitle, "UTF-8");
-//            String releaseYear = (openDt != null && openDt.length() >= 4) ? openDt.substring(0, 4) : "";
-//
-//            String url = String.format(
-//                    "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&title=%s&releaseDts=%s&ServiceKey=%s",
-//                    encodedTitle, releaseYear, apiKey2);
-//
-//            System.out.println("KMDB API URL: " + url);
-//
-//            String kmdbResponse = restTemplate.getForObject(url, String.class);
-//            System.out.println("KMDB 응답 길이: " + (kmdbResponse != null ? kmdbResponse.length() : "NULL"));
-//
-//            if (kmdbResponse != null) {
-//                JsonNode root = objectMapper.readTree(kmdbResponse);
-//                JsonNode dataArray = root.path("Data");
-//
-//                System.out.println("Data 배열 크기: " + dataArray.size());
-//
-//                if (dataArray.isArray() && dataArray.size() > 0) {
-//                    JsonNode results = dataArray.get(0).path("Result");
-//                    System.out.println("Result 배열 크기: " + results.size());
-//
-//                    for (JsonNode movieNode : results) {
-//                        String kmdbTitle = movieNode.path("title").asText();
-//                        System.out.println(">>> KOBIS Title: " + kobisTitle);
-//                        System.out.println(">>> KMDB Title: " + kmdbTitle);
-//                        System.out.println("------------------------");
-//                    }
-//                } else {
-//                    System.out.println("❌ KMDB Data 배열이 비어있음!");
-//                }
-//            } else {
-//                System.out.println("❌ KMDB 응답이 NULL입니다!");
-//            }
-//        } catch (Exception e) {
-//            System.out.println("❌ 예외 발생: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//        System.out.println("=== 함수 종료 ===\n");
-//    }
-//
-//    // KMDB API에서 포스터 URL을 가져오는 메서드
-//    private String getPosterFromKmdb(String kobisTitle, String openDt) {
-//        System.out.println("🖼️ 포스터 검색 시작: " + kobisTitle);
-//
-//        try {
-//            // URL 인코딩 추가
-//            String encodedTitle = java.net.URLEncoder.encode(kobisTitle, "UTF-8");
-//            String releaseYear = (openDt != null && openDt.length() >= 4) ? openDt.substring(0, 4) : "";
-//
-//            String url = String.format(
-//                    "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&title=%s&releaseDts=%s&ServiceKey=%s",
-//                    encodedTitle, releaseYear, apiKey2);
-//
-//            System.out.println("🔗 포스터 검색 URL: " + url);
-//
-//            String kmdbResponse = restTemplate.getForObject(url, String.class);
-//
-//            if (kmdbResponse != null) {
-//                JsonNode root = objectMapper.readTree(kmdbResponse);
-//                JsonNode dataArray = root.path("Data");
-//
-//                if (dataArray.isArray() && dataArray.size() > 0) {
-//                    JsonNode results = dataArray.get(0).path("Result");
-//
-//                    for (JsonNode movieNode : results) {
-//                        String kmdbTitle = movieNode.path("title").asText();
-//
-//                        // 제목 유사성 체크 (간단한 포함 관계 체크)
-//                        if (isSimilarTitle(kobisTitle, kmdbTitle)) {
-//                            JsonNode posters = movieNode.path("posters");
-//                            if (!posters.isMissingNode() && !posters.asText().isEmpty()) {
-//                                String posterUrl = posters.asText().split("\\|")[0]; // 첫 번째 포스터 사용
-//                                System.out.println("✅ 포스터 발견: " + posterUrl);
-//                                return posterUrl;
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            System.out.println("❌ 포스터를 찾지 못했습니다: " + kobisTitle);
-//            return null;
-//
-//        } catch (Exception e) {
-//            System.out.println("❌ 포스터 검색 중 오류: " + e.getMessage());
-//            return null;
-//        }
-//    }
-//
-//    // 제목 유사성 체크 메서드 (간단한 버전)
-//    private boolean isSimilarTitle(String kobisTitle, String kmdbTitle) {
-//        if (kobisTitle == null || kmdbTitle == null)
-//            return false;
-//
-//        // HTML 태그 제거
-//        String cleanKmdbTitle = kmdbTitle.replaceAll("<[^>]*>", "").trim();
-//
-//        // 공백 제거 후 비교
-//        String cleanKobis = kobisTitle.replaceAll("\\s+", "");
-//        String cleanKmdb = cleanKmdbTitle.replaceAll("\\s+", "");
-//
-//        System.out.println("🔍 제목 비교: [" + cleanKobis + "] vs [" + cleanKmdb + "]");
-//
-//        // 완전 일치 또는 포함 관계 체크
-//        return cleanKobis.equals(cleanKmdb) ||
-//                cleanKmdb.contains(cleanKobis) ||
-//                cleanKobis.contains(cleanKmdb);
-//    }
-//
-//    /**
-//     * KOBIS에서 2025년 개봉 영화 목록을 가져와 DB 저장 후 반환
-//     */
-//    @Transactional
-//    public List<Movie> saveDailyBoxOffice() {
-//        String openStartDt = "2025";
-//        String openEndDt = "2025";
-//        int itemPerPage = 100; // KOBIS API 최대 100개까지 가능
-//        int curPage = 1;
-//        int totalToFetch = 200;
-//
-//        List<Movie> savedMovies = new ArrayList<>();
-//        int totalFetched = 0;
-//
-//        while (totalFetched < totalToFetch) {
-//            String kobisUrl = String.format(
-//                    "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieList.json?key=%s&openStartDt=%s&openEndDt=%s&itemPerPage=%d&curPage=%d",
-//                    kobisApiKey, openStartDt, openEndDt, itemPerPage, curPage);
-//
-//            try {
-//                String response = restTemplate.getForObject(kobisUrl, String.class);
-//                JsonNode root = objectMapper.readTree(response);
-//                JsonNode movieList = root.path("movieListResult").path("movieList");
-//
-//                if (movieList.isEmpty())
-//                    break;
-//
-//                for (JsonNode movieNode : movieList) {
-//                    if (totalFetched >= totalToFetch)
-//                        break;
-//
-//                    String movieCd = movieNode.path("movieCd").asText();
-//                    String movieNm = movieNode.path("movieNm").asText();
-//                    String openDt = movieNode.path("openDt").asText();
-//                    LocalDate releaseDate = openDt.isBlank() ? null : parseReleaseDate(openDt);
-//
-//                    if (releaseDate != null && movieRepository.existsByMovienmAndReleasedate(movieNm, releaseDate)) {
-//                        savedMovies.add(movieRepository.findByMovienmAndReleasedate(movieNm, releaseDate));
-//                        totalFetched++;
-//                        continue;
-//                    }
-//
-//                    // KOBIS 상세 정보
-//                    String kobisInfoUrl = String.format(
-//                            "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=%s&movieCd=%s",
-//                            kobisApiKey, movieCd);
-//                    String kobisInfoResponse = restTemplate.getForObject(kobisInfoUrl, String.class);
-//                    JsonNode movieInfo = objectMapper.readTree(kobisInfoResponse)
-//                            .path("movieInfoResult").path("movieInfo");
-//
-//                    String showTm = movieInfo.path("showTm").asText("");
-//                    String actors = StreamSupport.stream(movieInfo.path("actors").spliterator(), false)
-//                            .map(a -> a.path("peopleNm").asText())
-//                            .filter(s -> !s.isBlank())
-//                            .collect(Collectors.joining(", "));
-//                    String directors = StreamSupport.stream(movieInfo.path("directors").spliterator(), false)
-//                            .map(d -> d.path("peopleNm").asText())
-//                            .filter(s -> !s.isBlank())
-//                            .collect(Collectors.joining(", "));
-//                    String genres = StreamSupport.stream(movieInfo.path("genres").spliterator(), false)
-//                            .map(g -> g.path("genreNm").asText())
-//                            .filter(s -> !s.isBlank())
-//                            .collect(Collectors.joining(", "));
-//                    String watchGradeNm = movieInfo.path("audits").elements().hasNext()
-//                            ? movieInfo.path("audits").elements().next().path("watchGradeNm").asText("")
-//                            : "";
-//                    String isAdult = watchGradeNm.contains("청소년관람불가") ? "Y" : "N";
-//
-//                    // KMDb API
-//                    String releaseDts = parseReleaseDateForKmdb(openDt);
-//                    String kmdbUrl = String.format(
-//                            "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?collection=kmdb_new2&ServiceKey=%s&query=%s&releaseDts=%s&releaseDte=%s",
-//                            kmdbApiKey, movieNm, releaseDts, releaseDts);
-//
-//                    String description = null;
-//                    String posterUrl = null;
-//                    try {
-//                        String kmdbResponse = restTemplate.getForObject(kmdbUrl, String.class);
-//                        JsonNode kmdbResult = objectMapper.readTree(kmdbResponse);
-//                        JsonNode result = kmdbResult.path("Data").get(0).path("Result").get(0);
-//
-//                        description = result.path("plots").path("plot").isArray()
-//                                ? result.path("plots").path("plot").get(0).path("plotText").asText(null)
-//                                : null;
-//
-//                        posterUrl = result.path("posters").asText(null);
-//                        if (posterUrl != null) {
-//                            posterUrl = posterUrl.split("\\|")[0].trim();
-//                        }
-//                    } catch (Exception e) {
-//                        continue; // KMDb 실패 시 패스
-//                    }
-//
-//                    if (description == null || description.isBlank() || posterUrl == null || posterUrl.isBlank()) {
-//                        continue;
-//                    }
-//
-//                    Movie movie = new Movie();
-//                    movie.setMoviecd(movieCd);
-//                    movie.setMovienm(movieNm);
-//                    movie.setDescription(description);
-//                    movie.setGenre(genres);
-//                    movie.setDirector(directors);
-//                    movie.setActors(actors);
-//                    movie.setRunningtime(showTm.isBlank() ? null : Integer.parseInt(showTm));
-//                    movie.setReleasedate(releaseDate);
-//                    movie.setPosterurl(posterUrl);
-//                    movie.setRunningscreen(null);
-//                    movie.setIsadult(Movie.IsAdult.valueOf(isAdult));
-//
-//                    movieRepository.save(movie);
-//                    savedMovies.add(movie);
-//                    totalFetched++;
-//                }
-//
-//                curPage++;
-//            } catch (Exception e) {
-//                break;
-//            }
-//        }
-//
-//        return savedMovies;
-//    }
-//
-//    /**
-//     * openDt를 yyyy-MM-dd 또는 yyyyMMdd 형식으로 파싱
-//     */
-//    private LocalDate parseReleaseDate(String openDt) {
-//        try {
-//            // yyyy-MM-dd 형식 시도
-//            return LocalDate.parse(openDt, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-//        } catch (DateTimeParseException e) {
-//            // yyyyMMdd 형식 시도
-//            return LocalDate.parse(openDt, DateTimeFormatter.ofPattern("yyyyMMdd"));
-//        }
-//    }
-//
-//    /**
-//     * openDt를 KMDb의 releaseDts 형식(yyyyMMdd)으로 변환
-//     */
-//    private String parseReleaseDateForKmdb(String openDt) {
-//        if (openDt.isBlank()) {
-//            return "";
-//        }
-//        LocalDate date = parseReleaseDate(openDt);
-//        return date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-//    }
-//}
+package com.example.thescreen.service;
+
+import com.example.thescreen.entity.Movie;
+import com.example.thescreen.repository.MovieRepository;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+@Service
+public class FetchMovieService {
+
+    @Autowired
+    private RestTemplate restTemplate;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+    
+    @Autowired
+    private MovieRepository movieRepository;
+    
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Value("${kobis.api.key:}")
+    private String kobisApiKey;
+
+    @Value("${kmdb.api.key:}")
+    private String kmdbApiKey;
+
+    /**
+     * MovieRank 테이블에 있는 영화들의 상세 정보를 가져와서 Movie 테이블에 저장
+     */
+    public void fetchMovieDetailsForBoxOffice() {
+        try {
+            // 환경변수에서 API 키 가져오기
+            if (kobisApiKey == null || kobisApiKey.isEmpty()) {
+                kobisApiKey = System.getenv("KOBIS_API_KEY");
+            }
+            if (kmdbApiKey == null || kmdbApiKey.isEmpty()) {
+                kmdbApiKey = System.getenv("KMDB_API_KEY");
+            }
+            
+            if (kobisApiKey == null) {
+                System.out.println("KOBIS API 키가 설정되어 있지 않습니다.");
+                return;
+            }
+
+            // Movie 테이블에서 박스오피스 순위가 있는 영화 정보 가져오기
+            String query = "SELECT moviecd, movienm FROM movie WHERE movierank IS NOT NULL";
+            List<Map<String, Object>> boxOfficeMovies = jdbcTemplate.queryForList(query);
+            
+            System.out.println(">>> Movie 테이블에서 " + boxOfficeMovies.size() + "개 박스오피스 영화 발견");
+
+            for (Map<String, Object> movieData : boxOfficeMovies) {
+                String movieCd = (String) movieData.get("moviecd");
+                String movieName = (String) movieData.get("movienm");
+                
+                System.out.println(">>> 영화 정보 수집 중: " + movieName + " (코드: " + movieCd + ")");
+                
+                // 이미 상세 정보가 있는지 확인 (description이 기본값이 아닌 경우)
+                try {
+                    String checkQuery = "SELECT description FROM movie WHERE moviecd = ?";
+                    String currentDescription = jdbcTemplate.queryForObject(checkQuery, String.class, movieCd);
+                    if (currentDescription != null && !currentDescription.equals("줄거리 정보를 준비중입니다.")) {
+                        System.out.println(">>> 이미 상세 정보가 있는 영화: " + movieName);
+                        continue;
+                    }
+                } catch (Exception e) {
+                    // 영화가 없거나 오류 시 계속 진행
+                }
+                
+                // KOBIS API에서 상세 정보 가져와서 업데이트
+                updateMovieDetails(movieCd, movieName);
+            }
+            
+            System.out.println(">>> 박스오피스 영화 정보 수집 완료");
+            
+        } catch (Exception e) {
+            System.out.println(">>> 영화 정보 수집 중 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private void updateMovieDetails(String movieCd, String movieName) {
+        try {
+            // KOBIS 상세 정보 API
+            String kobisUrl = String.format(
+                "http://www.kobis.or.kr/kobisopenapi/webservice/rest/movie/searchMovieInfo.json?key=%s&movieCd=%s",
+                kobisApiKey, movieCd
+            );
+            
+            String response = restTemplate.getForObject(kobisUrl, String.class);
+            JsonNode root = objectMapper.readTree(response);
+            JsonNode movieInfo = root.path("movieInfoResult").path("movieInfo");
+            
+            if (movieInfo.isMissingNode()) {
+                System.out.println(">>> KOBIS API에서 영화 정보를 찾을 수 없음: " + movieName);
+                return;
+            }
+            
+            // 기본 정보 추출
+            String showTm = movieInfo.path("showTm").asText("");
+            String openDt = movieInfo.path("openDt").asText("");
+            
+            // 줄거리 정보는 KOBIS에서 제공하지 않으므로 KMDB에서 가져옴
+            String description = "줄거리 정보를 준비중입니다.";
+            
+            // KMDB API에서 포스터와 줄거리 정보 가져오기
+            String[] kmdbData = fetchDataFromKMDB(movieName, openDt);
+            String posterUrl = kmdbData[0];
+            if (!kmdbData[1].equals("줄거리 정보를 준비중입니다.")) {
+                description = kmdbData[1];
+            }
+            
+            // 감독 정보
+            StringBuilder directors = new StringBuilder();
+            JsonNode directorsNode = movieInfo.path("directors");
+            for (JsonNode director : directorsNode) {
+                if (directors.length() > 0) directors.append(", ");
+                directors.append(director.path("peopleNm").asText());
+            }
+            
+            // 배우 정보
+            StringBuilder actors = new StringBuilder();
+            JsonNode actorsNode = movieInfo.path("actors");
+            int actorCount = 0;
+            for (JsonNode actor : actorsNode) {
+                if (actorCount >= 5) break;
+                if (actors.length() > 0) actors.append(", ");
+                actors.append(actor.path("peopleNm").asText());
+                actorCount++;
+            }
+            
+            // 장르 정보
+            StringBuilder genres = new StringBuilder();
+            JsonNode genresNode = movieInfo.path("genres");
+            for (JsonNode genre : genresNode) {
+                if (genres.length() > 0) genres.append(", ");
+                genres.append(genre.path("genreNm").asText());
+            }
+            
+            // 관람등급 정보 (KOBIS API에서 audits 필드로 가져오기)
+            String isAdult = "N"; // 기본값: 전체관람가
+            JsonNode auditsNode = movieInfo.path("audits");
+            for (JsonNode audit : auditsNode) {
+                String auditNo = audit.path("auditNo").asText("");
+                String watchGradeNm = audit.path("watchGradeNm").asText("");
+                
+                // 관람등급에 따른 처리
+                if (watchGradeNm.contains("청소년관람불가") || watchGradeNm.contains("19세") || 
+                    watchGradeNm.contains("제한상영가") || auditNo.contains("19")) {
+                    isAdult = "Y";
+                    break; // 19세 이상 등급이면 바로 중단
+                }
+                
+                System.out.println("관람등급 정보: " + watchGradeNm + " (등급번호: " + auditNo + ")");
+            }
+            
+            // Movie 테이블 업데이트 (isadult 필드 추가)
+            jdbcTemplate.update(
+                "UPDATE movie SET description = ?, genre = ?, director = ?, actors = ?, runningtime = ?, releasedate = ?, posterurl = ?, isadult = ? WHERE moviecd = ?",
+                description,
+                genres.toString().isEmpty() ? "장르 정보 없음" : genres.toString(),
+                directors.toString().isEmpty() ? "감독 정보 없음" : directors.toString(),
+                actors.toString().isEmpty() ? "출연진 정보 없음" : actors.toString(),
+                showTm.isEmpty() ? 120 : Integer.parseInt(showTm),
+                parseOpenDate(openDt),
+                posterUrl,
+                isAdult,
+                movieCd
+            );
+            
+            System.out.println(">>> 영화 정보 업데이트 완료: " + movieName);
+            
+        } catch (Exception e) {
+            System.out.println(">>> KOBIS API 오류: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * KMDB API에서 포스터와 줄거리 정보를 가져오는 메서드
+     * @return String[2] - [0]: 포스터URL, [1]: 줄거리
+     */
+    private String[] fetchDataFromKMDB(String movieName, String releaseYear) {
+        String[] result = {"/images/logo_1.png", "줄거리 정보를 준비중입니다."};
+        
+        try {
+            if (kmdbApiKey == null || kmdbApiKey.isEmpty()) {
+                System.out.println("KMDB API 키가 설정되어 있지 않습니다. 기본값을 사용합니다.");
+                return result;
+            }
+            
+            // 개봉년도 추출 (YYYYMMDD -> YYYY)
+            String year = "";
+            if (releaseYear != null && releaseYear.length() >= 4) {
+                year = releaseYear.substring(0, 4);
+            }
+            
+            // KMDB API URL 구성
+            String kmdbUrl = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp"
+                    + "?collection=kmdb_new2"
+                    + "&ServiceKey=" + kmdbApiKey
+                    + "&title=" + java.net.URLEncoder.encode(movieName, "UTF-8")
+                    + "&releaseDts=" + year
+                    + "&listCount=1";
+            
+            System.out.println("KMDB API 호출: " + movieName + " (" + year + ")");
+            
+            URL url = new URL(kmdbUrl);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setConnectTimeout(5000);
+            conn.setReadTimeout(5000);
+            
+            InputStream is = conn.getInputStream();
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(is);
+            
+            JsonNode data = root.path("Data");
+            if (data.isArray() && data.size() > 0) {
+                JsonNode resultNode = data.get(0).path("Result");
+                if (resultNode.isArray() && resultNode.size() > 0) {
+                    JsonNode movie = resultNode.get(0);
+                    
+                    // 포스터 정보
+                    String posterArray = movie.path("posters").asText();
+                    if (posterArray != null && !posterArray.isEmpty()) {
+                        String[] posters = posterArray.split("\\|");
+                        if (posters.length > 0 && !posters[0].isEmpty()) {
+                            result[0] = posters[0];
+                            System.out.println("포스터 URL 찾음: " + posters[0]);
+                        }
+                    }
+                    
+                    // 줄거리 정보 (올바른 JSON 구조로 수정)
+                    JsonNode plotsNode = movie.path("plots");
+                    if (!plotsNode.isMissingNode()) {
+                        JsonNode plotArray = plotsNode.path("plot");
+                        if (plotArray.isArray() && plotArray.size() > 0) {
+                            String plotText = plotArray.get(0).path("plotText").asText("");
+                            if (!plotText.isEmpty()) {
+                                result[1] = plotText;
+                                System.out.println("줄거리 찾음: " + plotText.substring(0, Math.min(50, plotText.length())) + "...");
+                            }
+                        }
+                    }
+                }
+            }
+            
+            if (result[0].equals("/images/logo_1.png") && result[1].equals("줄거리 정보를 준비중입니다.")) {
+                System.out.println("KMDB에서 영화 정보를 찾지 못했습니다: " + movieName);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("KMDB API 오류: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    private java.time.LocalDate parseOpenDate(String openDt) {
+        try {
+            if (openDt == null || openDt.isEmpty()) {
+                return java.time.LocalDate.now();
+            }
+            
+            if (openDt.length() == 8) {
+                return java.time.LocalDate.parse(openDt, java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd"));
+            } else if (openDt.length() == 10) {
+                return java.time.LocalDate.parse(openDt);
+            }
+            
+            return java.time.LocalDate.now();
+            
+        } catch (Exception e) {
+            return java.time.LocalDate.now();
+        }
+    }
+}

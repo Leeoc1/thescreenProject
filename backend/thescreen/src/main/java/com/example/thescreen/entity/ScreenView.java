@@ -10,6 +10,7 @@ import lombok.Setter;
 @Table(name = "screen_view")
 @Getter
 @Setter
+@org.hibernate.annotations.Immutable
 public class ScreenView {
     @Id
     private String screencd;

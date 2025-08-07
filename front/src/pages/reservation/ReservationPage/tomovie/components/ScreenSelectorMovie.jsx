@@ -26,12 +26,12 @@ const ScreenSelectorMovie = () => {
             const selectedSchedule = await getSchedules();
 
             const filteredSchedules = selectedSchedule.filter((schedule) => {
-              return (
-                schedule.movienm === movienm &&
-                schedule.startdate === selectedFullDate &&
-                schedule.cinemanm === selectedTheater &&
-                schedule.screenstatus === "운영중"
-              );
+              const movieMatch = schedule.movienm === movienm;
+              const dateMatch = schedule.startdate === selectedFullDate;
+              const theaterMatch = schedule.cinemanm === selectedTheater;
+              const statusMatch = schedule.screenstatus === "사용중";
+
+              return movieMatch && dateMatch && theaterMatch && statusMatch;
             });
 
             // 상영 시간순으로 정렬
@@ -123,9 +123,6 @@ const ScreenSelectorMovie = () => {
 
   return (
     <div className="place-time-list-content">
-      {isLoading && (
-        <div className="loading-message">상영정보를 불러오는 중...</div>
-      )}
       {!isLoading && movieSchedule.length === 0 && (
         <div>선택한 조건에 맞는 상영정보가 없습니다.</div>
       )}

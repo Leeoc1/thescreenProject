@@ -33,7 +33,16 @@ public class ScheduleViewController {
      * 개선된 API - 오늘 포함 5일간의 스케줄만 조회
      */
     @GetMapping("/schedules")
-    public List<ScheduleView> getSchedulesForNext5Days() {
+    public List<ScheduleView> getSchedules(
+            @RequestParam(required = false) String cinemaCd,
+            @RequestParam(required = false) String date) {
+        
+        // 파라미터가 있으면 필터링된 결과 반환
+        if (cinemaCd != null && !cinemaCd.isEmpty()) {
+            return scheduleService.getSchedulesForNext5DaysByCinemaCode(cinemaCd);
+        }
+        
+        // 파라미터가 없으면 전체 스케줄 반환
         return scheduleService.getSchedulesForNext5Days();
     }
 

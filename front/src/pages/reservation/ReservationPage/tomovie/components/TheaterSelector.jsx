@@ -110,7 +110,21 @@ const TheaterSelector = () => {
     const selectedDate = sessionStorage.getItem("selectedFullDate");
     const movienm = sessionStorage.getItem("movienm");
 
-    if (!selectedDate || !movienm) {
+    // 디버깅용: 데이터가 없으면 테스트용 데이터 설정
+    if (!selectedDate) {
+      const today = new Date().toISOString().split("T")[0];
+      sessionStorage.setItem("selectedFullDate", today);
+    }
+
+    if (!movienm) {
+      sessionStorage.setItem("movienm", "좀비딸");
+    }
+
+    // 업데이트된 값들 다시 가져오기
+    const updatedDate = sessionStorage.getItem("selectedFullDate");
+    const updatedMovienm = sessionStorage.getItem("movienm");
+
+    if (!updatedDate || !updatedMovienm) {
       setAvailableTheaters([]);
       setIsLoadingTheaters(false);
       return;
@@ -149,14 +163,15 @@ const TheaterSelector = () => {
 
       const filteredSchedules = schedules.filter((schedule) => {
         const scheduleDate = new Date(schedule.startdate);
-        const selectedDateObj = new Date(selectedDate);
+        const selectedDateObj = new Date(updatedDate);
 
-        return (
-          schedule.movienm === movienm &&
-          scheduleDate.toDateString() === selectedDateObj.toDateString() &&
-          schedule.regionnm === region &&
-          schedule.screenstatus === "운영중"
-        );
+        const movieMatch = schedule.movienm === updatedMovienm;
+        const dateMatch =
+          scheduleDate.toDateString() === selectedDateObj.toDateString();
+        const regionMatch = schedule.regionnm === region;
+        const statusMatch = schedule.screenstatus === "사용중";
+
+        return movieMatch && dateMatch && regionMatch && statusMatch;
       });
 
       const theaters = [
@@ -213,9 +228,7 @@ const TheaterSelector = () => {
       {selectedRegion && (
         <div className="theater-section">
           <h3>상영관</h3>
-          {isLoadingTheaters ? (
-            <div className="loading-message">상영관 정보를 불러오는 중...</div>
-          ) : availableTheaters.length > 0 ? (
+          {availableTheaters.length > 0 ? (
             <div className="theater-list">
               {availableTheaters.map((theater, index) => (
                 <div
@@ -229,9 +242,9 @@ const TheaterSelector = () => {
                 </div>
               ))}
             </div>
-          ) : (
+          ) : !isLoadingTheaters ? (
             <div>선택한 조건에 맞는 상영관이 없습니다.</div>
-          )}
+          ) : null}
         </div>
       )}
 

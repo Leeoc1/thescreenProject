@@ -1,59 +1,60 @@
 package com.example.thescreen.entity;
 
-import lombok.Data;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Immutable;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "view_movie_with_rank")
-@Immutable
-@Data
+@Table(name = "movie_view")
+@Getter
+@Setter
+@org.hibernate.annotations.Immutable
 public class MovieView {
     @Id
-    @Column(name = "moviecd", length = 20, nullable = false)
-    private String moviecd; // varchar(20)
+    @Column(length = 20)
+    private String moviecd;
 
-    @Column(name = "movienm", length = 100)
-    private String movienm; // varchar(100)
+    @Column(length = 100)
+    private String movienm;
 
-    @Column(name = "genre", length = 255)
-    private String genre; // varchar(255)
-
-    @Column(name = "description", columnDefinition = "text")
+    @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "director", length = 50)
-    private String director; // varchar(50)
+    @Column(columnDefinition = "TEXT")
+    private String genre;
 
-    @Column(name = "actors", columnDefinition = "text")
-    private String actors; // text
+    @Column(length = 50)
+    private String director;
 
-    @Column(name = "runningtime", columnDefinition = "int(11)")
-    private Integer runningtime; // int(11)
+    @Column(columnDefinition = "TEXT")
+    private String actors;
 
-    @Column(name = "releasedate", columnDefinition = "date")
-    private Date releasedate; // date
+    private Integer runningtime;
 
-    @Column(name = "posterurl", length = 200)
-    private String posterurl; // varchar(200)
+    private LocalDate releasedate;
 
-    @Column(name = "runningscreen", length = 20)
-    private String runningscreen; // varchar(20)
+    @Column(length = 200)
+    private String posterurl;
 
-    @Column(name = "movieinfo", length = 50)
-    private String movieinfo; // varchar(50)
+    @Column(length = 50)
+    private String movieinfo;
 
-    @Column(name = "isadult", length = 1)
-    private String isadult; // enum('N','Y')
+    @Enumerated(EnumType.STRING)
+    private IsAdult isadult;
+    
+    // 박스오피스 관련 필드
+    @Column
+    private Integer movierank; // 박스오피스 순위
+    
+    @Column
+    private Long audiacc; // 누적 관객수
+    
+    @Column(name = "last_updated")
+    private LocalDate lastUpdated; // 마지막 업데이트 날짜
 
-    @Column(length = 30) // movierankcd의 길이를 적절히 설정 (MovieRank의 movierankcd와 일치)
-    private String movierankcd; // MovieRank와의 연관성을 위한 필드
-
-    @Column(name = "movierank", length = 30)
-    private String movierank; // varchar(30)
-
-    @Column(name = "rankchange", columnDefinition = "int(11)")
-    private Integer rankchange; // int(11)
+    public enum IsAdult {
+        Y, N
+    }
 }

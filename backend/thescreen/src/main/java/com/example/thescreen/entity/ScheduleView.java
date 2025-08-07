@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Table(name = "schedule_view")
 @Getter
 @Setter
+@org.hibernate.annotations.Immutable
 public class ScheduleView {
     @Id
     private String schedulecd;
@@ -61,6 +62,4 @@ public class ScheduleView {
     }
 
     private String movierank;
-
-    private Integer rankchange;
 }

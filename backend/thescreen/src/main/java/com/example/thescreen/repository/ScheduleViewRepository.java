@@ -28,4 +28,11 @@ public interface ScheduleViewRepository extends JpaRepository<ScheduleView, Stri
     @Query("SELECT DISTINCT s.movienm FROM ScheduleView s WHERE s.cinemanm LIKE %:cinemanm% AND s.startdate >= :startDate AND s.startdate <= :endDate")
     List<String> findDistinctMovieNamesByCinemaAndDateRange(@Param("cinemanm") String cinemanm,
             @Param("startDate") String startDate, @Param("endDate") String endDate);
+
+    // Cinema 코드를 통한 스케줄 조회 (Cinema 코드를 이름으로 변환하여 조회)
+    @Query("SELECT s FROM ScheduleView s WHERE s.cinemanm IN " +
+           "(SELECT c.cinemanm FROM Cinema c WHERE c.cinemacd = :cinemacd) " +
+           "AND s.startdate >= :startDate AND s.startdate <= :endDate ORDER BY s.startdate, s.starttime")
+    List<ScheduleView> findSchedulesByCinemaCodeAndDateRange(@Param("cinemacd") String cinemacd,
+            @Param("startDate") String startDate, @Param("endDate") String endDate);
 }

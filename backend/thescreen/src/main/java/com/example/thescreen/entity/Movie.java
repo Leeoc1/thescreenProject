@@ -37,16 +37,32 @@ public class Movie {
     @Column(length = 200)
     private String posterurl;
 
-    @Column(length = 20)
-    private String runningscreen;
-
     @Column(length = 50, columnDefinition = "VARCHAR(50) DEFAULT 'N'")
     private String movieinfo = "N";
 
     @Enumerated(EnumType.STRING)
     private IsAdult isadult;
+    
+    // 박스오피스 관련 필드 추가
+    @Column
+    private Integer movierank; // 박스오피스 순위
+    
+    @Column
+    private Long audiacc; // 누적 관객수
+    
+    @Column(name = "last_updated")
+    private LocalDate lastUpdated; // 마지막 업데이트 날짜
 
     public enum IsAdult {
         Y, N
+    }
+    
+    /**
+     * 엔티티가 저장되기 전에 자동으로 lastUpdated 설정
+     */
+    @PrePersist
+    @PreUpdate
+    public void prePersist() {
+        this.lastUpdated = LocalDate.now();
     }
 }

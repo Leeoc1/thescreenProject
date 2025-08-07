@@ -1,60 +1,69 @@
--- create schedule_view
-create or replace view schedule_view as
-select s.schedulecd, s.startdate, s.starttime, m.movienm, m.moviecd,
-m.runningscreen, m.runningtime, m.director, m.description, m.actors, m.posterurl, m.releasedate,
-m.genre, m.movieinfo, m.isadult, mr.movierank, mr.rankchange,
-sc.screenname,sc.screenstatus, sc.screentype, sc.allseat,
-sc.reservationseat, c.cinemanm, r.regionnm
-from
-    schedule s
-    inner join movie m on s.moviecd = m.moviecd
-    inner join screen sc on s.screencd = sc.screencd
-    inner join cinema c on sc.cinemacd = c.cinemacd
-    inner join region r on c.regioncd = r.regioncd
-    inner join movierank mr on s.moviecd = mr.movierankcd;
+-- 기존 뷰와 테이블을 안전하게 정리
+DROP VIEW IF EXISTS reservation_view;
+DROP VIEW IF EXISTS review_view;
+DROP VIEW IF EXISTS screen_view;
+DROP VIEW IF EXISTS schedule_view;
+DROP VIEW IF EXISTS movie_view;
 
--- create reservation_view
-create or replace view reservation_view as
-select r.reservationcd, r.seatcd, r.reservationtime, r.reservationstatus, sv.starttime, sv.movienm, sv.runningtime, sv.screenname, sv.cinemanm, r.userid, p.paymenttime, p.paymentmethod, p.amount
-from
-    reservation r
-    inner join schedule_view sv on r.schedulecd = sv.schedulecd
-    inner join payment p on r.paymentcd = p.paymentcd;
+-- 혹시 schedule_view가 테이블로 존재할 경우를 대비해 테이블로도 삭제 시도
+DROP TABLE IF EXISTS schedule_view;
+DROP TABLE IF EXISTS reservation_view;
+DROP TABLE IF EXISTS review_view;
+DROP TABLE IF EXISTS screen_view;
+DROP TABLE IF EXISTS movie_view;
 
--- create screen_view
-create or replace view screen_view as
-select s.screencd, s.allseat, s.cinemacd, s.reservationseat, s.screenname, s.screenstatus, s.screentype, c.cinemanm, rg.regioncd, rg.regionnm
-from
-    screen s
-    inner join cinema c on s.cinemacd = c.cinemacd
-    inner join region rg on rg.regioncd = c.regioncd;
+-- schedule_view 생성 (스케줄과 영화 정보 통합 뷰)
+CREATE VIEW schedule_view AS
+SELECT s.schedulecd, s.startdate, s.starttime, m.movienm, m.moviecd,
+       m.runningtime, m.director, m.description, m.actors, m.posterurl, m.releasedate,
+       m.genre, m.movieinfo, m.isadult, m.movierank, m.audiacc,
+       sc.screenname, sc.screenstatus, sc.screentype, sc.allseat,
+       sc.reservationseat, c.cinemanm, r.regionnm
+FROM schedule s
+    INNER JOIN movie m ON s.moviecd = m.moviecd
+    INNER JOIN screen sc ON s.screencd = sc.screencd
+    INNER JOIN cinema c ON sc.cinemacd = c.cinemacd
+    INNER JOIN region r ON c.regioncd = r.regioncd;
 
--- create movie_view
-CREATE OR REPLACE VIEW view_movie_with_rank AS
-SELECT m.moviecd, m.movienm, m.description, m.genre, m.director, m.actors, m.runningtime, m.releasedate, m.posterurl, m.runningscreen, m.movieinfo, m.isadult, r.movierankcd, r.movierank, r.rankchange
-FROM movie m
-    LEFT JOIN movierank r ON m.movienm = r.moviename;
+-- reservation_view 생성
+CREATE VIEW reservation_view AS
+SELECT r.reservationcd, r.seatcd, r.reservationtime, r.reservationstatus, 
+       sv.starttime, sv.movienm, sv.runningtime, sv.screenname, sv.cinemanm, 
+       r.userid, p.paymenttime, p.paymentmethod, p.amount
+FROM reservation r
+    INNER JOIN schedule_view sv ON r.schedulecd = sv.schedulecd
+    INNER JOIN payment p ON r.paymentcd = p.paymentcd;
 
--- create review_view
-CREATE OR REPLACE VIEW review_view AS
-SELECT r.reviewnum, -- 리뷰 번호
-    u.userid, -- 유저 ID
-    m.movienm, -- 영화 이름
-    r.rating, -- 평점
-    r.likes -- 추천(좋아요)
+-- screen_view 생성
+CREATE VIEW screen_view AS
+SELECT s.screencd, s.allseat, s.cinemacd, s.reservationseat, s.screenname, 
+       s.screenstatus, s.screentype, c.cinemanm, rg.regioncd, rg.regionnm
+FROM screen s
+    INNER JOIN cinema c ON s.cinemacd = c.cinemacd
+    INNER JOIN region rg ON rg.regioncd = c.regioncd;
+
+-- review_view 생성
+CREATE VIEW review_view AS
+SELECT r.reviewnum, u.userid, m.movienm, r.rating, r.likes 
 FROM review r
     LEFT JOIN users u ON r.userid = u.userid
     LEFT JOIN movie m ON r.moviecd = m.moviecd;
 
--- create moviewithschedule view (스케줄이 있는 영화)
-CREATE OR REPLACE VIEW moviewithschedule AS
-SELECT m.moviecd, m.movienm, m.description, m.genre, m.director, m.actors, m.runningtime, m.releasedate, m.posterurl, m.runningscreen, m.movieinfo, m.isadult, mr.movierank
-FROM movie m
-    LEFT JOIN movierank mr ON m.moviecd = mr.movierankcd
-WHERE
-    EXISTS (
-        SELECT 1
-        FROM schedule s
-        WHERE
-            s.moviecd = m.moviecd
-    );
+-- movie_view 생성 (Movie 테이블과 동일한 구조)
+CREATE VIEW movie_view AS
+SELECT 
+    moviecd,
+    movienm,
+    description,
+    genre,
+    director,
+    actors,
+    runningtime,
+    releasedate,
+    posterurl,
+    movieinfo,
+    isadult,
+    movierank,
+    audiacc,
+    last_updated
+FROM movie;

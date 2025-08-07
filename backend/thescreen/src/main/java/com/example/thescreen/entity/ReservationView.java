@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "reservation_view")
 @Getter
 @Setter
+@org.hibernate.annotations.Immutable
 public class ReservationView {
     @Id
     private String reservationcd;

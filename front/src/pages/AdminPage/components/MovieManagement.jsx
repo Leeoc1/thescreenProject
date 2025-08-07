@@ -4,6 +4,7 @@ import {
   archiveMovie,
   updateScreeningStatus,
   fetchMoviesFromKobis,
+  fetchUpcomingMoviesFromKobis,
 } from "../../../api/movieApi";
 import "../styles/MovieManagement.css";
 import "../styles/AdminPage.css";
@@ -16,6 +17,7 @@ const MovieManagement = () => {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [activeTab, setActiveTab] = useState("ready");
   const [isLoading, setIsLoading] = useState(false);
+  const [isUpcomingLoading, setIsUpcomingLoading] = useState(false);
   const { refreshNotifications } = useNotification();
 
   useEffect(() => {
@@ -63,6 +65,31 @@ const MovieManagement = () => {
       alert("영화 데이터 가져오기에 실패했습니다.");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const fetchUpcomingMoviesFromKobisApi = async () => {
+    if (
+      !window.confirm(
+        "KOBIS API에서 최신 상영예정작 데이터를 가져오시겠습니까?"
+      )
+    )
+      return;
+    setIsUpcomingLoading(true);
+    try {
+      const result = await fetchUpcomingMoviesFromKobis();
+      if (result.success) {
+        await loadMovies(); // 전체 영화 목록 새로고침
+        // 알림 새로고침
+        refreshNotifications();
+        alert(result.message);
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      alert("상영예정작 데이터 가져오기에 실패했습니다.");
+    } finally {
+      setIsUpcomingLoading(false);
     }
   };
 
@@ -119,13 +146,25 @@ const MovieManagement = () => {
     <div className="adp-content">
       <div className="adp-header">
         <h2>영화 관리</h2>
-        <button
-          className="fetch-movies-btn"
-          onClick={fetchMoviesFromKobisApi}
-          disabled={isLoading}
-        >
-          {isLoading ? "데이터 가져오는 중..." : "영화 데이터 가져오기"}
-        </button>
+        <div className="fetch-buttons-container">
+          <button
+            className="fetch-movies-btn"
+            onClick={fetchMoviesFromKobisApi}
+            disabled={isLoading}
+          >
+            {isLoading ? "데이터 가져오는 중..." : "현재상영작 데이터 가져오기"}
+          </button>
+          <button
+            className="fetch-movies-btn"
+            onClick={fetchUpcomingMoviesFromKobisApi}
+            disabled={isUpcomingLoading}
+            style={{ marginLeft: "10px" }}
+          >
+            {isUpcomingLoading
+              ? "데이터 가져오는 중..."
+              : "상영예정작 데이터 가져오기"}
+          </button>
+        </div>
       </div>
       <div className="mvm-movie-management-tabs">
         <div className="mvm-tab-nav">
@@ -292,4 +331,3 @@ const MovieManagement = () => {
 };
 
 export default MovieManagement;
-

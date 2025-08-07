@@ -13,12 +13,18 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
 
     // moviecd로 영화 조회
     Movie findByMoviecd(String moviecd);
+    
+    // moviecd로 영화 존재 여부 확인
+    boolean existsByMoviecd(String moviecd);
 
     // moviecd, movienm 추출
     List<MovieCdNmList> findAllBy();
 
     // 상영 중인 영화만 조회
     List<Movie> findByMovieinfo(String movieinfo);
+    
+    // 특정 상태의 영화 개수 조회
+    long countByMovieinfo(String movieinfo);
 
     // 상영 중이면서 현재 상영작인 영화들
     @Query("SELECT m FROM Movie m WHERE m.movieinfo = 'Y' AND m.releasedate <= :today")
@@ -42,10 +48,24 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
     LocalDate findMaxReleasedate();
 
     List<Movie> findByReleasedateBetween(LocalDate start, LocalDate end);
+    
+    // 박스오피스 순위별 영화 개수 조회 (ScheduleInitService에서 사용)
+    long countByMovierankBetween(Integer startRank, Integer endRank);
+    
+    // 특정 순위 영화 존재 여부 확인
+    boolean existsByMovierank(Integer movierank);
 
     List<Movie> findByReleasedateAfter(LocalDate date);
 
     List<Movie> findByReleasedateBefore(LocalDate date);
 
     List<Movie> findByReleasedate(LocalDate date);
+    
+    // 박스오피스 순위 관련 메서드
+    List<Movie> findByMovierankIsNotNullOrderByMovierankAsc();
+    
+    List<Movie> findTop10ByMovierankIsNotNullOrderByMovierankAsc();
+    
+    // 영화명으로 검색
+    List<Movie> findByMovienmContainingIgnoreCase(String movienm);
 }

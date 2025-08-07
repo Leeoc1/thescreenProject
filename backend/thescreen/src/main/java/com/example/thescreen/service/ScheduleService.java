@@ -1,9 +1,9 @@
 package com.example.thescreen.service;
 
-import com.example.thescreen.entity.MovieView;
+import com.example.thescreen.entity.Movie;
 import com.example.thescreen.entity.Schedule;
 import com.example.thescreen.entity.ScheduleView;
-import com.example.thescreen.repository.MovieViewRepository;
+import com.example.thescreen.repository.MovieRepository;
 import com.example.thescreen.repository.ScheduleRepository;
 import com.example.thescreen.repository.ScheduleViewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class ScheduleService {
     private static final int MIN_HOUR_GAP = 3;
 
     @Autowired
-    private MovieViewRepository movieViewRepository;
+    private MovieRepository movieRepository;
 
     @Autowired
     private ScheduleRepository scheduleRepository;
@@ -56,18 +56,18 @@ public class ScheduleService {
                 return String.format("해당 날짜(%s)에 대한 스케줄이 이미 등록되었습니다.", endDate);
             }
 
-            // 탑 10 영화 조회
+            // 박스오피스 순위가 있는 영화 조회
             System.out.println("영화 데이터 조회 중...");
-            List<MovieView> allMovies = movieViewRepository.findMoviesWithRank();
+            List<Movie> allMovies = movieRepository.findByMovierankIsNotNullOrderByMovierankAsc();
             System.out.println("조회된 전체 영화 수: " + allMovies.size());
             
-            List<MovieView> movies = allMovies.stream()
+            List<Movie> movies = allMovies.stream()
                     .filter(movie -> !scheduleRepository.existsByMoviecd(movie.getMoviecd()))
                     .collect(Collectors.toList());
             System.out.println("스케줄 생성 대상 영화 수: " + movies.size());
 
             System.out.println("스케줄 생성 대상 영화 목록:");
-            for (MovieView movie : movies) {
+            for (Movie movie : movies) {
                 // runningtime 확인 및 로깅 (수정하지 않음)
                 int actualRunningTime = (movie.getRunningtime() != null && movie.getRunningtime() > 0) 
                     ? movie.getRunningtime() 
@@ -99,7 +99,7 @@ public class ScheduleService {
                     "INSERT INTO schedule (schedulecd, moviecd, screencd, startdate, starttime, endtime) VALUES\n");
 
             int totalSchedules = 0;
-            for (MovieView movie : movies) {
+            for (Movie movie : movies) {
                 // runningtime 안전하게 처리
                 int actualRunningTime = (movie.getRunningtime() != null && movie.getRunningtime() > 0) 
                     ? movie.getRunningtime() 
@@ -205,7 +205,7 @@ public class ScheduleService {
         return true;
     }
 
-    private boolean isLastMovieAndDate(List<MovieView> movies, MovieView movie, LocalDate date,
+    private boolean isLastMovieAndDate(List<Movie> movies, Movie movie, LocalDate date,
             List<LocalDate> targetDates) {
         return movies.indexOf(movie) == movies.size() - 1 && date.equals(targetDates.get(targetDates.size() - 1));
     }
@@ -266,5 +266,22 @@ public class ScheduleService {
         String endDateStr = endDate.format(formatter);
 
         return scheduleViewRepository.findDistinctMovieNamesByCinemaAndDateRange(cinemaName, startDateStr, endDateStr);
+    }
+
+    /**
+     * 오늘 포함 5일간의 특정 극장(코드 기준)에서의 스케줄 조회
+     * 
+     * @param cinemaCode 극장 코드
+     * @return 5일간의 해당 극장 스케줄 리스트
+     */
+    public List<ScheduleView> getSchedulesForNext5DaysByCinemaCode(String cinemaCode) {
+        LocalDate today = LocalDate.now();
+        LocalDate endDate = today.plusDays(4);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String startDateStr = today.format(formatter);
+        String endDateStr = endDate.format(formatter);
+
+        return scheduleViewRepository.findSchedulesByCinemaCodeAndDateRange(cinemaCode, startDateStr, endDateStr);
     }
 }

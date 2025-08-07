@@ -1,7 +1,7 @@
 package com.example.thescreen.chatbot.service;
 
 import com.example.thescreen.entity.Cinema;
-import com.example.thescreen.entity.MovieView;
+import com.example.thescreen.entity.MovieView; // MovieView import 추가
 import com.example.thescreen.entity.ScheduleView;
 import com.example.thescreen.repository.CinemaRepository;
 import com.example.thescreen.repository.ScheduleViewRepository;
@@ -36,7 +36,7 @@ public class BookingService {
      * 자연어 예매 처리 메인 메서드
      */
     public Map<String, Object> processNaturalLanguageBooking(String userInput, List<Cinema> allCinemas,
-            List<MovieView> allMovies) {
+            List<MovieView> allMovies) { // MovieView로 변경
         try {
             // 1. 자연어에서 정보 추출
             Map<String, Object> extractedInfo = naturalLanguageService.extractBookingInfo(userInput, allCinemas,

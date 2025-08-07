@@ -33,6 +33,12 @@
   transform: none;
 }
 
+.fetch-buttons-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
 .mvm-tab-nav {
   display: flex;
   background-color: #f8fafc;
