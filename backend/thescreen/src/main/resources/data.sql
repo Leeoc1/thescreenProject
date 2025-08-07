@@ -11,10 +11,6 @@ INSERT IGNORE INTO region (regioncd, regionnm) VALUES
   ('9', '강원'),
   ('10', '충북');
 
--- 마스터 계정 생성 (MasterAdmin.java에서 이동)
-INSERT IGNORE INTO users (userid, userpw, username, email, phone, birth, status, reg_date) VALUES
-  ('master001', '$2a$10$EixZaYvK1fsbw1ZfbX3OXePaWxn96p36WQNguSBqAuisafLkKARZa', '김관리', 'master1@example.com', '01011112222', '1995-05-01', '활성', CURDATE());
-
 -- 극장(Cinema) 가데이터 생성 - 각 지역마다 10개씩 (CSV 실제 주소 참고)
 INSERT IGNORE INTO cinema (cinemacd, cinemanm, address, tel, status, regioncd) VALUES
   -- 서울 (10개)
