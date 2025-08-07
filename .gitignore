@@ -152,3 +152,6 @@ vite.config.ts.timestamp-*
 /.env.production
 /target
 *.log
+
+# MCP 설정 파일
+mcp.json
