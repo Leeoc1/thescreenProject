@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.ai:spring-ai-retry:1.0.0-M2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springframework.ai" artifactId="spring-ai-retry" version="1.0.0-M2" baseVersion="1.0.0-M2" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.ai/spring-ai-retry/1.0.0-M2/917ff2a7006178419e004c8fdc0c993c0b1bd30a/spring-ai-retry-1.0.0-M2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.ai/spring-ai-retry/1.0.0-M2/48412dfe07b2391ae2253de37512bbe7fb9048da/spring-ai-retry-1.0.0-M2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

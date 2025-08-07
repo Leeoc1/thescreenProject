@@ -1,0 +1,314 @@
+/* Top Bar */
+.adp-top-bar {
+  background-color: #1e293b;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.adp-logo {
+  cursor: pointer;
+}
+
+.adp-logo h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.adp-user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.adp-notification-container {
+  position: relative;
+}
+
+.adp-bell-wrapper {
+  position: relative;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.adp-bell-wrapper:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.adp-bell-icon {
+  width: 20px;
+  height: 20px;
+  filter: invert(1) brightness(1);
+  transition: filter 0.2s ease;
+}
+
+.adp-bell-icon:hover {
+  filter: invert(1) brightness(1.2);
+}
+
+.adp-notification-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444;
+  border: 2px solid #1e293b;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.adp-notification-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 320px;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  margin-top: 8px;
+}
+
+.adp-notification-header {
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
+  border-radius: 8px 8px 0 0;
+}
+
+.adp-notification-header h4 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.adp-notification-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.adp-notification-item {
+  padding: 16px;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.2s ease;
+}
+
+.adp-notification-item:hover {
+  background-color: #f8fafc;
+}
+
+.adp-notification-item:last-child {
+  border-bottom: none;
+}
+
+.adp-notification-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.adp-notification-title {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.adp-notification-message {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.adp-notification-timestamp {
+  color: #94a3b8;
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.adp-notification-empty {
+  padding: 32px 16px;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.adp-user-info span {
+  color: #cbd5e1;
+  font-size: 0.875rem;
+}
+
+/* 타이머 스타일 */
+.adp-timer-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+}
+
+.adp-timer-clickable {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #cbd5e1;
+}
+
+.adp-timer-clickable:hover {
+  color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.adp-timer-icon {
+  flex-shrink: 0;
+  color: inherit;
+  margin-bottom: 1px;
+}
+
+.adp-timer-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: "Courier New", monospace;
+  color: inherit;
+}
+
+.adp-timer-clickable.adp-timer-warning {
+  color: #f59e0b;
+  animation: pulse 1s infinite;
+}
+
+.adp-timer-clickable.adp-timer-warning:hover {
+  color: #d97706;
+  background-color: rgba(249, 158, 11, 0.1);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.adp-btn-logout {
+  background-color: #dc2626;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.adp-btn-logout:hover {
+  background-color: #b91c1c;
+}
+
+/* 세션 연장 모달 스타일 */
+.adp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.adp-modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.adp-modal-content h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.adp-modal-content p {
+  margin: 0.5rem 0;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.adp-modal-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.adp-btn-extend {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.adp-btn-extend:hover {
+  background-color: #059669;
+}
+
+.adp-btn-decline {
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.adp-btn-decline:hover {
+  background-color: #4b5563;
+}

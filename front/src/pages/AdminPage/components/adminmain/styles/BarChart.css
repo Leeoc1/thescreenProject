@@ -1,0 +1,81 @@
+/* BarChart 컴포넌트 스타일 */
+
+.br-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.br-nav-button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.br-nav-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.br-title {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.br-stats-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.br-stats-text {
+  font-size: 0.9rem;
+  font-weight: 400;
+  text-align: right;
+  line-height: 1.3;
+}
+
+.br-bar-detail {
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.br-empty-state {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.br-empty-content {
+  text-align: center;
+  color: #666;
+}
+
+.br-empty-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.br-empty-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.br-empty-subtitle {
+  font-size: 14px;
+  margin-top: 5px;
+}

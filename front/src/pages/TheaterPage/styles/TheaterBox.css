@@ -1,0 +1,260 @@
+/* 영화 탭이랑 동일한 검색 스타일 (필요 시 클래스네임 수정)*/
+.mvs-searchbox-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.mvs-searchbox-svg-circle {
+  stroke: #888;
+  stroke-width: 2;
+}
+.mvs-searchbox-svg-line {
+  stroke: #888;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.mvs-searchbox-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mvs-searchbox-container {
+  position: relative;
+  width: 220px;
+}
+
+.mvs-searchbox-input {
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.mvs-searchbox-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+
+/* 더보기 버튼 영역 스타일 */
+.rts-showmore-wrap {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* 영화 탭과 동일한 더보기 버튼 스타일 */
+.mvs-showmore-btn {
+  border-radius: 0.4rem;
+  border: 1px solid #000000;
+  background-color: white;
+  color: black;
+  padding: 0.5rem 1rem;
+}
+.mvs-showmore-btn:hover {
+  background-color: black;
+  color: white;
+}
+.rts-page {
+  min-height: 100vh;
+}
+
+.rts-content {
+  padding-top: 4rem;
+}
+
+.rts-main {
+  padding: 4rem 0;
+}
+
+.rts-container {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.rts-section {
+  margin-bottom: 4rem;
+}
+
+.rts-section-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: black;
+}
+
+.rts-region-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.rts-region-tab {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid #e5e5e5;
+  background-color: white;
+  color: black;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.rts-region-tab:hover {
+  border-color: #fbbf24;
+  background-color: #fef3c7;
+}
+
+.rts-region-tab.active {
+  background-color: #fbbf24;
+  border-color: #fbbf24;
+  color: black;
+  font-weight: bold;
+}
+
+.rts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+}
+
+.rts-card {
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rts-image {
+  width: 100%;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.rts-image img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.rts-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.rts-info {
+  margin-bottom: 1rem;
+}
+
+.rts-name {
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: black;
+}
+
+.rts-address {
+  color: #666;
+  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.rts-phone {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+
+.rts-features {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.rts-feature-tag {
+  background-color: #fbbf24;
+  color: black;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.rts-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.rts-btn {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.rts-btn.primary {
+  background-color: #fbbf24;
+  color: black;
+}
+
+.rts-btn.primary:hover {
+  background-color: #f59e0b;
+}
+
+.rts-btn.secondary {
+  background-color: white;
+  color: black;
+  border: 2px solid #e5e5e5;
+}
+
+.rts-btn.secondary:hover {
+  border-color: #fbbf24;
+  background-color: #fef3c7;
+}
+
+@media (max-width: 768px) {
+  .rts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rts-actions {
+    flex-direction: column;
+  }
+}
+
+.rts-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.rts-star {
+  margin-left: 0.5rem;
+  vertical-align: middle;
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+.rts-star:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,80 @@
+/* PieMovieChart 컴포넌트 스타일 */
+
+.pmc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.pmc-nav-button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pmc-nav-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.pmc-title {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.pmc-stats-info {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.pmc-chart-container {
+  height: 400px;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.pmc-legend-style {
+  padding-right: 20px;
+  padding-left: 20px;
+  font-size: 10px;
+  max-width: 200px;
+}
+
+.pmc-empty-state {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.pmc-empty-content {
+  text-align: center;
+  color: #666;
+}
+
+.pmc-empty-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.pmc-empty-title {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.pmc-empty-subtitle {
+  font-size: 14px;
+  margin-top: 5px;
+}

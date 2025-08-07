@@ -1,0 +1,139 @@
+.footer-section {
+  background-color: #f8f9fa;
+  border-top: 1px solid #e5e5e5;
+  padding: 40px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.footer-container {
+  width: 980px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.footer-nav-link {
+  color: #666;
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+  font-weight: normal;
+}
+
+.footer-nav-link:hover {
+  color: #333;
+}
+
+.footer-nav-link.strong {
+  font-weight: normal;
+  color: #666;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer-left {
+  flex: 1;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.megabox-logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.mega-text {
+  color: #333;
+}
+
+.box-text {
+  color: #333;
+}
+
+.company-text {
+  color: #666;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.company-info {
+  color: #666;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.company-info p {
+  margin: 3px 0;
+}
+
+.footer-right {
+  display: flex;
+  align-items: flex-start;
+}
+
+.social-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.social-link {
+  display: block;
+  width: 32px;
+  height: 32px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.social-link:hover {
+  background-color: #e0e0e0;
+}
+
+.social-link img {
+  width: 16px;
+  height: 16px;
+}
+
+@media (max-width: 768px) {
+  .footer-nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-nav-link {
+    font-size: 12px;
+  }
+
+  .company-info {
+    font-size: 10px;
+  }
+}

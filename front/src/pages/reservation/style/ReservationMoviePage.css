@@ -1,0 +1,32 @@
+.rmpp-page {
+  background: #f4f6fa;
+  min-height: 100vh;
+}
+
+.rmpp-container {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.08);
+  padding: 48px 48px 60px 48px;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  box-sizing: border-box;
+}
+
+.rmpp-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.rmpp-subtitle {
+  font-size: 1.1rem;
+  color: #666;
+  text-align: left;
+  margin-bottom: 40px;
+}

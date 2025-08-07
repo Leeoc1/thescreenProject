@@ -1,0 +1,251 @@
+/* 개인정보수정 페이지 스타일 */
+.mp-info-description {
+  margin-top: 10px;
+  color: #666;
+}
+
+.mp-info-form {
+  margin-top: 20px;
+}
+
+.mp-info-form-group {
+  margin-bottom: 15px;
+}
+
+.mp-info-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.mp-info-input {
+  width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.mp-info-error {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.mp-info-submit-btn {
+  background-color: #fbbf24;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.mp-info-submit-btn:hover {
+  background-color: #f59e0b;
+}
+
+.mp-info-content {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.mp-info-content p {
+  margin: 8px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+/* 네이버 스타일 개인정보 폼 - MyAccount와 분리 */
+.mp-info-profile-section {
+  background-color: #f8f9fa;
+  padding: 20px 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.mp-info-profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.mp-info-profile-avatar-large {
+  width: 80px;
+  height: 80px;
+  background-color: #e9ecef;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.mp-info-profile-info-section {
+  flex: 1;
+}
+
+.mp-info-profile-id {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.mp-info-profile-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.mp-info-profile-btn {
+  padding: 8px 16px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mp-info-profile-btn:hover {
+  background-color: #f8f9fa;
+}
+
+.mp-info-form-container {
+  background-color: white;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 0;
+  margin-top: 20px;
+}
+
+.mp-info-form-header {
+  background-color: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #e9ecef;
+  font-weight: 600;
+  color: #333;
+  border-radius: 8px 8px 0 0;
+}
+
+.mp-info-form-body {
+  padding: 20px;
+}
+
+.mp-form-field {
+  display: flex;
+  align-items: center;
+  padding: 15px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.mp-form-field:last-child {
+  border-bottom: none;
+}
+
+.mp-form-label {
+  width: 120px;
+  font-weight: 500;
+  color: #333;
+  flex-shrink: 0;
+}
+
+.mp-form-label.required::after {
+  content: " *";
+  color: #ff4757;
+}
+
+.mp-form-input-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mp-form-input {
+  flex: 1;
+  max-width: 300px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.mp-form-input:focus {
+  outline: none;
+  border-color: #f59e0b;
+}
+
+.mp-form-input:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+.mp-form-button {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  min-width: 100px;
+}
+
+.mp-form-button:hover {
+  background-color: #f8f9fa;
+}
+
+.mp-form-note {
+  font-size: 12px;
+  color: #ff4b4b;
+}
+
+.mp-form-actions {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.mp-save-btn {
+  background-color: #fbbf24;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.mp-save-btn:hover {
+  background-color: #f59e0b;
+}
+
+/* 휴대폰번호 변경 섹션 */
+.mp-phone-change-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 40%;
+}
+
+.mp-phone-input-group,
+.mp-verification-input-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.mp-phone-input-group input,
+.mp-verification-input-group input {
+  flex: 1;
+}
+
+.mp-phone-change-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}

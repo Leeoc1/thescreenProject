@@ -1,0 +1,71 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.3'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+	set('springAiVersion', "1.0.0-M2")
+}
+
+dependencies {
+	// 스프링 부트 웹
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	// JPA
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// 타임리프
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	// 롬복
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	// MariaDB 드라이버
+	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
+	// 테스트
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// 결제
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+	// csv
+	implementation 'com.opencsv:opencsv:5.9'
+	// coolsms 휴대폰 인증 메세지
+	implementation 'net.nurigo:sdk:4.3.2'
+	// Redis 의존성
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	// JWT 라이브러리 (Spring Boot 3.x 호환)
+	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+	// 보안
+	// 스프링 시큐리티
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	// env 파일 읽기
+	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
+	//스프링 ai
+	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
+	
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+	}
+}
+
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

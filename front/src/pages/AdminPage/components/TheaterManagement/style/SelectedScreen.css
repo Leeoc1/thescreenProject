@@ -1,0 +1,156 @@
+/* 선택된 영화 표시 */
+.ss-selected-movies {
+  margin-bottom: 20px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.ss-selected-movies h3 {
+  margin: 0 0 8px 0;
+  color: #495057;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ss-movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ss-movie-tag {
+  background-color: #007bff;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* 그리드 컨테이너 */
+.ss-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 16px;
+  padding: 20px 0;
+  overflow: auto;
+  max-height: 400px;
+}
+
+/* 그리드 카드 */
+.ss-grid-card {
+  position: relative;
+  background-color: white;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.2s ease;
+  -moz-transition: all 0.2s ease;
+  -ms-transition: all 0.2s ease;
+  -o-transition: all 0.2s ease;
+}
+
+.ss-grid-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+  transform: translateY(-2px);
+}
+
+.ss-grid-card.active {
+  border-color: #3b82f6;
+  background-color: #dbeafe;
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+.ss-grid-card.active p {
+  color: #1e40af;
+  font-weight: 600;
+}
+
+.ss-grid-card p {
+  margin: 0;
+  font-weight: 500;
+  color: #374151;
+  text-align: center;
+}
+
+/* 버튼 그룹 */
+.ss-button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.ss-btn-cancel,
+.ss-btn-register {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+
+.ss-btn-cancel {
+  background-color: white;
+  color: #6b7280;
+  border-color: #d1d5db;
+}
+
+.ss-btn-cancel:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.ss-btn-register {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.ss-btn-register:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .ss-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .ss-grid-card {
+    height: 60px;
+    padding: 12px;
+  }
+
+  .ss-button-group {
+    flex-direction: column;
+  }
+
+  .ss-btn-cancel,
+  .ss-btn-register {
+    width: 100%;
+  }
+}
+
+.ss-selected-movies-header {
+  display: flex;
+  flex-direction: row;
+}

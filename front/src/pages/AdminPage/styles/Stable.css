@@ -1,0 +1,44 @@
+.adp-status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem; /* 수정: 0.5rep -> 0.5rem */
+    border-radius: 0.25rem;
+    min-width: 45px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .adp-status.adp-active {
+    background-color: #dcfce7;
+    color: #166534;
+  }
+  
+  .adp-status.adp-vacation {
+    background-color: #ffedd5;
+    color: #c2410c;
+  }
+  
+  .adp-status.adp-terminated {
+    background-color: #e5e7eb;
+    color: #4b5563;
+  }
+  
+  .adp-status.adp-off {
+    background-color: #dbeafe;
+    color: #1e40af;
+  }
+  
+  .adp-status.adp-inactive {
+    background-color: #fee2e2;
+    color: #991b1b;
+  }
+  
+  .adp-status.adp-pending {
+    background-color: #fef3c7;
+    color: #92400e;
+  }
+  
+  .adp-status.adp-maintenance {
+    background-color: #e0e7ff;
+    color: #3730a3;
+  }

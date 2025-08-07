@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>지역 목록</title>
+  <style>
+    table {
+        width: 50%;
+        border-collapse: collapse;
+        margin: 20px auto;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<h2>지역 목록</h2>
+<table>
+  <thead>
+  <tr>
+    <th>극장 코드</th>
+    <th>극장 이름</th>
+    <th>지역 코드</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="cinema : ${cinemas}">
+    <td th:text="${cinema.cinemacd}"></td>
+    <td th:text="${cinema.cinemanm}"></td>
+    <td th:text="${cinema.regioncd}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

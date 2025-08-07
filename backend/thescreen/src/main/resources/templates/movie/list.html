@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>영화 목록</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .movie-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fafafa;
+        }
+
+        .movie-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .movie-info {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .movie-description {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .adult-badge {
+            background-color: #e74c3c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: inline-block;
+            margin-left: 10px;
+        }
+
+        .total-count {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 16px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 th:text="${title}">영화 목록</h1>
+
+        <div class="total-count">
+            총 <span th:text="${#lists.size(movies)}">0</span>개의 영화가 있습니다.
+        </div>
+
+        <div class="movie-grid">
+            <div class="movie-card" th:each="movie : ${movies}">
+                <div class="movie-title">
+                    <span th:text="${movie.movienm}">영화 제목</span>
+                    <span class="adult-badge"
+                        th:if="${movie.isadult == T(com.example.thescreen.entity.Movie$IsAdult).Y}">19세</span>
+                </div>
+
+                <div class="movie-info">
+                    <strong>영화코드:</strong> <span th:text="${movie.moviecd}">M001</span>
+                </div>
+
+                <div class="movie-info">
+                    <strong>장르:</strong> <span th:text="${movie.genre}">액션</span>
+                </div>
+
+                <div class="movie-info">
+                    <strong>감독:</strong> <span th:text="${movie.director}">감독명</span>
+                </div>
+
+                <div class="movie-info">
+                    <strong>배우:</strong> <span th:text="${movie.actors}">배우명</span>
+                </div>
+
+                <div class="movie-info">
+                    <strong>상영시간:</strong> <span th:text="${movie.runningtime}">120</span>분
+                </div>
+
+                <div class="movie-info">
+                    <strong>개봉일:</strong> <span
+                        th:text="${#temporals.format(movie.releasedate, 'yyyy-MM-dd')}">2023-01-01</span>
+                </div>
+
+                <div class="movie-description" th:text="${movie.description}">
+                    영화 설명이 여기에 표시됩니다.
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+# THE SCREEN - 영화관 예매 서비스
+User-agent: *
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Allow: /
+
+# 사이트맵 위치 (추후 추가 시)
+# Sitemap: https://yoursite.com/sitemap.xml

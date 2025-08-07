@@ -1,0 +1,73 @@
+/* ReservationSuccessPage.css */
+.reservation-success-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 예매완료 페이지 전용 헤더 스타일 */
+.success-header {
+  width: 100%;
+  margin: 100px auto 0 auto;
+}
+
+.success-page-title {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  padding: 18px 0 18px 0;
+  background: #222;
+  color: #fff;
+  border-radius: 8px 8px 0 0;
+  margin: 20px auto 0 auto;
+  width: 100%;
+  max-width: 980px;
+  box-sizing: border-box;
+  border-left: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
+
+/* 포스터 없음 플레이스홀더 스타일 */
+.no-poster-placeholder {
+  width: 120px;
+  height: 170px;
+  background: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.no-poster-placeholder span {
+  text-align: center;
+}
+
+/* 예약 정보 로딩 페이지에서 헤더와의 간격 조정 */
+.reservation-payment-page-loading .payment-container-loading {
+  margin-top: 0px;
+  width: 980px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #fff;
+  min-height: 400px;
+  padding: 40px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+}
+
+.reservation-payment-page-loading .payment-box-loading {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.reservation-payment-page-loading .payment-box-loading h2 {
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0;
+}

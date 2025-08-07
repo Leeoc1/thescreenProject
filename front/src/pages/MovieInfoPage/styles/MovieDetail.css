@@ -1,0 +1,269 @@
+/* Container */
+.mvd-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Movie Detail Section */
+.mvd-movie-detail-section {
+  background-color: hsl(0, 0%, 91%);
+  padding: 80px 0 40px 0;
+  border-bottom: 1px solid hsl(0, 0%, 86%);
+}
+
+.mvd-movie-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.mvd-movie-poster {
+  flex-shrink: 0;
+}
+
+.mvd-movie-poster img {
+  width: 300px;
+  height: 430px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.mvd-movie-info {
+  flex: 1;
+  padding-top: 20px;
+}
+
+.mvd-movie-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: hsl(0, 0%, 0%);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.mvd-movie-meta {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 25px;
+  font-size: 14px;
+}
+
+.mvd-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mvd-meta-label {
+  color: hsl(0, 0%, 40%);
+  font-size: 12px;
+}
+
+.mvd-meta-value {
+  color: hsl(0, 0%, 0%);
+  font-weight: 500;
+}
+
+.mvd-movie-details {
+  margin-bottom: 30px;
+}
+
+.mvd-detail-row {
+  display: flex;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.mvd-detail-label {
+  width: 60px;
+  color: hsl(0, 0%, 40%);
+  font-weight: 500;
+}
+
+.mvd-detail-value {
+  color: hsl(0, 0%, 0%);
+  flex: 1;
+  max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mvd-movie-booking-info {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 25px;
+}
+
+.mvd-booking-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mvd-booking-info-label {
+  color: hsl(0, 0%, 40%);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.mvd-booking-info-value {
+  color: hsl(0, 0%, 0%);
+  font-weight: 500;
+  font-size: 32px;
+}
+
+/* Synopsis Section */
+.mvd-synopsis-section {
+  background-color: hsl(0, 0%, 100%);
+  padding: 40px 0;
+}
+
+.mvd-synopsis-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: hsl(0, 0%, 0%);
+  margin-bottom: 20px;
+}
+
+.mvd-synopsis-content {
+  font-size: 14px;
+  line-height: 1.8;
+  color: hsl(0, 0%, 20%);
+  max-width: 800px;
+}
+
+.mvd-synopsis-content p {
+  margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mvd-movie-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mvd-movie-poster {
+    align-self: center;
+  }
+
+  .mvd-movie-poster img {
+    width: 250px;
+    height: 360px;
+  }
+
+  .mvd-movie-meta {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .mvd-footer-content {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+
+  .mvd-footer-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .mvd-footer-right {
+    align-items: center;
+  }
+}
+
+/* 찜 관련 스타일 */
+.mvd-wishlist-section {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin: 25px 0;
+  padding: 15px 0;
+  border-top: 1px solid hsl(0, 0%, 86%);
+  border-bottom: 1px solid hsl(0, 0%, 86%);
+}
+
+.mvd-wishlist-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mvd-wishlist-heart-button {
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #ff6b6b;
+  padding: 5px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mvd-wishlist-heart-button:hover {
+  transform: scale(1.1);
+  background-color: rgba(255, 107, 107, 0.1);
+}
+
+.mvd-wishlist-heart-button.wished {
+  color: #ff6b6b;
+  animation: heartBeat 0.6s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.2);
+  }
+  40% {
+    transform: scale(1.1);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  80% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.mvd-wishlist-count {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  color: #666;
+}
+
+.mvd-booking-button {
+  background-color: hsl(0, 0%, 0%);
+  color: hsl(0, 0%, 100%);
+  border: none;
+  padding: 12px 40px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Noto Sans KR", sans-serif;
+  width: auto;
+  white-space: nowrap;
+}
+
+.mvd-booking-button:hover {
+  background-color: #333;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}

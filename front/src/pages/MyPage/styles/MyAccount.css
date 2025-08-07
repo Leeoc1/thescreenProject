@@ -1,0 +1,78 @@
+/* Profile Section */
+.mp-profile-section {
+  background-color: #000;
+  color: #fff;
+  padding: 3rem 1rem;
+}
+
+.mp-profile-container {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.mp-profile-card {
+  background-color: #000;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.mp-profile-avatar {
+  width: 5rem;
+  height: 5rem;
+  background-color: #6c757d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.mp-avatar-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #343a40;
+}
+
+.mp-profile-info {
+  flex: 1;
+}
+
+.mp-profile-greeting {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.mp-profile-name {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.mp-profile-link {
+  color: #adb5bd;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.mp-profile-link:hover {
+  color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .mp-profile-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mp-profile-section {
+    padding: 2rem 1rem;
+  }
+}

@@ -1,0 +1,66 @@
+.mvp-page {
+  background: #f4f6fa;
+  min-height: 100vh;
+}
+
+.mvp-container {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.08);
+  padding: 48px 48px 60px 48px;
+  margin-top: 48px;
+  margin-bottom: 48px;
+  box-sizing: border-box;
+}
+
+.mvp-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+/* 탭 네비게이션 스타일 */
+.mvp-tab-navigation {
+  display: flex;
+  gap: 0;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.mvp-tab-button {
+  padding: 12px 24px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  position: relative;
+}
+
+.mvp-tab-button:hover {
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+.mvp-tab-button.active {
+  color: #ffc107;
+  border-bottom-color: #ffc107;
+  font-weight: 600;
+}
+
+.mvp-tab-button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #ffc107;
+}

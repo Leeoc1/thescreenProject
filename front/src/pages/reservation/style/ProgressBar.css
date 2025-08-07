@@ -1,0 +1,86 @@
+.progress-bar-wrapper {
+  box-sizing: border-box;
+}
+
+.progress-bar-wrapper .progress-bar {
+  width: 100%;
+  max-width: 1080px;
+  background: #fff;
+  padding: 38px 0;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  margin: 90px auto 0 auto;
+}
+
+.progress-bar-wrapper .progress-steps {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.progress-bar-wrapper .progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  z-index: 2;
+  margin: 0 50px;
+}
+
+.progress-bar-wrapper .progress-step:first-child {
+  margin-left: 0;
+}
+
+.progress-bar-wrapper .progress-step:last-child {
+  margin-right: 0;
+}
+
+.progress-bar-wrapper .step-number {
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
+  background: #e9ecef;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 24px;
+  transition: all 0.3s ease;
+}
+
+.progress-bar-wrapper .progress-step.completed .step-number::before {
+  font-size: 28px;
+}
+
+.progress-bar-wrapper .progress-step.completed .step-number {
+  background: #ffc107; /* 부트스트랩의 warning */
+  color: white;
+}
+
+.progress-bar-wrapper .progress-step.active .step-number {
+  background: #ffc107;
+  color: white;
+}
+
+.progress-bar-wrapper .step-title {
+  font-size: 16px;
+  color: #6c757d;
+  font-weight: 400;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.progress-bar-wrapper .progress-step.active .step-title {
+  color: #ffc107;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.progress-bar-wrapper .progress-step.completed .step-title {
+  color: #ffc107;
+  font-weight: 400;
+  font-size: 16px;
+}

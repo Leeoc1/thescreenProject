@@ -1,0 +1,9 @@
+.sms-auth-form {
+  margin-bottom: 0.5rem;
+}
+
+.rg-timer {
+  color: #f59e0b; /* 타이머 색상 (Register.css의 색상 팔레트 참고) */
+  font-weight: 600;
+  margin-top: 0.5rem;
+}

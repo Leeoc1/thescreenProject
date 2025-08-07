@@ -1,0 +1,283 @@
+/* Stats Grid */
+.slo-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.slo-stat-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.slo-stat-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.875rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.slo-stat-value {
+  font-size: 25px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.slo-stat-change {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.slo-stat-change.slo-positive {
+  color: #059669;
+}
+
+.slo-stat-change.slo-negative {
+  color: #dc2626;
+}
+
+/* Charts Section */
+.slo-charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.slo-chart-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+}
+
+.slo-chart-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+.slo-chart-placeholder {
+  height: 350px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.nivo-bar {
+  height: 300px;
+  width: 100%;
+}
+
+.bar-detail {
+  height: 30px;
+  width: 100px;
+  font-size: 0.8rem;
+  padding: 5px;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+.slo-chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  height: 100%;
+  width: 100%;
+}
+
+.nivo-bar rect {
+  transition: transform 0.3s;
+}
+.nivo-bar g rect:hover {
+  transform: scale(1.1);
+  fill: #91b6f3;
+}
+
+.slo-chart-bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 40px;
+}
+
+.slo-chart-bar {
+  width: 30px;
+  background: linear-gradient(to top, #3b82f6, #60a5fa);
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+  transition: all 0.2s ease;
+  border: 1px solid #1e40af;
+}
+
+.slo-chart-bar:hover {
+  background: linear-gradient(to top, #2563eb, #3b82f6);
+  transform: scale(1.05);
+}
+
+.slo-chart-date {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.slo-chart-amount {
+  font-size: 0.625rem;
+  color: #374151;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Pie Chart */
+.slo-pie-chart {
+  width: 200px;
+  height: 350px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #3b82f6 0deg 90deg,
+    #10b981 90deg 180deg,
+    #f59e0b 180deg 270deg,
+    #ef4444 270deg 360deg
+  );
+  margin: 0 auto;
+}
+
+.slo-piechart-wrap {
+  height: 350px;
+  min-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  box-sizing: border-box;
+  margin-top: 30px;
+}
+
+.slo-chart-card,
+.slo-piechart-wrap {
+  overflow: visible !important;
+}
+
+.slo-pie-chart.slo-piechart-center {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  position: absolute;
+  left: 30%;
+  top: 40%;
+  transform: translate(-50%, -30%);
+}
+
+.slo-piechart-labels {
+  position: absolute;
+  top: 12px;
+  right: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  z-index: 2;
+}
+
+.slo-piechart-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 1px 8px;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+  white-space: nowrap;
+}
+
+.slo-piechart-stack {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -30%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.slo-piechart-slice {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  left: 0;
+  top: 0;
+  transition: transform 0.2s, box-shadow 0.2s;
+  pointer-events: auto;
+}
+
+.slo-piechart-slice-hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  z-index: 3;
+}
+
+.slo-piechart-tooltip {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  color: #222;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+  text-align: center;
+  min-width: 90px;
+}
+
+.nivo-legend text {
+  fill: #222 !important;
+  font-size: 1rem;
+  font-weight: 500;
+  z-index: 10;
+}
+
+/* Date Filter */
+.slo-date-filter select {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .slo-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .slo-charts-section {
+    grid-template-columns: 1fr;
+  }
+}

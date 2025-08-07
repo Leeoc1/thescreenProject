@@ -1,0 +1,212 @@
+.mvs-searchbox-svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.mvs-searchbox-svg-circle {
+  stroke: #888;
+  stroke-width: 2;
+}
+.mvs-searchbox-svg-line {
+  stroke: #888;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+.mvs-searchbox-wrap {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.mvs-searchbox-container {
+  position: relative;
+  width: 220px;
+}
+
+.mvs-searchbox-input {
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.mvs-searchbox-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #888;
+  display: flex;
+  align-items: center;
+}
+.mvs-page {
+  background-color: white;
+  color: black;
+  min-height: 100vh;
+}
+
+.mvs-section {
+  margin-bottom: 4rem;
+}
+
+.mvs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 2rem;
+}
+
+.mvs-card {
+  background-color: #f9f9f9;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mvs-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.mvs-poster {
+  position: relative;
+  aspect-ratio: 2/3;
+  overflow: hidden;
+}
+
+.mvs-poster img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mvs-info {
+  padding: 1rem;
+}
+
+.mvs-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: black;
+}
+
+.mvs-genre,
+.mvs-rating,
+.mvs-release {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.mvs-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.mvs-age-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 16px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.mvs-age-19 {
+  background-color: #dc2626;
+  height: 20px;
+}
+
+.mvs-age-all {
+  background-color: #059669;
+  height: 20px;
+}
+
+.mvs-rating-text {
+  font-size: 0.875rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .mvs-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
+}
+
+.mvs-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6); /* 반투명 배경 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0; /* 기본적으로 숨김 */
+  transition: opacity 0.3s ease;
+}
+
+.mvs-poster:hover .mvs-overlay {
+  opacity: 1;
+}
+
+.mvs-buttons {
+  display: flex;
+  flex-direction: column; /* 수직 배치 */
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.mvs-btn {
+  background-color: transparent;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 0.25rem 2rem;
+  border-radius: 0.3rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -webkit-border-radius: 0.3rem;
+  -moz-border-radius: 0.3rem;
+  -ms-border-radius: 0.3rem;
+  -o-border-radius: 0.3rem;
+}
+
+.mvs-btn:hover {
+  background-color: rgba(255, 255, 255, 0.7); /* 호버 시 배경: 흰색 */
+  color: #000; /* 호버 시 텍스트: 검정색 */
+}
+
+.mvs-showmore-btn {
+  border-radius: 0.4rem;
+  -webkit-border-radius: 0.4rem;
+  -moz-border-radius: 0.4rem;
+  -ms-border-radius: 0.4rem;
+  -o-border-radius: 0.4rem;
+  border: 1px solid #000000;
+  background-color: white;
+  color: black;
+  padding: 0.5rem 1rem;
+}
+
+.mvs-showmore-btn:hover {
+  background-color: black;
+  color: white;
+}
+
+.mvs-release-date {
+  font-size: 0.9rem;
+  color: #555;
+  margin: 0;
+}

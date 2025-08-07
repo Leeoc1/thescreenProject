@@ -1,0 +1,883 @@
+/* reservation-page 배경색 제거 */
+.reservation-page {
+  background: #fff;
+  min-height: 100vh;
+}
+
+/* reservation-content를 seat 페이지와 동일한 구조로 변경 */
+.reservation-content {
+  padding-top: 0;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  justify-content: center;
+}
+
+/* 선택한 영화 섹션 */
+.selected-movie-section {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px 8px 0 0;
+  padding: 30px;
+  box-sizing: border-box;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.selected-movie-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  margin: 0;
+  text-align: center;
+}
+
+.selected-movie-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.selected-movie-poster {
+  width: 120px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.selected-movie-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.selected-movie-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 8px 0;
+}
+
+.selected-movie-genre {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.selected-movie-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 4px 0 0 0;
+}
+
+.rpp-age-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 20px;
+  border-radius: 3px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
+}
+
+.rpp-age-19 {
+  background-color: #dc2626;
+}
+
+.rpp-age-all {
+  background-color: #059669;
+}
+
+.rpp-rating-text {
+  font-size: 16px;
+  color: #666;
+}
+
+/* 영화가 선택되지 않았을 때 표시되는 메시지 */
+.no-movie-selected {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #666;
+  font-size: 18px;
+  text-align: center;
+}
+
+.no-movie-selected p {
+  margin: 0;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #ddd;
+}
+
+/* reservation-container를 seat 페이지와 동일한 구조로 변경 */
+.reservation-container {
+  width: 980px;
+  background: white;
+  margin: 0 auto;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 48px;
+  box-sizing: border-box;
+}
+
+/* 섹션 타이틀 스타일 */
+.section-title {
+  background: #000;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px 0 10px 0;
+  font-weight: 500;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* 극장선택 컨테이너 */
+.theater-selector {
+  width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  padding: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  box-sizing: border-box;
+  min-height: 753px;
+  height: 753px;
+  display: flex;
+  border-radius: 0 0 8px 8px;
+  margin-top: 0;
+}
+
+.region-list {
+  min-width: 140px;
+  max-width: 140px;
+  padding: 0;
+  border-radius: 0 0 0 8px;
+  height: 100%;
+  background: none;
+}
+
+.branch-list {
+  min-width: 140px;
+  max-width: 140px;
+  padding: 0;
+  border-radius: 0 0 8px 0;
+  height: 100%;
+  background: none;
+  border-right: 1px solid #ddd;
+}
+
+.region-btn {
+  display: block;
+  width: 100%;
+  padding: 8px 20px 8px 16px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: #222;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.region-btn.active {
+  font-weight: 700;
+  color: #e91e63;
+  background: #ececec;
+}
+
+.branch-btn {
+  display: block;
+  width: 100%;
+  padding: 7px 16px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: #222;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.branch-btn.active {
+  font-weight: 700;
+  color: #e91e63;
+  background: #ececec;
+}
+
+/* 상영시간 선택 컨테이너 */
+.time-selector {
+  background: #fff;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+  box-sizing: border-box;
+  min-height: 120px;
+}
+
+/* 날짜/요일 선택 (place 페이지) */
+.date-header {
+  background: #000;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
+  padding: 10px 0 10px 0;
+  border-radius: 8px 8px 0 0;
+  font-weight: 500;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px auto 0 auto;
+  border: 1px solid #ddd;
+  border-bottom: none;
+  width: 980px;
+  box-sizing: border-box;
+}
+
+.date-selector {
+  width: 980px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 0 0 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px 20px 16px 20px;
+  border: 1px solid #ddd;
+  border-top: none;
+  box-sizing: border-box;
+}
+
+.date-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0;
+  padding: 0;
+}
+.arrow {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #888;
+  cursor: pointer;
+  width: 32px;
+  height: 48px;
+  transition: color 0.2s;
+}
+.arrow:hover {
+  color: #222;
+}
+.dates {
+  display: flex;
+  justify-content: space-between;
+  gap: 0;
+  flex: 1;
+}
+.date-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+  height: 48px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #222;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+  user-select: none;
+}
+.date-item.selected {
+  background: #111;
+  color: #fff;
+}
+.date-item.saturday .date-num,
+.date-item.saturday .date-label {
+  color: #1976d2;
+}
+.date-item.sunday .date-num,
+.date-item.sunday .date-label {
+  color: #d32f2f;
+}
+.date-item.disabled {
+  color: #bbb;
+  background: #f5f5f5;
+  pointer-events: none;
+}
+.date-label {
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.region-count {
+  color: #aaa;
+  font-size: 13px;
+  margin-left: 2px;
+}
+
+.theater-title {
+  width: 280px;
+  border-radius: 8px 0 0 0;
+  display: inline-block;
+}
+.branch-title {
+  width: 140px;
+  border-radius: 0 8px 0 0;
+}
+.time-title {
+  width: 700px;
+  border-radius: 0 8px 0 0;
+  display: inline-block;
+}
+
+.date-selector-section {
+  width: 980px;
+  margin: 0 auto;
+}
+
+/* 선택기 컨테이너 */
+.selector-container {
+  width: 980px;
+  margin: 20px auto;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 20px;
+  position: relative;
+  min-height: 600px;
+  align-items: stretch;
+}
+
+.region-section {
+  min-width: 0;
+  flex: 0 0 auto;
+}
+
+.theater-section {
+  width: 282px;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.screen-section {
+  min-width: 0;
+  flex: 1;
+  position: relative;
+  background: #fff;
+  border-radius: 0 0 8px 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: inherit;
+  position: relative;
+}
+
+.theater-section::before,
+.screen-section::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #ddd;
+}
+
+.region-section h3,
+.theater-section h3,
+.screen-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 15px 0;
+}
+
+.region-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.region-item {
+  display: block;
+  width: fit-content;
+  min-width: 120px;
+  padding: 10px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: #222;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.region-item:hover {
+  background: #ececec;
+}
+
+.region-item.active {
+  font-weight: 700;
+  color: #e91e63;
+  background: #ececec;
+}
+
+.theater-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow-y: auto;
+  max-height: 600px;
+}
+
+.theater-item {
+  display: block;
+  width: fit-content;
+  min-width: 120px;
+  padding: 8px 20px 8px 16px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: #222;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.theater-item:hover {
+  background: #ececec;
+}
+
+.theater-item.active {
+  font-weight: 700;
+  color: #e91e63;
+  background: #ececec;
+}
+
+/* Place 페이지 전용 상영시간 스타일 */
+.place-time-list-content {
+  padding: 0 24px;
+}
+
+.place-screen-type-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 12px 0 8px 0;
+  color: #222;
+}
+
+.place-screen-times-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.place-screen-time-card {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.place-screen-time-card:hover {
+  border-color: #fbbf24;
+  background-color: #fef3c7;
+}
+
+.place-screen-time-card.place-active {
+  border-color: #fbbf24;
+  background-color: #fbbf24;
+  color: #222;
+  font-weight: bold;
+}
+
+.place-screen-time-card.place-active .place-screen-time-time,
+.place-screen-time-card.place-active .place-screen-time-seats,
+.place-screen-time-card.place-active .place-screen-time-screen {
+  color: #222;
+}
+
+.place-screen-time-time {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 2px;
+}
+
+.place-screen-time-seats {
+  font-size: 0.95rem;
+  color: #388e3c;
+  font-weight: 500;
+}
+
+.place-screen-time-screen {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.region-section {
+  min-width: 0;
+  flex: 0 0 auto;
+}
+
+.theater-section {
+  min-width: 0;
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.screen-section {
+  min-width: 0;
+  flex: 1;
+  position: relative;
+  background: #fff;
+  border-radius: 0 0 8px 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.theater-section::before,
+.screen-section::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: #ddd;
+}
+
+.region-section h3,
+.theater-section h3,
+.screen-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  margin: 0 0 15px 0;
+}
+
+.region-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.region-item {
+  display: block;
+  width: fit-content;
+  min-width: 120px;
+  padding: 10px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: #222;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.region-item:hover {
+  background: #ececec;
+}
+
+.region-item.active {
+  font-weight: 700;
+  color: #e91e63;
+  background: #ececec;
+}
+
+.theater-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.theater-item {
+  display: block;
+  width: fit-content;
+  min-width: 120px;
+  padding: 8px 20px 8px 16px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 400;
+  color: #222;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+
+.theater-item:hover {
+  background: #ececec;
+}
+
+.theater-item.active {
+  font-weight: 700;
+  color: #e91e63;
+  background: #ececec;
+}
+
+/* Place 페이지 전용 상영시간 스타일 */
+.place-time-list-content {
+  padding: 0 24px;
+}
+
+.place-screen-type-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 12px 0 8px 0;
+  color: #222;
+}
+
+.place-screen-times-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.place-screen-time-card {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.place-screen-time-card:hover {
+  border-color: #fbbf24;
+  background-color: #fef3c7;
+}
+
+.place-screen-time-card.place-active {
+  border-color: #fbbf24;
+  background-color: #fbbf24;
+  color: #222;
+  font-weight: bold;
+}
+
+.place-screen-time-card.place-active .place-screen-time-time,
+.place-screen-time-card.place-active .place-screen-time-seats,
+.place-screen-time-card.place-active .place-screen-time-screen {
+  color: #222;
+}
+
+.place-screen-time-time {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 2px;
+}
+
+.place-screen-time-seats {
+  font-size: 0.95rem;
+  color: #388e3c;
+  font-weight: 500;
+}
+
+.place-screen-time-screen {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.theater-title,
+.time-title {
+  border-radius: 0 !important;
+}
+
+.time-list-area {
+  flex: 1;
+  min-width: 0;
+  background: #fff;
+  border-radius: 0 0 8px 0;
+  height: 100%;
+  border-left: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-title.with-border {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  border-radius: 0;
+  margin-bottom: 12px;
+}
+
+.time-list-content {
+  padding: 0 24px;
+}
+
+.time-btns {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.movie-info-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.movie-grade {
+  display: inline-block;
+  background: #ffc107;
+  color: #222;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 4px;
+  padding: 2px 8px 2px 6px;
+  margin-right: 4px;
+}
+.movie-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #222;
+}
+.screen-type-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 12px 0 8px 0;
+  color: #222;
+}
+.screen-times-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.screen-time-card {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+.screen-time-card:hover {
+  border-color: #fbbf24;
+  background-color: #fef3c7;
+}
+.screen-time-card.active {
+  border-color: #fbbf24;
+  background-color: #fbbf24;
+  color: #222;
+  font-weight: bold;
+}
+.screen-time-card.active .screen-time-time,
+.screen-time-card.active .screen-time-seats,
+.screen-time-card.active .screen-time-screen {
+  color: #222;
+}
+.screen-time-time {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 2px;
+}
+.screen-time-seats {
+  font-size: 0.95rem;
+  color: #388e3c;
+  font-weight: 500;
+}
+.screen-time-screen {
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.reservation-seat-btn-fixed {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 100;
+  background: #fbbf24;
+  color: #222;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1.1rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.reservation-seat-btn-fixed:hover {
+  background: #f59e0b;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
+}
+.reservation-seat-btn-fixed.disabled {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .reservation-seat-btn-fixed {
+    bottom: 16px;
+    right: 16px;
+    width: calc(100vw - 32px);
+    left: 16px;
+    padding: 1rem 0;
+    font-size: 1.1rem;
+  }
+}
+
+/* 로딩 메시지 스타일 */
+.loading-message {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 16px;
+  font-weight: 500;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 20px 0;
+  border: 1px solid #e9ecef;
+}
+
+.loading-message::before {
+  content: "⏳ ";
+  margin-right: 8px;
+}

@@ -1,0 +1,294 @@
+:root {
+  --header-height: 4rem;
+}
+
+.h-header {
+  background-color: #2a2a2a;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  transition: all 0.3s ease;
+  height: var(--header-height);
+}
+
+.h-header-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.h-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  height: 4rem;
+  position: relative;
+  width: 980px;
+}
+
+.h-header-content.h-scrolled {
+  height: var(--header-height);
+}
+
+.h-logo-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.h-logo-img {
+  height: 150px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.h-logo-line {
+  line-height: 1.2;
+  transition: all 0.3s ease;
+  font-size: 1.125rem;
+}
+
+.h-nav-scrolled {
+  display: none;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  flex: 1;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  white-space: nowrap;
+}
+
+.h-nav-scrolled.h-show {
+  display: flex !important;
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.h-nav-item {
+  font-weight: 500;
+  font-size: 0.875rem;
+  position: relative;
+  padding: 0.75rem 0;
+  transition: color 0.3s ease;
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.h-nav-item:hover {
+  color: #fbbf24;
+}
+
+.h-nav-item::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #fbbf24;
+  transition: width 0.3s ease;
+}
+
+.h-nav-item:hover::after {
+  width: 100%;
+}
+
+.h-user-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.h-notice-btn {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.h-notice-btn:hover {
+  color: #fbbf24;
+}
+
+.h-login-btn,
+.h-logout-btn {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.h-login-btn:hover,
+.h-logout-btn:hover {
+  color: #fbbf24;
+}
+
+.h-signup-btn {
+  color: #d1d5db;
+  font-size: 0.875rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.h-user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.h-user-profile:hover {
+  opacity: 0.8;
+}
+
+.h-user-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.h-username {
+  color: #e5e7eb;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.h-mypage-btn {
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.h-mypage-btn {
+  color: #fbbf24;
+  border: 1px solid #fbbf24;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.h-signup-btn:hover {
+  color: #fbbf24;
+}
+
+.h-mypage-btn:hover {
+  background-color: #fbbf24;
+  color: #2a2a2a;
+}
+
+.h-mypage-btn:hover {
+  background-color: #fbbf24;
+  color: #2a2a2a;
+}
+
+.h-mobile-menu-btn {
+  color: white;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: none;
+}
+
+.h-nav-bottom {
+  position: relative;
+  background-color: #1a1a1a;
+  border-top: 1px solid #4b5563;
+  transition: all 0.3s ease;
+}
+
+.h-nav-bottom.h-hidden {
+  display: none;
+}
+
+.h-nav-bottom-container {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.h-nav-bottom-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  height: 3rem;
+}
+
+.h-mobile-menu {
+  background-color: #2a2a2a;
+  border-top: 1px solid #4b5563;
+  padding: 1rem 0;
+  display: none;
+}
+
+.h-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.h-mobile-nav-item {
+  color: white;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.h-mobile-nav-item:hover {
+  color: #fbbf24;
+}
+
+/* 관리자 버튼 스타일 */
+.h-manager-btn {
+  color: #ffffff;
+  border: 2px solid #ff4500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+  background-color: #ff4500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .h-mobile-menu-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .h-mobile-menu-btn {
+    display: block;
+  }
+
+  .h-mobile-menu.h-show {
+    display: block;
+  }
+}

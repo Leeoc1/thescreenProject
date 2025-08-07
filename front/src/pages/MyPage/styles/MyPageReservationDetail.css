@@ -1,0 +1,78 @@
+/* 모달 공통 스타일 */
+.mp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.mp-modal-content {
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  min-width: 320px;
+  max-width: 90vw;
+  width: 750px;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.mp-modal-close:hover {
+  color: #000;
+}
+
+.mp-modal-title {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.mp-modal-row {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #212529;
+}
+
+.mp-modal-details-container {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.mp-modal-left-section {
+  flex: 1;
+}
+
+.mp-modal-right-section {
+  flex: 1;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .mp-modal-details-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

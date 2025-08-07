@@ -1,0 +1,81 @@
+/* 예매내역 Table */
+.mp-reservation-table-container {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e9ecef;
+  overflow: hidden;
+}
+
+.mp-reservation-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.mp-reservation-table thead {
+  background-color: #000;
+  color: #fff;
+}
+
+.mp-reservation-table th {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.mp-reservation-table tbody {
+  background-color: #fff;
+}
+
+.mp-reservation-row {
+  border-bottom: 1px solid #e9ecef;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.mp-reservation-row:hover {
+  background-color: #f8f9fa;
+}
+
+.mp-reservation-row:last-child {
+  border-bottom: none;
+}
+
+.mp-reservation-table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+}
+
+.mp-reservation-title {
+  color: #212529;
+  text-align: left;
+}
+
+.mp-reservation-date {
+  color: #6c757d;
+  text-align: center;
+}
+
+.mp-reservation-status {
+  color: #212529;
+  text-align: center;
+}
+
+.mp-no-reservations {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: #6c757d;
+}
+
+.mp-no-reservations p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+/* 테이블 내부의 no-reservations 스타일 */
+td.mp-no-reservations {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}

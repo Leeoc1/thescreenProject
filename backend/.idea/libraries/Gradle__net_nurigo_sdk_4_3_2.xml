@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: net.nurigo:sdk:4.3.2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="net.nurigo" artifactId="sdk" version="4.3.2" baseVersion="4.3.2" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.nurigo/sdk/4.3.2/e92fcccce3ce08c048a58990200915a20ef94721/sdk-4.3.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.nurigo/sdk/4.3.2/3ee8a727f35bdb6ee676d3ef497decd5f14e2575/sdk-4.3.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.ai:spring-ai-spring-boot-autoconfigure:1.0.0-M2" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="org.springframework.ai" artifactId="spring-ai-spring-boot-autoconfigure" version="1.0.0-M2" baseVersion="1.0.0-M2" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.ai/spring-ai-spring-boot-autoconfigure/1.0.0-M2/7f12f979e91018d9874ec7d18d5112a06d67cf40/spring-ai-spring-boot-autoconfigure-1.0.0-M2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.ai/spring-ai-spring-boot-autoconfigure/1.0.0-M2/ffb7496f2572bf1332d97a7a00a6ad7fd7f52766/spring-ai-spring-boot-autoconfigure-1.0.0-M2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

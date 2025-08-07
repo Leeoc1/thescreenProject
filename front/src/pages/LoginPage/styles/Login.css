@@ -1,0 +1,281 @@
+.l-logo-img {
+  width: 300px;
+  object-fit: contain;
+  align-items: center;
+  margin-bottom: -100px;
+  margin-top: -100px; /* 컨텐츠가 이미지 범위를 침범하도록 더 큰 음수 마진 */
+}
+
+.lgs-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 50%, #000000 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  margin-top: calc(-1 * var(--header-height));
+}
+
+.lgs-container {
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px 15px rgba(0, 0, 0, 0.13),
+    0 10px 10px 15px rgba(0, 0, 0, 0.04);
+  width: 100%;
+  max-width: 550px;
+  padding: 2.5rem;
+}
+
+.lgs-header {
+  text-align: center;
+  margin-bottom: 1rem; /* 기존 2rem에서 1rem으로 줄임 */
+}
+
+.lgs-title {
+  font-size: 2.25rem;
+  font-weight: bold;
+  color: #fbbf24;
+  margin-bottom: 0.5rem;
+}
+
+.lgs-subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+  margin-top: -10px; /* 음수 마진으로 더욱 위로 올리기 */
+  margin-bottom: 30px;
+}
+
+.lgs-form {
+  margin-bottom: 1.5rem;
+}
+
+.lgs-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.lgs-form-group label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.lgs-form-group input {
+  width: 100%;
+  height: 3.125rem;
+  padding: 0 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.lgs-form-group input:focus {
+  outline: none;
+  border-color: #fbbf24;
+}
+
+.lgs-form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.lgs-remember-me {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  cursor: pointer;
+}
+
+.lgs-remember-me input[type="checkbox"] {
+  width: auto;
+}
+
+.lgs-forgot-password {
+  color: #fbbf24;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.lgs-forgot-password:hover {
+  text-decoration: underline;
+}
+
+.lgs-btn {
+  width: 100%;
+  background-color: #fbbf24;
+  color: black;
+  border: none;
+  padding: 0.875rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.lgs-btn:hover {
+  background-color: #f59e0b;
+}
+
+.lgs-divider {
+  text-align: center;
+  margin: 2rem 0;
+  position: relative;
+}
+
+.lgs-divider::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #6b7280;
+}
+
+.lgs-divider span {
+  background-color: white;
+  padding: 0 1rem;
+  color: #6b7280;
+  font-size: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+
+.lgs-social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.lgs-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lgs-social-btn:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.lgs-social-btn.lgs-kakao {
+  border-color: #fee500;
+  color: #3c1e1e;
+}
+
+.lgs-social-btn.lgs-kakao:hover {
+  background-color: #fee500;
+}
+
+.lgs-social-btn.lgs-naver {
+  border-color: #03c75a;
+  color: #03c75a;
+}
+
+.lgs-social-btn.lgs-naver:hover {
+  background-color: #03c75a;
+  color: white;
+}
+
+.lgs-social-btn.lgs-google {
+  border-color: #4285f4;
+  color: #4285f4;
+}
+
+.lgs-social-btn.lgs-google:hover {
+  background-color: #4285f4;
+  color: white;
+}
+
+.lgs-social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-weight: bold;
+  border-radius: 50%;
+}
+
+.lgs-social-btn.lgs-kakao .lgs-social-icon {
+  background-color: #3c1e1e;
+  color: #fee500;
+}
+
+.lgs-social-btn.lgs-naver .lgs-social-icon {
+  background-color: #03c75a;
+  color: white;
+}
+
+.lgs-social-btn.lgs-google .lgs-social-icon {
+  background-color: #4285f4;
+  color: white;
+}
+
+.lgs-signup-link {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.lgs-signup-link p {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.lgs-link-btn {
+  background: none;
+  border: none;
+  color: #fbbf24;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-left: 0.25rem;
+}
+
+.lgs-link-btn:hover {
+  color: #f59e0b;
+}
+
+.lgs-back-to-home {
+  text-align: center;
+}
+
+.lgs-back-btn {
+  background: none;
+  border: 2px solid #e5e7eb;
+  color: #6b7280;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lgs-back-btn:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.lgs-google-login-button {
+  width: 100% !important;
+  justify-content: center !important;
+  margin-bottom: 10px !important;
+  height: 45px !important;
+  border-radius: 0.5rem !important;
+}

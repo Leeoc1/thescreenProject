@@ -1,0 +1,51 @@
+/* PieChart 컴포넌트 스타일 */
+
+.pc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.pc-nav-button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.pc-nav-button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+
+.pc-title {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.pc-stats-info {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #666;
+  font-weight: 500;
+}
+
+.pc-chart-container {
+  height: 400px;
+  width: 400px;
+  margin: 0 auto;
+}
+
+.pc-legend-style {
+  font-size: 10px;
+  max-width: 100px;
+  margin: 0;
+  padding: 0;
+  left: 0;
+}

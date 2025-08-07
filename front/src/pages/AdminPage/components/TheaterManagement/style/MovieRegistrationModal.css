@@ -1,0 +1,214 @@
+/* 탭 컨테이너 */
+.mrm-tab-container {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  flex-shrink: 0;
+}
+
+.mrm-tab-button {
+  flex: 1;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+}
+
+.mrm-tab-button:hover {
+  color: #374151;
+  background-color: #f3f4f6;
+}
+
+.mrm-tab-button.active {
+  color: #3b82f6;
+  background-color: white;
+  border-bottom-color: #3b82f6;
+}
+
+/* 탭 콘텐츠 */
+.mrm-tab-content {
+  flex: 1;
+  overflow-y: auto;
+  max-height: 650px;
+  padding: 20px;
+}
+
+/* 로딩 및 빈 상태 */
+.mrm-loading,
+.mrm-no-movies {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+/* 영화 목록 */
+.mrm-movie-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mrm-movie-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+  transition: all 0.2s;
+}
+
+.mrm-movie-item:hover {
+  border-color: #d1d5db;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mrm-movie-item.clickable {
+  cursor: pointer;
+}
+
+.mrm-movie-item.clickable:hover {
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mrm-movie-item.selected {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
+}
+
+.mrm-movie-info {
+  flex: 1;
+}
+
+.mrm-movie-info h4 {
+  margin: 0 0 8px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.mrm-movie-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #4b5563;
+}
+
+.mrm-movie-info strong {
+  color: #374151;
+  margin-right: 4px;
+}
+
+.mrm-movie-summary {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* 선택 표시 */
+.mrm-selection-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  border-radius: 6px;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  transition: all 0.2s;
+  flex-shrink: 0;
+  margin-left: 16px;
+  min-width: 120px;
+}
+
+.mrm-movie-item.selected .mrm-selection-indicator {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.mrm-movie-item.clickable:hover .mrm-selection-indicator {
+  background-color: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+.mrm-movie-item.clickable.selected:hover .mrm-selection-indicator {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}
+
+/* 헤더 액션 버튼 */
+.modal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mrm-btn-register-movies {
+  padding: 8px 16px;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mrm-btn-register-movies:hover {
+  background-color: #059669;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .mrm-tab-container {
+    flex-wrap: wrap;
+  }
+
+  .mrm-tab-button {
+    font-size: 12px;
+    padding: 10px 12px;
+  }
+
+  .mrm-movie-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .mrm-selection-indicator {
+    margin-left: 0;
+    align-self: flex-end;
+    min-width: 100px;
+  }
+
+  .mrm-tab-content {
+    padding: 16px;
+  }
+}
+
+.mrm-movie-schedules {
+  margin-right: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.mrm-movie-current {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  flex: 1;
+}

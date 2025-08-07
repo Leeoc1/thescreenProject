@@ -1,0 +1,203 @@
+/* Modal Styles */
+.mp-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.mp-modal-content {
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  min-width: 320px;
+  max-width: 90vw;
+  width: 750px;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.mp-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #888;
+  transition: color 0.2s;
+}
+
+.mp-modal-close:hover {
+  color: #000;
+}
+
+.mp-modal-title {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #212529;
+}
+
+.mp-modal-row {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  color: #212529;
+}
+
+/* 쿠폰함 모달 스타일 */
+.mp-coupon-modal {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.mp-coupon-modal-body {
+  flex: 1;
+  max-height: 60vh;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+}
+
+.mp-coupon-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mp-coupon-item {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  background-color: #fff;
+  transition: box-shadow 0.2s;
+}
+
+.mp-coupon-item:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mp-coupon-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mp-coupon-main-info {
+  flex: 1;
+}
+
+.mp-coupon-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 0.5rem 0;
+}
+
+.mp-coupon-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mp-coupon-expire,
+.mp-coupon-use-date,
+.mp-coupon-discount {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.mp-coupon-discount {
+  font-weight: 600;
+  color: #007bff;
+}
+
+.mp-coupon-status {
+  display: flex;
+  align-items: center;
+}
+
+.mp-coupon-status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+  min-width: 70px;
+}
+
+.mp-coupon-status-available {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.mp-coupon-status-used {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.mp-coupon-status-expired {
+  background-color: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+
+.mp-coupon-modal-footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.mp-no-coupons {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.mp-no-coupons p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.mp-loading {
+  text-align: center;
+  padding: 2rem;
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+/* 반응형 쿠폰 스타일 */
+@media (max-width: 768px) {
+  .mp-coupon-modal {
+    width: 95vw;
+    max-height: 85vh;
+  }
+
+  .mp-coupon-content {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .mp-coupon-status {
+    align-self: flex-end;
+  }
+
+  .mp-coupon-details {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.victools:jsonschema-module-swagger-2:4.35.0" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.github.victools" artifactId="jsonschema-module-swagger-2" version="4.35.0" baseVersion="4.35.0" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-module-swagger-2/4.35.0/4917637f88dde7d33bd21480a8b15f0c1f0e908a/jsonschema-module-swagger-2-4.35.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.victools/jsonschema-module-swagger-2/4.35.0/17eee20fdeb5c960681db8fa559ff86294945f2c/jsonschema-module-swagger-2-4.35.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

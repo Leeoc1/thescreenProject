@@ -1,0 +1,40 @@
+/* 페이지네이션 스타일 */
+.mp-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 5px;
+}
+
+.mp-page-btn {
+  padding: 8px 12px;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.mp-page-btn:hover {
+  background-color: #f5f5f5;
+}
+
+.mp-page-active {
+  background-color: #ffc107 !important;
+  color: white !important;
+  border-color: #ffc107 !important;
+}
+
+.mp-page-nav:disabled {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.mp-page-nav:disabled:hover {
+  background-color: #f8f9fa;
+}

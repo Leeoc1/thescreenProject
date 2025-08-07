@@ -1,0 +1,50 @@
+/* Tables */
+.usm-table-container {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
+  overflow-y: auto;
+  max-height: 650px;
+  margin-top: 10px;
+}
+
+.usm-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usm-table th {
+  background-color: #f8fafc;
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.875rem;
+}
+
+.usm-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.usm-table tr:hover {
+  background-color: #f8fafc;
+}
+
+/* Search Bar */
+.usm-search-bar {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.usm-search-bar input {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  min-width: 200px;
+}

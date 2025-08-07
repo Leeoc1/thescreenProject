@@ -1,0 +1,35 @@
+.isc-section {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.6) 0%,
+    #000000 10%,
+    #000000 90%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+  min-height: 400px;
+  margin-top: 49px; /* 네비게이션 바와의 간격을 위한 여백 */
+}
+
+.isc-container {
+  max-width: 980px;
+  width: 100%; /* 전체 너비 사용 */
+  height: 100%; /* section의 전체 높이 사용 */
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  padding: 0; /* 바깥 패딩 제거 */
+}
+
+@media (min-width: 768px) {
+  .isc-section {
+    height: 31.25rem;
+  }
+
+  .isc-title {
+    font-size: 3.75rem;
+  }
+
+  .isc-description {
+    font-size: 1.25rem;
+  }
+}

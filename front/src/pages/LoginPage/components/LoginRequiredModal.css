@@ -1,0 +1,166 @@
+/* LoginRequiredModal.css */
+
+/* 모달 배경 */
+.lrm-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: lrm-fadeIn 0.3s ease-out;
+}
+
+/* 모달 컨테이너 */
+.lrm-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 420px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: lrm-slideUp 0.3s ease-out;
+}
+
+/* 헤더 */
+.lrm-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.lrm-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* 콘텐츠 */
+.lrm-content {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.lrm-message {
+  font-size: 16px;
+  color: #555;
+  margin: 0 0 8px 0;
+  line-height: 1.5;
+}
+
+.lrm-submessage {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* 버튼 영역 */
+.lrm-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.lrm-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 100px;
+}
+
+.lrm-btn-cancel {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.lrm-btn-cancel:hover {
+  background-color: #e9e9e9;
+  transform: translateY(-1px);
+}
+
+.lrm-btn-login {
+  background: #4b5563;
+  color: white;
+}
+
+.lrm-btn-login:hover {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* 닫기 버튼 */
+.lrm-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.lrm-close-btn:hover {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+/* 애니메이션 */
+@keyframes lrm-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lrm-slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .lrm-modal {
+    padding: 24px;
+    margin: 20px;
+  }
+  
+  .lrm-title {
+    font-size: 20px;
+  }
+  
+  .lrm-buttons {
+    flex-direction: column;
+  }
+  
+  .lrm-btn {
+    width: 100%;
+  }
+}
