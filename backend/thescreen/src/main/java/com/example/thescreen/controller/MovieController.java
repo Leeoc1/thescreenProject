@@ -36,13 +36,11 @@ public class MovieController {
     }
 
     /**
-     * ✅ 2) 현재 상영작 조회 (개봉일 기준) - 뷰 사용
+     * ✅ 2) 현재 상영작 조회 (상영중 상태 기준) - 뷰 사용
      */
     @GetMapping("/current")
     public List<MovieView> getCurrentMovies() {
-        LocalDate today = LocalDate.now();
-        LocalDate fiftyDaysAgo = today.minusDays(50);
-        return movieViewRepository.findByReleasedateBetween(fiftyDaysAgo, today);
+        return movieViewRepository.findByMovieinfo("Y");
     }
 
     /**
@@ -120,7 +118,7 @@ public class MovieController {
     }
 
     /**
-     * ✅ 7) 박스오피스 데이터 수동 업데이트 (관리자용) - 실제 테이블 업데이트
+     * ✅ 7) 현재 상영작 데이터 가져오기 (박스오피스 11~20위, 상영준비중 상태로 저장)
      */
     @PostMapping("/fetch-movies")
     public Map<String, Object> fetchMoviesFromKobis() {
@@ -128,7 +126,7 @@ public class MovieController {
             // 저장 전 영화 개수
             long beforeCount = movieRepository.count();
 
-            movieService.saveDailyBoxOffice();
+            List<Movie> readyMovies = movieService.saveBoxOfficeReadyMovies();
 
             // 저장 후 영화 개수
             long afterCount = movieRepository.count();
@@ -137,9 +135,11 @@ public class MovieController {
             // 저장 후 업데이트된 영화 목록을 뷰에서 반환
             List<MovieView> allMovies = movieViewRepository.findAll();
 
-            // 현재 상영작: movieinfo가 'Y' 또는 'N'인 영화들
+            // 현재 상영작: movieinfo가 'Y', 'N', 'E'인 영화들
             List<MovieView> currentMovies = allMovies.stream()
-                    .filter(movie -> "Y".equals(movie.getMovieinfo()) || "N".equals(movie.getMovieinfo()))
+                    .filter(movie -> "Y".equals(movie.getMovieinfo()) || 
+                                   "N".equals(movie.getMovieinfo()) || 
+                                   "E".equals(movie.getMovieinfo()))
                     .collect(Collectors.toList());
             // 상영 종료작: movieinfo가 'D'인 영화들
             List<MovieView> archivedMovies = allMovies.stream()
@@ -148,8 +148,8 @@ public class MovieController {
 
             Map<String, Object> result = new HashMap<>();
             result.put("success", true);
-            result.put("message", String.format("박스오피스 데이터 처리 완료! 새로 추가된 영화: %d개 (전체: %d개)",
-                    addedCount, afterCount));
+            result.put("message", String.format("영화 %d개가 상영 준비중으로 저장되었습니다. 상영시작 버튼을 누르면 상영이 시작됩니다.",
+                    readyMovies.size()));
             result.put("addedCount", addedCount);
             result.put("totalCount", afterCount);
             result.put("currentMovies", currentMovies);
@@ -240,56 +240,5 @@ public class MovieController {
         movie.setMovieinfo("D");
 
         return movieRepository.save(movie);
-    }
-
-    /**
-     * ✅ 12) 상영예정작 데이터 수동 업데이트 (관리자용, 실제 테이블 업데이트)
-     */
-    @PostMapping("/fetch-upcoming")
-    public Map<String, Object> fetchUpcomingMoviesFromKobis() {
-        try {
-            // 저장 전 상영예정작 개수
-            long beforeCount = movieRepository.countByMovieinfo("E");
-
-            List<Movie> upcomingMovies = movieService.saveUpcomingMovies();
-
-            // 저장 후 상영예정작 개수
-            long afterCount = movieRepository.countByMovieinfo("E");
-            long addedCount = afterCount - beforeCount;
-
-            Map<String, Object> result = new HashMap<>();
-            result.put("success", true);
-            result.put("message", String.format("상영예정작 데이터 처리 완료! 새로 추가된 영화: %d개 (전체: %d개)",
-                    addedCount, afterCount));
-            result.put("addedCount", addedCount);
-            result.put("totalCount", afterCount);
-            result.put("upcomingMovies", upcomingMovies);
-            return result;
-        } catch (Exception e) {
-            Map<String, Object> result = new HashMap<>();
-            result.put("success", false);
-            result.put("message", "상영예정작 데이터 가져오기 실패: " + e.getMessage());
-            return result;
-        }
-    }
-
-    /**
-     * ✅ 13) 상영예정작 lastUpdated 강제 업데이트 (관리자용, 실제 테이블 업데이트)
-     */
-    @PostMapping("/force-update-upcoming-last-updated")
-    public Map<String, Object> forceUpdateUpcomingMoviesLastUpdated() {
-        try {
-            movieService.forceUpdateUpcomingMoviesLastUpdated();
-            
-            Map<String, Object> result = new HashMap<>();
-            result.put("success", true);
-            result.put("message", "상영예정작 lastUpdated 업데이트 완료!");
-            return result;
-        } catch (Exception e) {
-            Map<String, Object> result = new HashMap<>();
-            result.put("success", false);
-            result.put("message", "상영예정작 lastUpdated 업데이트 실패: " + e.getMessage());
-            return result;
-        }
     }
 }

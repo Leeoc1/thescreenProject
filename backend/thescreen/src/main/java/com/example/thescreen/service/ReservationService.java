@@ -19,21 +19,12 @@ public class ReservationService {
     private ReservationViewRepository reservationViewRepository;
 
     public List<Map<String, Object>> getLast7DaysSales() {
-        // 오늘 2025-07-08 05:28 PM KST 기준, 날짜 범위 설정
+        // 한국 시간 기준, 날짜 범위 설정
         LocalDateTime endDate = LocalDate.now(ZoneId.of("Asia/Seoul")).atTime(23, 59, 59);
         LocalDateTime startDate = endDate.minusDays(7);
 
-        System.out.println("=== getLast7DaysSales 디버깅 ===");
-        System.out.println("시작 날짜: " + startDate);
-        System.out.println("종료 날짜: " + endDate);
-
         // 리포지토리 호출
         List<Object[]> rawResults = reservationViewRepository.findDailySalesBetween(startDate, endDate);
-
-        System.out.println("원본 쿼리 결과:");
-        for (Object[] row : rawResults) {
-            System.out.println("날짜: " + row[0] + ", 매출: " + row[1]);
-        }
 
         // Object[]를 Map으로 변환
         List<Map<String, Object>> results = new ArrayList<>();
@@ -44,20 +35,9 @@ public class ReservationService {
             results.add(result);
         }
 
-        System.out.println("변환된 결과:");
-        for (Map<String, Object> result : results) {
-            System.out.println("날짜: " + result.get("reservationDate") + ", 매출: " + result.get("totalAmount"));
-        }
-
         // 누락된 날짜를 0으로 채우기
         List<Map<String, Object>> finalResults = fillMissingDates(results, startDate.toLocalDate(),
                 endDate.toLocalDate());
-
-        System.out.println("최종 결과 (누락된 날짜 0으로 채움):");
-        for (Map<String, Object> result : finalResults) {
-            System.out.println("날짜: " + result.get("reservationDate") + ", 매출: " + result.get("totalAmount"));
-        }
-        System.out.println("=== 디버깅 끝 ===");
 
         return finalResults;
     }

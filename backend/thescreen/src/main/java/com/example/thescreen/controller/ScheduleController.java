@@ -114,27 +114,4 @@ public class ScheduleController {
             return ResponseEntity.status(500).body(result);
         }
     }
-
-    @PostMapping("/generate-dummy")
-    public ResponseEntity<Map<String, Object>> generateDummySchedules() {
-        try {
-            System.out.println("=== 스케줄 자동 생성 시작 ===");
-            String result = scheduleService.generateDummySchedules();
-            System.out.println("스케줄 생성 결과: " + result);
-            
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("message", result);
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            System.err.println("스케줄 생성 중 오류 발생: " + e.getMessage());
-            e.printStackTrace();
-            
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("message", "가데이터 생성 실패: " + e.getMessage());
-            response.put("error", e.getClass().getSimpleName());
-            return ResponseEntity.status(500).body(response);
-        }
-    }
 }

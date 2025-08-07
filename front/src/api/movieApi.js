@@ -44,17 +44,6 @@ export const fetchMoviesFromKobis = () =>
     null
   );
 
-// 관리자용 KOBIS 상영예정작 데이터 가져오기 (movie 테이블에 저장)
-export const fetchUpcomingMoviesFromKobis = () =>
-  apiRequestWithErrorHandling(
-    "post",
-    "/movies/fetch-upcoming",
-    null,
-    {},
-    "Error fetching upcoming movies from KOBIS:",
-    null
-  );
-
 // 현재상영작과 상영예정작 목록 조회 (movie 테이블)
 export const getMoviesForAdmin = () =>
   apiRequestWithErrorHandling(

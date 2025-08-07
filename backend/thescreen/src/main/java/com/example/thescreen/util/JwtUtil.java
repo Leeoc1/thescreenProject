@@ -83,7 +83,7 @@ public class JwtUtil {
                 .signWith(SECRET_KEY)
                 .compact();
                 
-        System.out.println("[관리자 JWT 토큰 발급] " + token);
+        System.out.println("[JWT 토큰 생성] 만료시간: " + expiryDate + " | 토큰 길이: " + token.length());
         return token;
     }
 }

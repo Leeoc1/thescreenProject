@@ -92,29 +92,20 @@ public class MovieRankService {
                     }
                 }
 
-                // Movie 테이블에 박스오피스 정보 업데이트 (JPA 방식)
-                Movie existingMovie = movieRepository.findById(code).orElse(null);
-                if (existingMovie != null) {
-                    // 기존 영화 업데이트
-                    existingMovie.setMovierank(rank);
-                    existingMovie.setAudiacc(audiAcc);
-                    movieRepository.save(existingMovie); // @PreUpdate에서 lastUpdated 자동 설정
-                } else {
-                    // 새로운 영화 생성
-                    Movie newMovie = new Movie();
-                    newMovie.setMoviecd(code);
-                    newMovie.setMovienm(name);
-                    newMovie.setMovierank(rank);
-                    newMovie.setAudiacc(audiAcc);
-                    newMovie.setDescription("줄거리 정보를 준비중입니다.");
-                    newMovie.setGenre("장르 정보 없음");
-                    newMovie.setDirector("감독 정보 없음");
-                    newMovie.setActors("출연진 정보 없음");
-                    newMovie.setPosterurl("/images/logo_1.png");
-                    newMovie.setMovieinfo("N");
-                    newMovie.setIsadult(Movie.IsAdult.N);
-                    movieRepository.save(newMovie); // @PrePersist에서 lastUpdated 자동 설정
-                }
+                // Movie 테이블에 박스오피스 정보 저장 (DB가 매번 초기화되므로 새로운 영화만 생성)
+                Movie newMovie = new Movie();
+                newMovie.setMoviecd(code);
+                newMovie.setMovienm(name);
+                newMovie.setMovierank(rank);
+                newMovie.setAudiacc(audiAcc);
+                newMovie.setDescription("줄거리 정보를 준비중입니다.");
+                newMovie.setGenre("장르 정보 없음");
+                newMovie.setDirector("감독 정보 없음");
+                newMovie.setActors("출연진 정보 없음");
+                newMovie.setPosterurl("/images/logo_1.png");
+                newMovie.setMovieinfo("Y");
+                newMovie.setIsadult(Movie.IsAdult.N);
+                movieRepository.save(newMovie); // @PrePersist에서 lastUpdated 자동 설정
             }
 
             System.out.println(">>> 박스오피스 랭킹 DB 저장 완료");

@@ -4,7 +4,6 @@ import {
   archiveMovie,
   updateScreeningStatus,
   fetchMoviesFromKobis,
-  fetchUpcomingMoviesFromKobis,
 } from "../../../api/movieApi";
 import "../styles/MovieManagement.css";
 import "../styles/AdminPage.css";
@@ -17,7 +16,6 @@ const MovieManagement = () => {
   const [upcomingMovies, setUpcomingMovies] = useState([]);
   const [activeTab, setActiveTab] = useState("ready");
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpcomingLoading, setIsUpcomingLoading] = useState(false);
   const { refreshNotifications } = useNotification();
 
   useEffect(() => {
@@ -41,8 +39,7 @@ const MovieManagement = () => {
   };
 
   const fetchMoviesFromKobisApi = async () => {
-    if (!window.confirm("KOBIS API에서 최신 영화 데이터를 가져오시겠습니까?"))
-      return;
+    if (!window.confirm("현재 상영작 데이터 10개를 불러옵니다.")) return;
     setIsLoading(true);
     try {
       const result = await fetchMoviesFromKobis();
@@ -65,31 +62,6 @@ const MovieManagement = () => {
       alert("영화 데이터 가져오기에 실패했습니다.");
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const fetchUpcomingMoviesFromKobisApi = async () => {
-    if (
-      !window.confirm(
-        "KOBIS API에서 최신 상영예정작 데이터를 가져오시겠습니까?"
-      )
-    )
-      return;
-    setIsUpcomingLoading(true);
-    try {
-      const result = await fetchUpcomingMoviesFromKobis();
-      if (result.success) {
-        await loadMovies(); // 전체 영화 목록 새로고침
-        // 알림 새로고침
-        refreshNotifications();
-        alert(result.message);
-      } else {
-        alert(result.message);
-      }
-    } catch (error) {
-      alert("상영예정작 데이터 가져오기에 실패했습니다.");
-    } finally {
-      setIsUpcomingLoading(false);
     }
   };
 
@@ -153,16 +125,6 @@ const MovieManagement = () => {
             disabled={isLoading}
           >
             {isLoading ? "데이터 가져오는 중..." : "현재상영작 데이터 가져오기"}
-          </button>
-          <button
-            className="fetch-movies-btn"
-            onClick={fetchUpcomingMoviesFromKobisApi}
-            disabled={isUpcomingLoading}
-            style={{ marginLeft: "10px" }}
-          >
-            {isUpcomingLoading
-              ? "데이터 가져오는 중..."
-              : "상영예정작 데이터 가져오기"}
           </button>
         </div>
       </div>
@@ -281,14 +243,6 @@ const MovieManagement = () => {
                         >
                           상영 시작
                         </button>
-                        <button
-                          className="mvm-archive-btn"
-                          onClick={() =>
-                            archiveMovieItem(movie.moviecd, movie.movienm)
-                          }
-                        >
-                          삭제
-                        </button>
                       </>
                     )}
                     {activeTab === "screening" && (
@@ -296,21 +250,10 @@ const MovieManagement = () => {
                         <button
                           className="mvm-screening-btn stop"
                           onClick={() =>
-                            toggleScreeningStatus(
-                              movie.moviecd,
-                              movie.movieinfo
-                            )
-                          }
-                        >
-                          상영 종료
-                        </button>
-                        <button
-                          className="mvm-archive-btn"
-                          onClick={() =>
                             archiveMovieItem(movie.moviecd, movie.movienm)
                           }
                         >
-                          삭제
+                          상영 종료
                         </button>
                       </>
                     )}

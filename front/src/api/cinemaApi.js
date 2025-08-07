@@ -86,25 +86,6 @@ export const registerMovie = async (moviecd, screencds) => {
   return data;
 };
 
-export const scheduleData = async () => {
-  try {
-    console.log("API 호출 시작: /api/schedules/generate-dummy");
-    const result = await apiRequestWithErrorHandling(
-      "post",
-      "/api/schedules/generate-dummy",
-      null,
-      {},
-      "Error generating dummy schedule:",
-      []
-    );
-    console.log("API 호출 성공:", result);
-    return result;
-  } catch (error) {
-    console.error("scheduleData API 호출 실패:", error);
-    throw error;
-  }
-};
-
 export const getmycinema = async (userid) => {
   return await apiRequestWithErrorHandling(
     "get",

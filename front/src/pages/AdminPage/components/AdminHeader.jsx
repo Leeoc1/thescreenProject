@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { getUserInfo } from "../../../api/userApi";
+import { getAdminToken, decodeUserid } from "../../../api/adminApi";
 import bellIcon from "../../../images/bell.png";
 import "../styles/AdminHeader.css";
 import "../styles/AdminPage.css";
@@ -16,10 +17,29 @@ const AdminHeader = () => {
   const [timeLeft, setTimeLeft] = useState(30 * 60); // 30분 = 1800초
   const [showExtensionModal, setShowExtensionModal] = useState(false);
 
+  // 토큰 기반으로 실제 남은 시간 계산
+  useEffect(() => {
+    const calculateRemainingTime = () => {
+      const tokenTimestamp = localStorage.getItem("adminTokenTimestamp");
+      if (tokenTimestamp) {
+        const now = new Date().getTime();
+        const tokenTime = parseInt(tokenTimestamp);
+        const elapsed = now - tokenTime;
+        const remaining = Math.max(0, 1800000 - elapsed); // 30분 - 경과시간
+        return Math.floor(remaining / 1000); // 초 단위로 반환
+      }
+      return 30 * 60; // 기본 30분
+    };
+
+    // 초기 시간 설정
+    setTimeLeft(calculateRemainingTime());
+  }, []);
+
   // 토큰 삭제 및 로그아웃 함수
   const clearAdminSession = (reason = "Manual logout") => {
-    // 관리자 토큰 제거
+    // 관리자 토큰 및 타임스탬프 제거
     localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminTokenTimestamp");
     // 기본 로그인 정보 제거
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userid");
@@ -31,32 +51,93 @@ const AdminHeader = () => {
     navigate("/");
   };
 
-  // 30분 타이머 업데이트
+  // 30분 타이머 업데이트 (실제 토큰 시간과 동기화)
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          // 타이머가 끝나면 자동 로그아웃
+      // 실제 토큰 만료시간 기준으로 계산
+      const tokenTimestamp = localStorage.getItem("adminTokenTimestamp");
+      if (tokenTimestamp) {
+        const now = new Date().getTime();
+        const tokenTime = parseInt(tokenTimestamp);
+        const elapsed = now - tokenTime;
+        const remaining = Math.max(0, 1800000 - elapsed); // 30분 - 경과시간
+        const remainingSeconds = Math.floor(remaining / 1000);
+
+        setTimeLeft(remainingSeconds);
+
+        if (remainingSeconds <= 0) {
+          // 실제 토큰이 만료되면 자동 로그아웃
           clearAdminSession("세션 타임아웃 (30분 경과)");
-          return 0;
+          return;
         }
 
         // 5분 남았을 때 연장 팝업 표시 (한 번만)
-        if (prev === 300 && !showExtensionModal) {
+        if (
+          remainingSeconds <= 300 &&
+          remainingSeconds > 295 &&
+          !showExtensionModal
+        ) {
           setShowExtensionModal(true);
         }
+      } else {
+        // 토큰 타임스탬프가 없으면 기존 방식 사용
+        setTimeLeft((prev) => {
+          if (prev <= 1) {
+            clearAdminSession("세션 타임아웃 (30분 경과)");
+            return 0;
+          }
 
-        return prev - 1;
-      });
+          if (prev === 300 && !showExtensionModal) {
+            setShowExtensionModal(true);
+          }
+
+          return prev - 1;
+        });
+      }
     }, 1000);
 
     return () => clearInterval(timer);
   }, [navigate, showExtensionModal]);
 
-  // 세션 연장 함수
-  const extendSession = () => {
-    setTimeLeft(30 * 60); // 30분으로 리셋
-    setShowExtensionModal(false);
+  // 세션 연장 함수 (새 토큰 발급)
+  const extendSession = async () => {
+    try {
+      // localStorage에서 userid와 관리자 로그인 여부 확인
+      const storedUserid = localStorage.getItem("userid");
+      const isAdminLogin = localStorage.getItem("isAdminLogin") === "true";
+
+      if (!storedUserid) {
+        alert("로그인 정보가 없습니다.");
+        clearAdminSession("로그인 정보 없음");
+        return;
+      }
+
+      let realUserid;
+
+      if (isAdminLogin) {
+        // 관리자 로그인인 경우 - 평문 userid 사용
+        realUserid = storedUserid;
+      } else {
+        // 일반 사용자 로그인인 경우 - 암호화된 userid 디코딩
+        realUserid = await decodeUserid(storedUserid);
+      }
+
+      console.log("토큰 연장 중...");
+      // 새로운 관리자 토큰 발급
+      const newToken = await getAdminToken(realUserid);
+      localStorage.setItem("adminToken", newToken);
+      localStorage.setItem(
+        "adminTokenTimestamp",
+        new Date().getTime().toString()
+      );
+
+      // 타이머 리셋
+      setTimeLeft(30 * 60); // 30분으로 리셋
+      setShowExtensionModal(false);
+    } catch (error) {
+      alert(`토큰 연장 실패: ${error.message}`);
+      clearAdminSession("토큰 연장 실패");
+    }
   };
 
   // 연장 거부 시 즉시 로그아웃
@@ -90,6 +171,7 @@ const AdminHeader = () => {
   useEffect(() => {
     const handleBeforeUnload = (event) => {
       localStorage.removeItem("adminToken");
+      localStorage.removeItem("adminTokenTimestamp");
       sessionStorage.clear();
     };
 
@@ -275,4 +357,3 @@ const AdminHeader = () => {
 };
 
 export default AdminHeader;
-

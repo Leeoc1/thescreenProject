@@ -26,6 +26,9 @@ public class MovieService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final MovieRepository movieRepository;
+    
+    // 년도 카운터 (20250101에서 시작해서 버튼 누를 때마다 년도 끝자리 -1)
+    private int yearCounter = 0;
 
     @Value("${kobis.api.key}")
     private String kobisApiKey;
@@ -119,20 +122,7 @@ public class MovieService {
                 String movieNm = boxOfficeItem.path("movieNm").asText();
                 int rank = boxOfficeItem.path("rank").asInt();
 
-                // 이미 존재하는 영화는 랭킹만 업데이트
-                if (movieRepository.existsById(movieCd)) {
-                    Movie existingMovie = movieRepository.findById(movieCd).orElse(null);
-                    if (existingMovie != null) {
-                        existingMovie.setMovierank(rank);
-                        existingMovie.setMovieinfo("Y");
-                        // lastUpdated는 @PreUpdate에서 자동 설정됨
-                        movieRepository.save(existingMovie);
-                        savedMovies.add(existingMovie);
-                    }
-                    continue;
-                }
-
-                // 새로운 영화는 상세 정보와 함께 저장
+                // 새로운 영화 저장 (DB가 매번 초기화되므로 기존 데이터 체크 불필요)
                 Movie movie = fetchMovieDetails(movieCd, movieNm, "Y");
                 if (movie != null) {
                     movie.setMovierank(rank);
@@ -143,6 +133,106 @@ public class MovieService {
             }
         } catch (Exception e) {
             System.err.println("박스오피스 데이터 처리 중 오류: " + e.getMessage());
+        }
+        
+        return savedMovies;
+    }
+
+    /**
+     * KOBIS 박스오피스 11위~20위 영화를 가져와 상영 준비중(N) 상태로 DB 저장
+     */
+    @Transactional
+    public List<Movie> saveBoxOfficeReadyMovies() {
+        // 년도를 동적으로 계산 (2025 -> 2024 -> 2023 ...)
+        int currentYear = 2025 - yearCounter;
+        String targetDt = String.format("%d0101", currentYear);
+        yearCounter++; // 다음 호출을 위해 카운터 증가
+        
+        System.out.println("=== 현재상영작 가져오기 버튼 실행 (날짜: " + targetDt + ") ===");
+        
+        String kobisUrl = String.format(
+                "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json?key=%s&targetDt=%s",
+                kobisApiKey, targetDt);
+        
+        List<Movie> savedMovies = new ArrayList<>();
+        
+        try {
+            String response = restTemplate.getForObject(kobisUrl, String.class);
+            JsonNode root = objectMapper.readTree(response);
+            JsonNode dailyBoxOfficeList = root.path("boxOfficeResult").path("dailyBoxOfficeList");
+
+            System.out.println("=== 현재상영작 가져오기 버튼 실행 ===");
+            System.out.println("전체 박스오피스 항목 수: " + dailyBoxOfficeList.size());
+            
+            // 모든 순위 출력
+            for (JsonNode item : dailyBoxOfficeList) {
+                int rank = item.path("rank").asInt();
+                String movieNm = item.path("movieNm").asText();
+                System.out.println(rank + "위: " + movieNm);
+            }
+
+            for (JsonNode boxOfficeItem : dailyBoxOfficeList) {
+                String movieCd = boxOfficeItem.path("movieCd").asText();
+                String movieNm = boxOfficeItem.path("movieNm").asText();
+                int rank = boxOfficeItem.path("rank").asInt();
+
+                System.out.println("처리 중인 영화: " + rank + "위 " + movieNm);
+
+                // 1위~10위 전체 저장 (상영 준비중으로)
+                if (rank >= 1 && rank <= 10) {
+                    System.out.println("조건 만족 - 저장 진행: " + rank + "위 " + movieNm);
+                    
+                    // 누적관객수 추가 (audiAcc 필드)
+                    long audiAcc = 0;
+                    if (boxOfficeItem.has("audiAcc") && !boxOfficeItem.get("audiAcc").isNull()) {
+                        try {
+                            audiAcc = Long.parseLong(boxOfficeItem.get("audiAcc").asText().replace(",", ""));
+                        } catch (NumberFormatException e) {
+                            System.out.println("누적관객수 파싱 오류: " + boxOfficeItem.get("audiAcc").asText());
+                            audiAcc = 0;
+                        }
+                    }
+
+                    // KMDB에서 상세 정보 가져오기
+                    Movie detailedMovie = fetchMovieDetails(movieCd, movieNm, "N");
+                    if (detailedMovie != null) {
+                        // 박스오피스 정보 추가
+                        detailedMovie.setMovierank(null); // 무비랭크는 null로 설정
+                        detailedMovie.setAudiacc(audiAcc);
+                        
+                        Movie savedMovie = movieRepository.save(detailedMovie);
+                        savedMovies.add(savedMovie);
+                        
+                        System.out.println("저장 완료 (KMDB 정보 포함): " + rank + "위 " + movieNm + " (moviecd: " + movieCd + ")");
+                    } else {
+                        // KMDB 정보를 가져올 수 없는 경우 기본 정보로 저장
+                        Movie newMovie = new Movie();
+                        newMovie.setMoviecd(movieCd);
+                        newMovie.setMovienm(movieNm);
+                        newMovie.setMovierank(null); // 무비랭크는 null로 설정
+                        newMovie.setAudiacc(audiAcc);
+                        newMovie.setDescription("줄거리 정보를 준비중입니다.");
+                        newMovie.setGenre("장르 정보 없음");
+                        newMovie.setDirector("감독 정보 없음");
+                        newMovie.setActors("출연진 정보 없음");
+                        newMovie.setPosterurl("/images/logo_1.png");
+                        newMovie.setMovieinfo("N"); // 상영 준비중으로 설정
+                        newMovie.setIsadult(Movie.IsAdult.N);
+                        
+                        Movie savedMovie = movieRepository.save(newMovie);
+                        savedMovies.add(savedMovie);
+                        
+                        System.out.println("저장 완료 (기본 정보): " + rank + "위 " + movieNm + " (moviecd: " + movieCd + ")");
+                    }
+                } else {
+                    System.out.println("조건 불만족 - 건너뛰기: " + rank + "위 " + movieNm);
+                }
+            }
+            
+            System.out.println("현재상영작 가져오기 완료 (" + targetDt + "): 박스오피스 1~10위 영화 " + savedMovies.size() + "개 저장 (상영준비중)");
+        } catch (Exception e) {
+            System.err.println("현재상영작 가져오기 처리 중 오류 (" + targetDt + "): " + e.getMessage());
+            e.printStackTrace();
         }
         
         return savedMovies;
@@ -190,20 +280,7 @@ public class MovieService {
                         continue;
                     }
 
-                    // 이미 존재하는 영화는 패스
-                    if (movieRepository.existsById(movieCd)) {
-                        Movie existingMovie = movieRepository.findById(movieCd).orElse(null);
-                        if (existingMovie != null) {
-                            existingMovie.setMovieinfo("E");
-                            // lastUpdated는 @PreUpdate에서 자동 설정됨
-                            Movie updatedMovie = movieRepository.save(existingMovie);
-                            savedMovies.add(updatedMovie);
-                            totalFetched++;
-                        }
-                        continue;
-                    }
-
-                    // 새로운 상영예정작 저장
+                    // 새로운 상영예정작 저장 (DB가 매번 초기화되므로 기존 데이터 체크 불필요)
                     Movie movie = fetchMovieDetails(movieCd, movieNm, "E");
                     if (movie != null) {
                         movie.setReleasedate(releaseDate);
