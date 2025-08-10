@@ -52,8 +52,6 @@ dependencies {
 	// 보안
 	// 스프링 시큐리티
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	// env 파일 읽기
-	implementation 'me.paulschwarz:spring-dotenv:4.0.0'
 	//스프링 ai
 	implementation 'org.springframework.ai:spring-ai-openai-spring-boot-starter'
 	
