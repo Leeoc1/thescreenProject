@@ -42,16 +42,14 @@ public class FetchMovieService {
      */
     public void fetchMovieDetailsForBoxOffice() {
         try {
-            // 환경변수에서 API 키 가져오기
-            if (kobisApiKey == null || kobisApiKey.isEmpty()) {
-                kobisApiKey = System.getenv("KOBIS_API_KEY");
-            }
-            if (kmdbApiKey == null || kmdbApiKey.isEmpty()) {
-                kmdbApiKey = System.getenv("KMDB_API_KEY");
+            // API 키 확인
+            if (kobisApiKey == null || kobisApiKey.trim().isEmpty()) {
+                System.out.println("KOBIS API 키가 설정되어 있지 않습니다.");
+                return;
             }
             
-            if (kobisApiKey == null) {
-                System.out.println("KOBIS API 키가 설정되어 있지 않습니다.");
+            if (kmdbApiKey == null || kmdbApiKey.trim().isEmpty()) {
+                System.out.println("KMDB API 키가 설정되어 있지 않습니다.");
                 return;
             }
 

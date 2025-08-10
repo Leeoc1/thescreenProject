@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class MovieRankService {
     
     @Autowired
     private MovieRepository movieRepository;
+
+    @Value("${kobis.api.key}")
+    private String kobisApiKey;
 
     @PostConstruct
     public void init() {
@@ -46,12 +50,8 @@ public class MovieRankService {
 
     public void saveMovieRanksFromApi() {
         try {
-            String kobisApiKey = System.getenv("KOBIS_API_KEY");
-            if (kobisApiKey == null) {
-                kobisApiKey = System.getProperty("KOBIS_API_KEY");
-            }
-            if (kobisApiKey == null) {
-                throw new RuntimeException("KOBIS_API_KEY 환경변수가 설정되어 있지 않습니다.");
+            if (kobisApiKey == null || kobisApiKey.trim().isEmpty()) {
+                throw new RuntimeException("KOBIS API 키가 설정되어 있지 않습니다.");
             }
             String targetDate = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             String apiUrl = "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"
