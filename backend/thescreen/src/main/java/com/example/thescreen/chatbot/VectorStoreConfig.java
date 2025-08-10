@@ -5,6 +5,7 @@ import com.example.thescreen.repository.FaqRepository;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
 import org.springframework.ai.vectorstore.VectorStore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,6 +21,7 @@ public class VectorStoreConfig {
     }
 
     @Bean
+    @ConditionalOnProperty(name = "spring.ai.openai.api-key")
     public VectorStore vectorStore(EmbeddingModel embeddingModel) {
         CachedVectorStore cachedVectorStore = new CachedVectorStore(embeddingModel);
 

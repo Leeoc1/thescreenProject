@@ -5,7 +5,7 @@ import { api } from "./apiUtils";
 // 암호화된 userid 디코딩
 export const decodeUserid = async (tokenizedUserid) => {
   try {
-    const response = await api.post("/api/auth/decode-userid", {
+    const response = await api.post("/auth/decode-userid", {
       tokenizedUserid: tokenizedUserid,
     });
 

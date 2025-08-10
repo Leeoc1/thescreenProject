@@ -13,7 +13,7 @@ export const getMovieDetail = async (moviecd) => {
 // 찜 상태 및 카운트 조회
 export const getWishlistStatus = async (userid, moviecd) => {
   return await apiRequest(
-    `/api/wishlist/status?userid=${userid}&moviecd=${moviecd}`,
+    `/wishlist/status?userid=${userid}&moviecd=${moviecd}`,
     { method: "GET" }
   );
 };
@@ -21,14 +21,14 @@ export const getWishlistStatus = async (userid, moviecd) => {
 // 찜 추가/해제 토글
 export const toggleWishlist = async (userid, moviecd) => {
   return await apiRequest(
-    `/api/wishlist/toggle?userid=${userid}&moviecd=${moviecd}`,
+    `/wishlist/toggle?userid=${userid}&moviecd=${moviecd}`,
     { method: "POST" }
   );
 };
 
 // 내가 찜한 영화 목록 조회
 export const getUserWishlist = async (userid) => {
-  return await apiRequest(`/api/wishlist/list?userid=${userid}`, {
+  return await apiRequest(`/wishlist/list?userid=${userid}`, {
     method: "GET",
   });
 };
@@ -123,7 +123,7 @@ export const getUpcomingMovies = () =>
 
 // 박스오피스 TOP 10 영화 조회
 export const getTopTenMovies = async () => {
-  const res = await fetch("/movies/top/ten");
-  if (!res.ok) throw new Error("TOP 10 영화 데이터를 불러오지 못했습니다.");
-  return await res.json();
+  return await apiRequest("/movies/top/ten", {
+    method: "GET",
+  });
 };

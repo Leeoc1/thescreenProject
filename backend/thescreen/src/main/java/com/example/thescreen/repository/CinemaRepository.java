@@ -16,4 +16,6 @@ public interface CinemaRepository extends JpaRepository<Cinema, String> {
     List<Cinema> findByCinemanmContainingIgnoreCase(String cinemanm);
 
     List<Cinema> findByAddressContainingIgnoreCase(String address);
+    
+    List<Cinema> findByRegioncd(String regioncd);
 }

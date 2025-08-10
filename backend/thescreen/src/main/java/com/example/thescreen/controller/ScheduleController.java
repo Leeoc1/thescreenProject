@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/schedules")
+@RequestMapping("/schedules")
 public class ScheduleController {
 
     @Autowired
@@ -113,5 +113,16 @@ public class ScheduleController {
             result.put("message", "스케줄 생성/업데이트 실패: " + e.getMessage());
             return ResponseEntity.status(500).body(result);
         }
+    }
+    
+    // 스케줄 조회 API
+    @GetMapping
+    public List<Schedule> getSchedules(
+            @RequestParam String startdate,
+            @RequestParam String moviecd,
+            @RequestParam String regioncd,
+            @RequestParam String cinemaid) {
+        // TODO: 실제 필터링 로직 구현 필요
+        return scheduleRepository.findAll();
     }
 }

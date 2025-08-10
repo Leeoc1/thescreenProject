@@ -11,7 +11,11 @@ const NoticeContents = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/notice/${noticenum}`)
+    fetch(
+      `${
+        process.env.REACT_APP_API_URL || "http://localhost:8080"
+      }/notice/${noticenum}`
+    )
       .then((res) => {
         if (!res.ok) throw new Error("공지사항을 찾을 수 없습니다");
         return res.json();

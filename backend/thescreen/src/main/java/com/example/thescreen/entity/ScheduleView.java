@@ -51,6 +51,8 @@ public class ScheduleView {
 
     private String regionnm;
 
+    private String regioncd;
+
     @Column(length = 50, columnDefinition = "VARCHAR(50) DEFAULT 'N'")
     private String movieinfo = "N";
 

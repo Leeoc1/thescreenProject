@@ -20,7 +20,6 @@
     <orderEntry type="library" name="Gradle: io.jsonwebtoken:jjwt-jackson:0.11.5" level="project" />
     <orderEntry type="library" name="Gradle: io.jsonwebtoken:jjwt-api:0.11.5" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-security:3.5.3" level="project" />
-    <orderEntry type="library" name="Gradle: me.paulschwarz:spring-dotenv:4.0.0" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.ai:spring-ai-openai-spring-boot-starter:1.0.0-M2" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-test:3.5.3" level="project" />
     <orderEntry type="library" name="Gradle: org.springframework.boot:spring-boot-starter-json:3.5.3" level="project" />
@@ -158,7 +157,6 @@
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.squareup.okhttp3:okhttp:4.10.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.25" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: commons-codec:commons-codec:1.18.0" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Gradle: io.github.cdimascio:dotenv-java:3.0.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: com.github.waffle:waffle-jna:3.3.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.junit.platform:junit-platform-launcher:1.12.2" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Gradle: org.glassfish.jaxb:jaxb-runtime:4.0.5" level="project" />

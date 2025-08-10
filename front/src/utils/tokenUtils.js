@@ -19,7 +19,9 @@ export const decodeUserid = async (tokenizedUserid) => {
       return tokenizedUserid;
     }
     const response = await fetch(
-      "http://localhost:8080/api/auth/decode-token",
+      `${
+        process.env.REACT_APP_API_URL || "http://localhost:8080"
+      }/auth/decode-token`,
       {
         method: "POST",
         headers: {

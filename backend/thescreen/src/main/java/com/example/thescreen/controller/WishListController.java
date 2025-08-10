@@ -12,7 +12,7 @@ import java.util.List;
 import com.example.thescreen.service.WishListService;
 
 @RestController
-@RequestMapping("/api/wishlist")
+@RequestMapping("/wishlist")
 public class WishListController {
 
     @Autowired

@@ -13,11 +13,14 @@ async function confirmTossPayment(searchParams) {
     paymentKey: searchParams.get("paymentKey"),
   };
 
-  const response = await fetch("/confirm", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(requestData),
-  });
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL || "http://localhost:8080"}/confirm`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(requestData),
+    }
+  );
 
   const json = await response.json();
   if (!response.ok) {
@@ -34,14 +37,14 @@ async function processPaymentSave(paymentData) {
     method: paymentData.method || paymentData.easyPay?.provider || "기타",
     amount: paymentData.totalAmount || paymentData.balanceAmount || 0,
   };
-  
+
   const result = await savePayment(paymentInfo);
-  
+
   if (result?.success) {
     sessionStorage.setItem("paymentcd", result.paymentcd);
     return result.paymentcd;
   }
-  
+
   throw new Error("결제 정보 저장에 실패했습니다.");
 }
 
@@ -50,7 +53,7 @@ async function processReservationSave() {
   const reservationInfo = JSON.parse(
     sessionStorage.getItem("finalReservationInfo") || "{}"
   );
-  
+
   // 이미 예약 완료된 경우 스킵
   if (reservationInfo.reservationCompleted) {
     return;
@@ -68,27 +71,89 @@ async function processReservationSave() {
     try {
       await applyCoupon(userid, reservationInfo.usedCoupon.couponnum);
       reservationInfo.couponAlreadyUsed = true;
-      sessionStorage.setItem("finalReservationInfo", JSON.stringify(reservationInfo));
+      sessionStorage.setItem(
+        "finalReservationInfo",
+        JSON.stringify(reservationInfo)
+      );
     } catch (couponError) {
       console.warn("쿠폰 사용 실패:", couponError);
     }
   }
 
   // 예약 정보 저장
-  const reservationResult = await saveReservation({
-    schedulecd: reservationInfo.schedulecd,
-    seatcd: reservationInfo.selectedSeats,
-    paymentcd,
-    userid,
-  });
-  
-  if (reservationResult?.success === false) {
-    throw new Error(`예약 저장에 실패했습니다: ${reservationResult.message || '알 수 없는 오류'}`);
+  try {
+    // 디버그 정보를 localStorage에 저장
+    localStorage.setItem(
+      "debugReservationRequest",
+      JSON.stringify({
+        schedulecd: reservationInfo.schedulecd,
+        seatcd: reservationInfo.selectedSeats,
+        paymentcd,
+        userid,
+        timestamp: new Date().toISOString(),
+      })
+    );
+
+    const reservationResult = await saveReservation({
+      schedulecd: reservationInfo.schedulecd,
+      seatcd: reservationInfo.selectedSeats,
+      paymentcd,
+      userid,
+    });
+
+    // 성공 응답도 localStorage에 저장
+    localStorage.setItem(
+      "debugReservationResponse",
+      JSON.stringify({
+        result: reservationResult,
+        timestamp: new Date().toISOString(),
+      })
+    );
+
+    if (reservationResult?.success === false) {
+      throw new Error(
+        `예약 저장에 실패했습니다: ${
+          reservationResult.message || "알 수 없는 오류"
+        }`
+      );
+    }
+  } catch (saveError) {
+    // 에러 정보도 localStorage에 저장
+    localStorage.setItem(
+      "debugReservationError",
+      JSON.stringify({
+        error: {
+          message: saveError.message,
+          stack: saveError.stack,
+          response: saveError.response
+            ? {
+                status: saveError.response.status,
+                statusText: saveError.response.statusText,
+                data: saveError.response.data,
+              }
+            : null,
+          config: saveError.config
+            ? {
+                url: saveError.config.url,
+                method: saveError.config.method,
+                data: saveError.config.data,
+                headers: saveError.config.headers,
+              }
+            : null,
+        },
+        timestamp: new Date().toISOString(),
+      })
+    );
+
+    throw saveError;
   }
 
   // 예약 완료 플래그 설정
   reservationInfo.reservationCompleted = true;
-  sessionStorage.setItem("finalReservationInfo", JSON.stringify(reservationInfo));
+  sessionStorage.setItem(
+    "finalReservationInfo",
+    JSON.stringify(reservationInfo)
+  );
 }
 
 const SuccessPage = () => {
@@ -162,28 +227,47 @@ const SuccessPage = () => {
         // 1. 토스페이먼츠 결제 확인
         const paymentData = await confirmTossPayment(searchParams);
         setResponseData(paymentData);
-        sessionStorage.setItem("paymentResponseData", JSON.stringify(paymentData));
+        sessionStorage.setItem(
+          "paymentResponseData",
+          JSON.stringify(paymentData)
+        );
 
         // 2. 결제 정보 DB 저장
         await processPaymentSave(paymentData);
 
         // 3. 예약 정보 저장
         await processReservationSave();
-
       } catch (error) {
-        if (error.message?.includes("이미 예약된 좌석") || error.message?.includes("duplicate")) {
+        if (
+          error.message?.includes("이미 예약된 좌석") ||
+          error.message?.includes("duplicate")
+        ) {
           // 중복 저장 시도는 정상 처리로 간주
           const reservationInfo = JSON.parse(
             sessionStorage.getItem("finalReservationInfo") || "{}"
           );
           reservationInfo.reservationCompleted = true;
-          sessionStorage.setItem("finalReservationInfo", JSON.stringify(reservationInfo));
+          sessionStorage.setItem(
+            "finalReservationInfo",
+            JSON.stringify(reservationInfo)
+          );
         } else if (error.code) {
           // 토스페이먼츠 에러
           navigate(`/fail?code=${error.code}&message=${error.message}`);
         } else {
           // 기타 에러
-          alert("예약 처리 중 오류가 발생했습니다: " + error.message);
+          console.error("예약 처리 에러 상세:", error);
+          console.error("에러 응답:", error.response);
+          console.error("에러 요청:", error.config);
+
+          // HTML 응답 에러인 경우
+          if (error.message?.includes("Unexpected token '<'")) {
+            alert(
+              "서버 API 에러: 예약 저장 API가 HTML 응답을 반환했습니다. 백엔드 서버 로그를 확인하세요."
+            );
+          } else {
+            alert("예약 처리 중 오류가 발생했습니다: " + error.message);
+          }
         }
       }
     };
@@ -264,4 +348,3 @@ const SuccessPage = () => {
 };
 
 export { SuccessPage };
-

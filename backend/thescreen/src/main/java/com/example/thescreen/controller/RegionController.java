@@ -1,25 +1,30 @@
 package com.example.thescreen.controller;
 
+import com.example.thescreen.entity.Cinema;
 import com.example.thescreen.entity.Region;
+import com.example.thescreen.repository.CinemaRepository;
 import com.example.thescreen.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/regions")
 public class RegionController {
     @Autowired
     private RegionRepository regionRepository;
+    
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
-
-    @GetMapping("/regions")
+    @GetMapping
     public List<Region> getRegions() {
-        List<Region> regions = regionRepository.findAll();
-        return regions;
+        return regionRepository.findAll();
+    }
+    
+    @GetMapping("/{regioncd}/cinemas")
+    public List<Cinema> getCinemasByRegion(@PathVariable String regioncd) {
+        return cinemaRepository.findByRegioncd(regioncd);
     }
 }

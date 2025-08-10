@@ -5,7 +5,7 @@ import { api, apiRequest, apiRequestWithErrorHandling } from "./apiUtils";
 // JWT 토큰에서 실제 userid 디코딩
 export const decodeUserid = async (token) => {
   try {
-    const response = await apiRequest("/api/auth/decode-token", {
+    const response = await apiRequest("/auth/decode-token", {
       method: "POST",
       body: { token },
     });
@@ -164,7 +164,7 @@ export const addStaff = async (staffData) => {
 export const fetchAllNotices = () =>
   apiRequestWithErrorHandling(
     "get",
-    "/api/notice/notice",
+    "/notice/notice",
     null,
     {},
     "Error fetching notices:",
@@ -175,7 +175,7 @@ export const fetchAllNotices = () =>
 export const fetchAllFaqs = () =>
   apiRequestWithErrorHandling(
     "get",
-    "/api/faq/faq",
+    "/faq/faq",
     null,
     {},
     "Error fetching faqs:",
@@ -186,7 +186,7 @@ export const fetchAllFaqs = () =>
 
 // 카카오 API 키 조회 (서버 설정값)
 export const getKakaoApiKey = async () => {
-  const response = await apiRequest("/api/kakao", { method: "GET" });
+  const response = await apiRequest("/kakao", { method: "GET" });
   return response.key;
 };
 
@@ -240,13 +240,16 @@ export const getGooglePeopleData = async (accessToken) => {
 
 // Google 사용자 정보를 백엔드에 저장 (users 테이블)
 export const saveGoogleUserToBackend = async (userInfo) => {
-  const response = await fetch("http://localhost:8080/google/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(userInfo),
-  });
+  const response = await fetch(
+    `${process.env.REACT_APP_API_URL || "http://localhost:8080"}/google/login`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userInfo),
+    }
+  );
 
   if (!response.ok) {
     throw new Error("Failed to save user to backend");
@@ -295,7 +298,7 @@ export const naverLoginCallback = async (code, state) => {
 // 리뷰 작성
 export const createReview = (reviewData) => {
   return api
-    .post("/api/review/review", reviewData)
+    .post("/review/review", reviewData)
     .then((response) => {
       return response.data;
     })
@@ -308,7 +311,7 @@ export const createReview = (reviewData) => {
 export const fetchAllReviews = () => {
   return apiRequestWithErrorHandling(
     "get",
-    "/api/review/review",
+    "/review/review",
     null,
     {},
     "리뷰 목록 조회 실패:",
@@ -320,7 +323,7 @@ export const kakaoTemplate = (reservationId) => {
   const accessToken = localStorage.getItem("kakao_access_token");
   return apiRequestWithErrorHandling(
     "post",
-    "login/api/send-reservation-message",
+    "login/send-reservation-message",
     { reservationId, accessToken },
     {},
     "카카오 템플릿 조회 실패:",

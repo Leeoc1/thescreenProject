@@ -2,7 +2,7 @@ import axios from "axios";
 
 // API 설정 및 기본 설정
 export const api = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:8080",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

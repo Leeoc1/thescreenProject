@@ -1,26 +1,30 @@
 package com.example.thescreen.controller;
 
 import com.example.thescreen.entity.Cinema;
+import com.example.thescreen.entity.Screen;
 import com.example.thescreen.repository.CinemaRepository;
+import com.example.thescreen.repository.ScreenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
+@RequestMapping("/cinemas")
 public class CinemaController {
     @Autowired
     private CinemaRepository cinemaRepository;
+    
+    @Autowired
+    private ScreenRepository screenRepository;
 
-    @GetMapping("/cinemas")
-    public List<Cinema> getCinema () {
-        List<Cinema> cinemas = cinemaRepository.findAll();
-
-        return cinemas;
+    @GetMapping
+    public List<Cinema> getCinemas() {
+        return cinemaRepository.findAll();
+    }
+    
+    @GetMapping("/{cinemaid}/screens")
+    public List<Screen> getScreensByCinema(@PathVariable String cinemaid) {
+        return screenRepository.findByCinemacd(cinemaid);
     }
 }

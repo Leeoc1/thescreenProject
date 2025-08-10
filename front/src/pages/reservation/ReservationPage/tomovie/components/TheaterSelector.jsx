@@ -12,6 +12,7 @@ const TheaterSelector = () => {
   const [availableRegions, setAvailableRegions] = useState([]);
   const [regionsData, setRegionsData] = useState([]); // 전체 regions 데이터 저장
   const [selectedRegion, setSelectedRegion] = useState("즐겨찾는 극장"); // 기본값을 즐겨찾기로 설정
+  const [selectedRegionCode, setSelectedRegionCode] = useState(null); // 선택된 지역 코드 저장
   const [availableTheaters, setAvailableTheaters] = useState([]);
   const [selectedTheater, setSelectedTheater] = useState(null);
   const [isLoadingTheaters, setIsLoadingTheaters] = useState(false);
@@ -69,32 +70,38 @@ const TheaterSelector = () => {
   const fetchAllRegions = async () => {
     try {
       const regions = await getRegions();
-      // 디버깅용
-      // 첫 번째 객체의 구조 확인
-      // 객체의 키들 확인
 
       // regions가 배열인지 확인하고, 적절한 속성 추출
       if (Array.isArray(regions)) {
         setRegionsData(regions); // 전체 데이터 저장
-        const regionNames = regions.map(
-          (region) =>
-            region.regionnm || region.regionNm || region.name || region
-        );
-        // 디버깅용
+
+        // 지역 객체로 저장 (이름과 코드 모두 포함)
+        const regionObjects = regions.map((region) => ({
+          name: region.regionnm || region.regionNm || region.name || region,
+          code: region.regioncd || region.code || region.id,
+        }));
 
         // "즐겨찾는 극장"을 맨 위에 추가
-        const regionsWithFavorite = ["즐겨찾는 극장", ...regionNames];
+        const regionsWithFavorite = [
+          { name: "즐겨찾는 극장", code: null },
+          ...regionObjects,
+        ];
         setAvailableRegions(regionsWithFavorite);
       } else {
-        setAvailableRegions(["즐겨찾는 극장"]);
+        setAvailableRegions([{ name: "즐겨찾는 극장", code: null }]);
       }
     } catch (error) {
-      setAvailableRegions(["즐겨찾는 극장"]);
+      setAvailableRegions([{ name: "즐겨찾는 극장", code: null }]);
     }
   };
 
   const handleRegionClick = async (region) => {
-    setSelectedRegion(region);
+    // region 객체에서 name과 code 추출
+    const regionName = typeof region === "string" ? region : region.name;
+    const regionCode = typeof region === "object" ? region.code : null;
+
+    setSelectedRegion(regionName);
+    setSelectedRegionCode(regionCode);
     setIsLoadingTheaters(true);
 
     // 지역 변경 시 상영관 선택 상태 초기화
@@ -132,7 +139,7 @@ const TheaterSelector = () => {
 
     try {
       // "즐겨찾는 극장" 처리
-      if (region === "즐겨찾는 극장") {
+      if (regionName === "즐겨찾는 극장") {
         const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         if (!isLoggedIn) {
           alert("로그인이 필요합니다.");
@@ -168,7 +175,12 @@ const TheaterSelector = () => {
         const movieMatch = schedule.movienm === updatedMovienm;
         const dateMatch =
           scheduleDate.toDateString() === selectedDateObj.toDateString();
-        const regionMatch = schedule.regionnm === region;
+
+        // 지역 매치 - 우선 regionnm으로 비교 (fallback으로 regioncd 사용)
+        const regionMatch =
+          schedule.regionnm === regionName ||
+          (regionCode && schedule.regioncd === regionCode);
+
         const statusMatch = schedule.screenstatus === "사용중";
 
         return movieMatch && dateMatch && regionMatch && statusMatch;
@@ -215,11 +227,11 @@ const TheaterSelector = () => {
             <div
               key={index}
               className={`region-item ${
-                selectedRegion === region ? "active" : ""
+                selectedRegion === region.name ? "active" : ""
               }`}
               onClick={() => handleRegionClick(region)}
             >
-              {region}
+              {region.name}
             </div>
           ))}
         </div>
@@ -228,7 +240,11 @@ const TheaterSelector = () => {
       {selectedRegion && (
         <div className="theater-section">
           <h3>상영관</h3>
-          {availableTheaters.length > 0 ? (
+          {isLoadingTheaters ? (
+            <div className="loading-message">
+              🎬 상영관 정보를 불러오는 중입니다...
+            </div>
+          ) : availableTheaters.length > 0 ? (
             <div className="theater-list">
               {availableTheaters.map((theater, index) => (
                 <div
@@ -242,9 +258,11 @@ const TheaterSelector = () => {
                 </div>
               ))}
             </div>
-          ) : !isLoadingTheaters ? (
-            <div>선택한 조건에 맞는 상영관이 없습니다.</div>
-          ) : null}
+          ) : (
+            <div className="no-theaters-message">
+              선택한 조건에 맞는 상영관이 없습니다.
+            </div>
+          )}
         </div>
       )}
 

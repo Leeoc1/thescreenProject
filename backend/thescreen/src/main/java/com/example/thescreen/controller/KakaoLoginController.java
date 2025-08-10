@@ -8,6 +8,7 @@ import com.example.thescreen.service.KaKaoService;
 import com.example.thescreen.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -82,7 +83,12 @@ public class KakaoLoginController {
             tokenHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
             HttpEntity<MultiValueMap<String, String>> tokenRequest = new HttpEntity<>(tokenParams, tokenHeaders);
 
-            ResponseEntity<Map> tokenResponse = restTemplate.postForEntity(tokenUrl, tokenRequest, Map.class);
+            ResponseEntity<Map<String, Object>> tokenResponse = restTemplate.exchange(
+                tokenUrl, 
+                HttpMethod.POST, 
+                tokenRequest, 
+                new ParameterizedTypeReference<Map<String, Object>>() {}
+            );
             Map<String, Object> tokenData = tokenResponse.getBody();
             String accessToken = (String) tokenData.get("access_token");
 
@@ -92,8 +98,12 @@ public class KakaoLoginController {
             userInfoHeaders.set("Authorization", "Bearer " + accessToken);
             HttpEntity<String> userInfoRequest = new HttpEntity<>(userInfoHeaders);
 
-            ResponseEntity<Map> userInfoResponse = restTemplate.exchange(userInfoUrl, HttpMethod.GET, userInfoRequest,
-                    Map.class);
+            ResponseEntity<Map<String, Object>> userInfoResponse = restTemplate.exchange(
+                userInfoUrl, 
+                HttpMethod.GET, 
+                userInfoRequest,
+                new ParameterizedTypeReference<Map<String, Object>>() {}
+            );
             Map<String, Object> userInfo = userInfoResponse.getBody();
 
             // 3. 사용자 정보 처리
@@ -156,7 +166,7 @@ public class KakaoLoginController {
     }
 
     // 카카오 메시지 템플릿
-    @PostMapping("api/send-reservation-message")
+    @PostMapping("send-reservation-message")
     public ResponseEntity<String> sendReservationMessage(@RequestBody Map<String, Object> request) {
         System.out.println("=== 카카오 메시지 전송 요청 ===");
         System.out.println("Request: " + request);

@@ -18,7 +18,7 @@ SELECT s.schedulecd, s.startdate, s.starttime, m.movienm, m.moviecd,
        m.runningtime, m.director, m.description, m.actors, m.posterurl, m.releasedate,
        m.genre, m.movieinfo, m.isadult, m.movierank, m.audiacc,
        sc.screenname, sc.screenstatus, sc.screentype, sc.allseat,
-       sc.reservationseat, c.cinemanm, r.regionnm
+       sc.reservationseat, c.cinemanm, r.regionnm, r.regioncd
 FROM schedule s
     INNER JOIN movie m ON s.moviecd = m.moviecd
     INNER JOIN screen sc ON s.screencd = sc.screencd

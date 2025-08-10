@@ -13,8 +13,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api")
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
+@RequestMapping("/coupons")
 @RequiredArgsConstructor
 public class CouponController {
     

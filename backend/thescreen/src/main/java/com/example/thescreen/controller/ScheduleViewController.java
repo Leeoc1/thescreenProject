@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = { "http://localhost:8080", "http://localhost:3000" })
 public class ScheduleViewController {
 
     @Autowired
@@ -24,7 +23,7 @@ public class ScheduleViewController {
     /**
      * 기존 API - 전체 스케줄 조회 (성능 이슈로 사용 지양)
      */
-    @GetMapping("/schedules/all")
+    @GetMapping("/schedule-view/all")
     public List<ScheduleView> getAllSchedules() {
         return scheduleViewRepository.findAll();
     }
@@ -32,7 +31,7 @@ public class ScheduleViewController {
     /**
      * 개선된 API - 오늘 포함 5일간의 스케줄만 조회
      */
-    @GetMapping("/schedules")
+    @GetMapping("/schedule-view")
     public List<ScheduleView> getSchedules(
             @RequestParam(required = false) String cinemaCd,
             @RequestParam(required = false) String date) {
@@ -49,7 +48,7 @@ public class ScheduleViewController {
     /**
      * 특정 극장의 오늘 포함 5일간 스케줄 조회
      */
-    @GetMapping("/schedules/cinema")
+    @GetMapping("/schedule-view/cinema")
     public List<ScheduleView> getSchedulesByCinema(@RequestParam String cinemaName) {
         return scheduleService.getSchedulesForNext5DaysByCinema(cinemaName);
     }
@@ -57,7 +56,7 @@ public class ScheduleViewController {
     /**
      * 특정 극장에서 오늘 포함 5일간 상영하는 영화명 목록 조회
      */
-    @GetMapping("/schedules/cinema/movies")
+    @GetMapping("/schedule-view/cinema/movies")
     public List<String> getMovieNamesByCinema(@RequestParam String cinemaName) {
         return scheduleService.getMovieNamesForNext5DaysByCinema(cinemaName);
     }

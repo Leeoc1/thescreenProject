@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/faq")
+@RequestMapping("/faq")
 public class FaqController {
 
     private final FaqRepository faqRepository;

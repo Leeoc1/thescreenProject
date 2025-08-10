@@ -123,8 +123,15 @@ const ScreenSelectorMovie = () => {
 
   return (
     <div className="place-time-list-content">
+      {isLoading && (
+        <div className="loading-message">
+          ⏰ 상영시간 정보를 불러오는 중입니다...
+        </div>
+      )}
       {!isLoading && movieSchedule.length === 0 && (
-        <div>선택한 조건에 맞는 상영정보가 없습니다.</div>
+        <div className="no-schedule-message">
+          선택한 조건에 맞는 상영정보가 없습니다.
+        </div>
       )}
       {!isLoading && uniqueScreentypes.length > 0 && (
         <>

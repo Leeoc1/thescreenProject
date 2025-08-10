@@ -131,7 +131,9 @@ const ReservationManagement = () => {
       try {
         // API 호출로 예약 상태를 '예약취소'로 변경
         const response = await fetch(
-          "http://localhost:8080/reservation/cancel",
+          `${
+            process.env.REACT_APP_API_URL || "http://localhost:8080"
+          }/reservation/cancel`,
           {
             method: "PUT",
             headers: {
@@ -329,4 +331,3 @@ const ReservationManagement = () => {
 };
 
 export default ReservationManagement;
-

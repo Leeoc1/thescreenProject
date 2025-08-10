@@ -2,7 +2,8 @@ import axios from "axios";
 
 // ========== SMS 인증 관련 API ==========
 
-const API_BASE_URL = "http://localhost:8080";
+// SMS API 설정
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 
 // SMS 인증번호 발송
 export const sendVerificationCode = async (phoneNumber) => {
@@ -28,4 +29,3 @@ export const verifyCode = async (phoneNumber, certificateNum) => {
     throw new Error(error.response?.data || "인증 실패");
   }
 };
-

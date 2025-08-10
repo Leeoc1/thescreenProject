@@ -15,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/reservation")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ReservationController {
 
     private ReservationRepository reservationRepository;
@@ -35,9 +34,13 @@ public class ReservationController {
     // 예매 정보 저장 (post)
     @PostMapping
     public ResponseEntity<?> saveReservation(@RequestBody Map<String, Object> requestData) {
+        System.out.println("=== 예약 저장 API 호출됨 ===");
+        System.out.println("요청 데이터: " + requestData);
+        
         try {
             // 필수 데이터 검증
             if (requestData.get("schedulecd") == null || requestData.get("seatcd") == null) {
+                System.out.println("ERROR: 필수 데이터 누락");
                 Map<String, String> errorResponse = new HashMap<>();
                 errorResponse.put("error", "필수 데이터가 누락되었습니다.");
                 return ResponseEntity.badRequest().body(errorResponse);
@@ -86,14 +89,18 @@ public class ReservationController {
             reservation.setReservationcd(formattedId);
             // 저장
             Reservation savedReservation = reservationRepository.save(reservation);
+            System.out.println("예약 저장 성공: " + savedReservation.getReservationcd());
 
             Map<String, Object> response = new HashMap<>();
             response.put("message", "예약이 성공적으로 저장되었습니다.");
             response.put("reservationId", savedReservation.getReservationcd());
 
+            System.out.println("응답 데이터: " + response);
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {
+            System.out.println("ERROR: 예약 저장 실패 - " + e.getMessage());
+            e.printStackTrace();
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("error", "예약 저장 중 오류가 발생했습니다: " + e.getMessage());
             return ResponseEntity.internalServerError().body(errorResponse);

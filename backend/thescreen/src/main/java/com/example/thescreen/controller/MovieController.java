@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/movies")
 @RequiredArgsConstructor
-@CrossOrigin(origins = { "http://localhost:3000" })
 public class MovieController {
 
     private final MovieRepository movieRepository;

@@ -75,13 +75,11 @@ function KakaoLoginHandler() {
               const cleanUrl = currentPath === "/login" ? "/" : currentPath;
               navigate(cleanUrl, { replace: true });
             } else {
-              
               alert("로그인 처리 중 오류가 발생했습니다.");
               navigate("/login", { replace: true });
             }
           })
           .catch((error) => {
-            
             alert("로그인 처리 중 오류가 발생했습니다.");
             navigate("/login", { replace: true });
           });
@@ -122,7 +120,6 @@ function AdminProtectedRoute({ children }) {
         const realUserid = await getCurrentUserId();
         setIsAdmin(realUserid === "master001");
       } catch (error) {
-        
         setIsAdmin(false);
       } finally {
         setIsChecking(false);
@@ -293,6 +290,12 @@ function ReservationProtectedRoute({ children, requiredStep }) {
 }
 
 function App() {
+  // 앱 로드 시 body에 padding-top 강제 적용
+  useEffect(() => {
+    document.body.style.paddingTop = "64px";
+    document.body.style.setProperty("padding-top", "64px", "important");
+  }, []);
+
   return (
     <Router>
       <ScrollToTop />
@@ -468,4 +471,3 @@ function App() {
 }
 
 export default App;
-

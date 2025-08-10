@@ -16,7 +16,6 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8080", "http://localhost:3000"})
 public class StaffController {
     @Autowired
     private StaffRepository staffRepository;

@@ -26,7 +26,9 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
+        `${
+          process.env.REACT_APP_API_URL || "http://localhost:8080"
+        }/auth/login`,
         {
           userid: formData.userid,
           userpw: formData.userpw,
