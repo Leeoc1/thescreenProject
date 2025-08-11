@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Service
 public class AiService {
-    @Value("${spring.ai.openai.api-key}")
+    @Value("${spring.ai.openai.api-key:#{null}}")
     private String openAiApiKey;
     private static final String OPENAI_API_URL = "https://api.openai.com/v1/chat/completions";
 
@@ -23,11 +23,21 @@ public class AiService {
     private MovieRepository movieRepository;
 
     public Map<String, Object> askAI(String question) {
+        // OpenAI API 키가 없으면 기본 응답 반환
+        if (openAiApiKey == null || openAiApiKey.trim().isEmpty()) {
+            return Map.of("type", "ai", "data", Map.of("content", "AI 기능이 현재 비활성화되어 있습니다."));
+        }
+        
         String aiAnswer = generateAiResponse(question);
         return Map.of("type", "ai", "data", Map.of("content", aiAnswer));
     }
 
     private String generateAiResponse(String question) {
+        // OpenAI API 키가 없으면 기본 응답 반환
+        if (openAiApiKey == null || openAiApiKey.trim().isEmpty()) {
+            return "AI 기능이 현재 비활성화되어 있습니다.";
+        }
+        
         String lowerQuestion = question.toLowerCase().trim();
 
         if (lowerQuestion.contains("추천") || lowerQuestion.contains("recommend")) {

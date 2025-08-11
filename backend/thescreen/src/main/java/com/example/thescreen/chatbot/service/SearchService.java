@@ -37,6 +37,20 @@ public class SearchService {
 
     /** ========================== FAQ 검색 ========================== */
     public Map<String, Object> searchFAQ(String cleanQuestion) {
+        // "FAQ" 키워드가 있으면 FAQ 목록 반환
+        if (cleanQuestion.toLowerCase().contains("faq") || cleanQuestion.contains("자주") || 
+            cleanQuestion.contains("질문") || cleanQuestion.contains("문의")) {
+            List<Map<String, Object>> faqList = faqRepository.findAll().stream()
+                    .limit(10)
+                    .map(faq -> Map.<String, Object>of(
+                            "title", faq.getFaqsub(),
+                            "content", faq.getFaqcontents()))
+                    .collect(Collectors.toList());
+            if (!faqList.isEmpty()) {
+                return createResponse("faq_list", Map.of("faqs", faqList));
+            }
+        }
+        
         return faqRepository.findByFaqsubContainingIgnoreCase(cleanQuestion).stream()
                 .findFirst()
                 .map(faq -> createResponse("faq", Map.of("content", faq.getFaqcontents())))
@@ -46,6 +60,21 @@ public class SearchService {
 
     /** ========================== 공지사항 검색 ========================== */
     public Map<String, Object> searchNotice(String cleanQuestion) {
+        // "공지사항" 키워드가 있으면 공지사항 목록 반환
+        if (cleanQuestion.contains("공지사항") || cleanQuestion.contains("공지") || 
+            cleanQuestion.contains("알림") || cleanQuestion.contains("안내")) {
+            List<Map<String, Object>> noticeList = noticeRepository.findAll().stream()
+                    .limit(10)
+                    .map(notice -> Map.<String, Object>of(
+                            "id", notice.getNoticenum(),
+                            "title", notice.getNoticesub(),
+                            "content", notice.getNoticecontents()))
+                    .collect(Collectors.toList());
+            if (!noticeList.isEmpty()) {
+                return createResponse("notice_list", Map.of("notices", noticeList));
+            }
+        }
+        
         return noticeRepository.findByNoticesubContainingIgnoreCase(cleanQuestion).stream()
                 .findFirst()
                 .map(n -> createResponse("notice", Map.of("content", n.getNoticecontents())))
@@ -55,7 +84,9 @@ public class SearchService {
 
     /** ========================== TOP10 영화 검색 ========================== */
     public Map<String, Object> searchTopMovies(String cleanQuestion) {
-        if (cleanQuestion.contains("탑10") || cleanQuestion.contains("top10") || cleanQuestion.contains("인기 영화")) {
+        if (cleanQuestion.contains("탑10") || cleanQuestion.contains("top10") || 
+            cleanQuestion.contains("인기 영화") || cleanQuestion.contains("박스오피스") ||
+            cleanQuestion.contains("순위")) {
             List<MovieView> topMovies = movieViewRepository.findTop10ByMovierankIsNotNullOrderByMovierankAsc(); // MovieView 사용
             if (!topMovies.isEmpty()) {
                 List<Map<String, String>> movieList = topMovies.stream()
@@ -70,6 +101,11 @@ public class SearchService {
 
     /** ========================== 영화 검색 ========================== */
     public Map<String, Object> searchMovie(String cleanQuestion) {
+        // "극장" 단독 키워드는 영화 검색에서 제외
+        if (cleanQuestion.trim().equals("극장")) {
+            return null;
+        }
+        
         return movieViewRepository.findByMovienmContainingIgnoreCase(cleanQuestion).stream() // MovieView 사용
                 .findFirst()
                 .map(this::createMovieResponse)
@@ -79,6 +115,20 @@ public class SearchService {
 
     /** ========================== 극장 검색 ========================== */
     public Map<String, Object> searchCinema(String cleanQuestion) {
+        // "극장" 키워드만 있으면 모든 극장 목록 반환
+        if (cleanQuestion.contains("극장") && !containsSpecificLocation(cleanQuestion)) {
+            List<Map<String, Object>> cinemaList = cinemaRepository.findAll().stream()
+                    .map(cinema -> Map.<String, Object>of(
+                            "id", cinema.getCinemacd(),
+                            "name", cinema.getCinemanm(),
+                            "address", Optional.ofNullable(cinema.getAddress()).orElse("주소 정보 없음"),
+                            "tel", Optional.ofNullable(cinema.getTel()).orElse("전화번호 정보 없음")))
+                    .collect(Collectors.toList());
+            if (!cinemaList.isEmpty()) {
+                return createResponse("cinema_list", Map.of("cinemas", cinemaList));
+            }
+        }
+        
         List<Cinema> regionCinemas = cinemaRepository.findByAddressContainingIgnoreCase(cleanQuestion);
         if (!regionCinemas.isEmpty()) {
             List<Map<String, Object>> cinemaList = regionCinemas.stream()
@@ -110,6 +160,15 @@ public class SearchService {
                     return createResponse("cinema", responseData);
                 })
                 .orElse(null);
+    }
+    
+    private boolean containsSpecificLocation(String question) {
+        return question.contains("강남") || question.contains("홍대") || question.contains("잠실") ||
+               question.contains("신촌") || question.contains("명동") || question.contains("동대문") ||
+               question.contains("영등포") || question.contains("구로") || question.contains("목동") ||
+               question.contains("천호") || question.contains("왕십리") || question.contains("노원") ||
+               question.contains("마포") || question.contains("서초") || question.contains("송파") ||
+               question.contains("부산") || question.contains("대구") || question.contains("인천");
     }
 
     /** ========================== 극장별 상영 영화 검색 ========================== */

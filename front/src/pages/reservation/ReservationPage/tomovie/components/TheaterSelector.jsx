@@ -241,8 +241,9 @@ const TheaterSelector = () => {
         <div className="theater-section">
           <h3>상영관</h3>
           {isLoadingTheaters ? (
-            <div className="loading-message">
-              🎬 상영관 정보를 불러오는 중입니다...
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>상영관 정보를 불러오는 중...</p>
             </div>
           ) : availableTheaters.length > 0 ? (
             <div className="theater-list">

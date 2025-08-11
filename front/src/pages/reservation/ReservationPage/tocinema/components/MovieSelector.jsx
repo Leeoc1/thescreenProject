@@ -7,38 +7,53 @@ const MovieSelector = () => {
   const [selectedDate, setSelectedDate] = useState(
     sessionStorage.getItem("selectedFullDate") || "날짜를 선택하세요"
   );
+  const [isLoading, setIsLoading] = useState(false);
   const selectedCinemanm = sessionStorage.getItem("cinemanm");
 
   useEffect(() => {
     const fetchMovies = async () => {
-      const schedule = await getSchedules();
+      if (selectedDate === "날짜를 선택하세요") {
+        setMovieList({});
+        return;
+      }
 
-      // 선택된 날짜로 필터링
-      const filtered = schedule.filter((schedule) => {
-        const dateMatch = schedule.startdate === selectedDate;
-        const cinemaMatch = schedule.cinemanm === selectedCinemanm;
-        return dateMatch && cinemaMatch;
-      });
+      setIsLoading(true);
+      try {
+        const schedule = await getSchedules();
 
-      // movienm 기준으로 스케줄 그룹화
-      const groupedMovies = filtered.reduce((acc, curr) => {
-        const movieName = curr.movienm;
-        if (!acc[movieName]) {
-          acc[movieName] = [];
-        }
-        acc[movieName].push(curr);
-        return acc;
-      }, {});
+        // 선택된 날짜로 필터링
+        const filtered = schedule.filter((schedule) => {
+          const dateMatch = schedule.startdate === selectedDate;
+          const cinemaMatch = schedule.cinemanm === selectedCinemanm;
+          return dateMatch && cinemaMatch;
+        });
 
-      // 상영 시작 시간순으로 정렬 (선택사항)
-      Object.keys(groupedMovies).forEach((movieName) => {
-        groupedMovies[movieName].sort(
-          (a, b) => new Date(a.starttime) - new Date(b.starttime)
-        );
-      });
+        // movienm 기준으로 스케줄 그룹화
+        const groupedMovies = filtered.reduce((acc, curr) => {
+          const movieName = curr.movienm;
+          if (!acc[movieName]) {
+            acc[movieName] = [];
+          }
+          acc[movieName].push(curr);
+          return acc;
+        }, {});
 
-      setMovieList(groupedMovies);
+        // 상영 시작 시간순으로 정렬 (선택사항)
+        Object.keys(groupedMovies).forEach((movieName) => {
+          groupedMovies[movieName].sort(
+            (a, b) => new Date(a.starttime) - new Date(b.starttime)
+          );
+        });
+
+        setMovieList(groupedMovies);
+      } catch (error) {
+        console.error("영화 목록 로딩 중 오류:", error);
+        setMovieList({});
+      } finally {
+        setIsLoading(false);
+      }
     };
+
     fetchMovies();
 
     // 마운트 시 sessionStorage 확인
@@ -82,7 +97,12 @@ const MovieSelector = () => {
 
   return (
     <div className="rptm-movie-list p-4">
-      {Object.keys(movieList).length === 0 ? (
+      {isLoading ? (
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>영화 목록을 불러오는 중...</p>
+        </div>
+      ) : Object.keys(movieList).length === 0 ? (
         <p className="text-gray-500">해당 날짜에 상영 중인 영화가 없습니다.</p>
       ) : (
         <div>
@@ -104,4 +124,3 @@ const MovieSelector = () => {
 };
 
 export default MovieSelector;
-

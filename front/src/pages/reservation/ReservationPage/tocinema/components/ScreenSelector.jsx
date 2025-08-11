@@ -12,6 +12,7 @@ const ScreenSelector = () => {
     sessionStorage.getItem("selectedFullDate") || "날짜를 선택하세요"
   );
   const [reservedSeatsCount, setReservedSeatsCount] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   // 현재 시간 정보 (컴포넌트 렌더링 시 한 번만 계산)
   const today = new Date();
@@ -20,6 +21,12 @@ const ScreenSelector = () => {
   // 상영 정보 가져오기
   useEffect(() => {
     const fetchSchedule = async () => {
+      if (!selectedMovieName || selectedDate === "날짜를 선택하세요") {
+        setMovieSchedule([]);
+        return;
+      }
+
+      setIsLoading(true);
       try {
         const selectedSchedule = await getSchedules();
 
@@ -27,7 +34,7 @@ const ScreenSelector = () => {
           return (
             schedule.movienm === selectedMovieName &&
             schedule.startdate === selectedDate &&
-            schedule.screenstatus === "운영중" &&
+            schedule.screenstatus === "사용중" &&
             schedule.cinemanm === sessionStorage.getItem("cinemanm")
           );
         });
@@ -38,27 +45,31 @@ const ScreenSelector = () => {
         );
         setMovieSchedule(filteredSchedules);
       } catch (error) {
-        
+        console.error("상영시간 정보 로딩 중 오류:", error);
         setMovieSchedule([]);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    if (selectedMovieName && selectedDate !== "날짜를 선택하세요") {
-      fetchSchedule();
-    } else {
-      setMovieSchedule([]);
-    }
+    fetchSchedule();
   }, [selectedMovieName, selectedDate]);
 
   // 세션 스토리지 변경 감지
   useEffect(() => {
     const handleSessionStorageChange = (event) => {
+      console.log(
+        "ScreenSelector received sessionStorageChange:",
+        event.detail
+      );
+
       const newMovieName =
         event.detail.selectedMovieName ||
         sessionStorage.getItem("selectedMovieName");
       const newDate =
         event.detail.selectedFullDate ||
         sessionStorage.getItem("selectedFullDate");
+
       if (newMovieName !== selectedMovieName || newDate !== selectedDate) {
         setSelectedMovieName(newMovieName);
         setSelectedDate(newDate || "날짜를 선택하세요");
@@ -73,6 +84,19 @@ const ScreenSelector = () => {
         handleSessionStorageChange
       );
   }, [selectedMovieName, selectedDate]);
+
+  // 컴포넌트 마운트 시 세션 스토리지 값 확인
+  useEffect(() => {
+    const movieName = sessionStorage.getItem("selectedMovieName");
+    const fullDate = sessionStorage.getItem("selectedFullDate");
+
+    if (movieName && movieName !== selectedMovieName) {
+      setSelectedMovieName(movieName);
+    }
+    if (fullDate && fullDate !== selectedDate) {
+      setSelectedDate(fullDate);
+    }
+  }, []); // 마운트 시 한 번만 실행
 
   // 상영 시간 선택
   const handleTimeSelect = (schedule) => {
@@ -135,10 +159,16 @@ const ScreenSelector = () => {
     <div className="rptm-time-list-area">
       <div className="rptm-time-list-content">
         {!selectedMovieName && <div>영화를 먼저 선택하세요.</div>}
-        {selectedMovieName && movieSchedule.length === 0 && (
+        {selectedMovieName && isLoading && (
+          <div className="loading-container">
+            <div className="loading-spinner"></div>
+            <p>상영시간을 불러오는 중...</p>
+          </div>
+        )}
+        {selectedMovieName && !isLoading && movieSchedule.length === 0 && (
           <div>선택한 날짜에 상영 정보가 없습니다.</div>
         )}
-        {uniqueScreentypes.length > 0 && (
+        {!isLoading && uniqueScreentypes.length > 0 && (
           <>
             {uniqueScreentypes.map((screentype) => (
               <div key={screentype}>
@@ -193,4 +223,3 @@ const ScreenSelector = () => {
 };
 
 export default ScreenSelector;
-

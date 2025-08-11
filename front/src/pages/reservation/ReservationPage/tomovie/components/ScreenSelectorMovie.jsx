@@ -124,8 +124,9 @@ const ScreenSelectorMovie = () => {
   return (
     <div className="place-time-list-content">
       {isLoading && (
-        <div className="loading-message">
-          ⏰ 상영시간 정보를 불러오는 중입니다...
+        <div className="loading-container">
+          <div className="loading-spinner"></div>
+          <p>상영시간 정보를 불러오는 중...</p>
         </div>
       )}
       {!isLoading && movieSchedule.length === 0 && (

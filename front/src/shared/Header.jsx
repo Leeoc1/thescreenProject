@@ -4,7 +4,6 @@ import "./Header.css";
 import logoImg from "../images/logo_1.png";
 import { getUserInfo } from "../api/userApi";
 import { secureLogout, getCurrentUserId } from "../utils/tokenUtils";
-import QuickReservation from "./QuickReservation";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -23,8 +22,6 @@ export default function Header() {
     localStorage.getItem("username") || ""
   ); // localStorage에서 username 가져오기
   const [isLoadingUser, setIsLoadingUser] = useState(false); // 사용자 정보 로딩 상태
-
-  const [showQuickReservation, setShowQuickReservation] = useState(false);
 
   // 로그인 상태 변화 감지 및 사용자 정보 로드
   useEffect(() => {
@@ -115,25 +112,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 챗봇이 열릴 때 빠른예매 닫기 이벤트 리스너
-  useEffect(() => {
-    const handleCloseQuickReservation = () => {
-      setShowQuickReservation(false);
-    };
-
-    window.addEventListener(
-      "closeQuickReservation",
-      handleCloseQuickReservation
-    );
-
-    return () => {
-      window.removeEventListener(
-        "closeQuickReservation",
-        handleCloseQuickReservation
-      );
-    };
-  }, []);
-
   const goTheater = () => navigate("/theater");
   const goMovie = () => navigate("/movie");
   const goEvent = () => navigate("/event");
@@ -144,13 +122,6 @@ export default function Header() {
   const goNotice = () => navigate("/notice");
   const goHome = () => navigate("/");
   const goMyPage = () => navigate("/mypage");
-  const toggleQuickReservation = () => {
-    // 빠른예매를 열 때 챗봇 닫기 이벤트 발생
-    if (!showQuickReservation) {
-      window.dispatchEvent(new CustomEvent("closeChatBot"));
-    }
-    setShowQuickReservation(!showQuickReservation);
-  };
 
   // 로그아웃 핸들러
   const handleLogout = () => {
@@ -196,13 +167,7 @@ export default function Header() {
             <a className="h-nav-item" onClick={goEvent}>
               이벤트
             </a>
-            <a className="h-nav-item" onClick={toggleQuickReservation}>
-              빠른예매
-            </a>
           </nav>
-          {showQuickReservation && isScrolled && (
-            <QuickReservation onClose={() => setShowQuickReservation(false)} />
-          )}
 
           {/* User Actions */}
           <div className="h-user-actions">
@@ -269,14 +234,8 @@ export default function Header() {
             <a className="h-nav-item" onClick={goEvent}>
               이벤트
             </a>
-            <a className="h-nav-item" onClick={toggleQuickReservation}>
-              빠른예매
-            </a>
           </nav>
         </div>
-        {showQuickReservation && !isScrolled && (
-          <QuickReservation onClose={() => setShowQuickReservation(false)} />
-        )}
       </div>
 
       {/* Mobile Menu */}

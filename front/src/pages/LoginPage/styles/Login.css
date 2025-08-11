@@ -3,7 +3,26 @@
   object-fit: contain;
   align-items: center;
   margin-bottom: -100px;
-  margin-top: -100px; /* 컨텐츠가 이미지 범위를 침범하도록 더 큰 음수 마진 */
+}
+
+.lgs-tooltip {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  background-color: #1f2937;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  animation: tooltip-fadein 0.2s ease-out;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
 }
 
 .lgs-page {
@@ -23,7 +42,7 @@
     0 10px 10px 15px rgba(0, 0, 0, 0.04);
   width: 100%;
   max-width: 550px;
-  padding: 2.5rem;
+  padding: 0 2.5rem 2.5rem 2.5rem;
 }
 
 .lgs-header {
@@ -60,6 +79,38 @@
   margin-bottom: 0.5rem;
 }
 
+.lgs-label-with-help {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.lgs-help-button {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #9ca3af;
+  color: white;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.lgs-help-button:hover {
+  background-color: #6b7280;
+}
+
+.lgs-input-container {
+  position: relative;
+}
+
 .lgs-form-group input {
   width: 100%;
   height: 3.125rem;
@@ -74,6 +125,26 @@
 .lgs-form-group input:focus {
   outline: none;
   border-color: #fbbf24;
+}
+
+.lgs-tooltip::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 20px;
+  border: 8px solid transparent;
+  border-bottom-color: #1f2937;
+}
+
+@keyframes tooltip-fadein {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .lgs-form-options {

@@ -17,9 +17,6 @@ public class ResponseUtil {
      */
     public ResponseEntity<Map<String, Object>> createSuccessResponse(Map<String, Object> data) {
         return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-                .header("Access-Control-Allow-Headers", "*")
                 .header("Content-Type", "application/json")
                 .body(data);
     }
@@ -35,9 +32,6 @@ public class ResponseUtil {
         logResponse(startTime, errorResponse.toString(), "에러 응답");
 
         return ResponseEntity.status(statusCode)
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-                .header("Access-Control-Allow-Headers", "*")
                 .header("Content-Type", "application/json")
                 .body(errorResponse);
     }
@@ -47,9 +41,6 @@ public class ResponseUtil {
      */
     public ResponseEntity<?> createOptionsResponse() {
         return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-                .header("Access-Control-Allow-Headers", "*")
                 .header("Access-Control-Max-Age", "3600")
                 .build();
     }

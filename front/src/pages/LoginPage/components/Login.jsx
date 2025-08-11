@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/Login.css";
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
@@ -13,6 +13,32 @@ const Login = () => {
     userid: "",
     userpw: "",
   });
+  const [showTooltip, setShowTooltip] = useState(false);
+  const tooltipRef = useRef(null);
+  const inputRef = useRef(null);
+  const helpButtonRef = useRef(null);
+
+  // 툴팁 바깥 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        tooltipRef.current &&
+        !tooltipRef.current.contains(event.target) &&
+        helpButtonRef.current &&
+        !helpButtonRef.current.contains(event.target)
+      ) {
+        // 텍스트 선택 중이 아닐 때만 툴팁 닫기
+        if (window.getSelection().toString() === "") {
+          setShowTooltip(false);
+        }
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({
@@ -136,16 +162,43 @@ const Login = () => {
         <div className="lgs-form-container">
           <form className="lgs-form" onSubmit={handleLogin}>
             <div className="lgs-form-group">
-              <label htmlFor="userid">아이디</label>
-              <input
-                type="text"
-                id="userid"
-                name="userid"
-                value={formData.userid}
-                onChange={handleInputChange}
-                placeholder="아이디를 입력하세요"
-                required
-              />
+              <div className="lgs-label-with-help">
+                <label htmlFor="userid">아이디</label>
+                <button
+                  ref={helpButtonRef}
+                  type="button"
+                  className="lgs-help-button"
+                  onClick={() => setShowTooltip(!showTooltip)}
+                >
+                  ?
+                </button>
+              </div>
+              <div className="lgs-input-container">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  id="userid"
+                  name="userid"
+                  value={formData.userid}
+                  onChange={handleInputChange}
+                  placeholder="아이디를 입력하세요"
+                  required
+                />
+                {showTooltip && (
+                  <div ref={tooltipRef} className="lgs-tooltip">
+                    💡 모든 기능을 확인하고 싶으시면 관리자 계정으로
+                    로그인하세요!
+                    <br />
+                    <strong style={{ userSelect: "text" }}>
+                      아이디: master001
+                    </strong>
+                    <br />
+                    <strong style={{ userSelect: "text" }}>
+                      비밀번호: pass_001
+                    </strong>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="lgs-form-group">

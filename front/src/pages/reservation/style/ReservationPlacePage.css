@@ -832,7 +832,7 @@
 .reservation-seat-btn-fixed {
   position: fixed;
   bottom: 32px;
-  right: 32px;
+  right: 300px;
   z-index: 100;
   background: #fbbf24;
   color: #222;
