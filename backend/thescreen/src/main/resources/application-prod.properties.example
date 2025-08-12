@@ -1,0 +1,32 @@
+# Spring Boot application-prod.properties example
+# Copy to application-prod.properties and adjust values.
+
+spring.application.name=thescreen
+server.port=8080
+
+# DataSource (MariaDB)
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://db-host:3306/thescreen
+spring.datasource.username=thescreen_user
+spring.datasource.password=use_strong_password
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.open-in-view=false
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=false
+
+# CORS
+app.cors.allowed-origins=https://your-frontend-domain
+
+# Logging
+logging.level.root=INFO
+logging.level.org.springframework=INFO
+
+# Security / OAuth placeholders (do not commit secrets)
+# oauth.kakao.client-id=
+# oauth.kakao.client-secret=
+# oauth.google.client-id=
+# oauth.google.client-secret=
+# openai.api-key=
+# coolsms.api-key=

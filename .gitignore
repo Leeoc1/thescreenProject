@@ -142,6 +142,7 @@ vite.config.ts.timestamp-*
 /.pnp
 .pnp.js
 /build
+front/build/
 /coverage
 
 # Spring Boot 관련

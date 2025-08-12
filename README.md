@@ -77,7 +77,7 @@
 - **Spring Boot 3.5.3** - 백엔드 프레임워크
 - **Spring Security** - 인증 및 보안
 - **Spring Data JPA** - 데이터베이스 연동
-- **Maven** - 의존성 관리
+- **Gradle** - 의존성/빌드 관리 (Gradle Wrapper 포함)
 
 ### Database
 
@@ -168,9 +168,9 @@ public class ReservationService {
 ### 사전 요구사항
 
 - Java 17+
-- Node.js 16+
+- Node.js 18+ (LTS 권장)
 - MariaDB 10.6+
-- Maven 3.6+
+- Gradle 로컬 설치 불필요(프로젝트에 gradlew/gradlew.bat 포함)
 
 ### 1. 저장소 클론
 
@@ -203,9 +203,18 @@ GRANT ALL PRIVILEGES ON thescreen.* TO 'thescreen_user'@'localhost';
 
 ### 4. 백엔드 실행
 
+운영체제에 따라 Gradle Wrapper를 사용하세요.
+
+```powershell
+# Windows PowerShell
+cd backend\thescreen
+./gradlew.bat bootRun
+```
+
 ```bash
+# macOS/Linux
 cd backend/thescreen
-./mvnw spring-boot:run
+./gradlew bootRun
 ```
 
 ### 5. 프론트엔드 실행
@@ -220,6 +229,8 @@ npm start
 
 - **프론트엔드**: http://localhost:3000
 - **백엔드 API**: http://localhost:8080
+
+참고: 개발 모드에서는 CRA의 proxy(package.json의 "proxy")가 적용되지만, 프로덕션 빌드에서는 무시됩니다. 운영/스테이징 환경에서는 반드시 `REACT_APP_API_URL` 환경변수로 API 엔드포인트를 지정하세요.
 
 ## 📚 API 문서
 
@@ -278,6 +289,20 @@ sudo systemctl status thescreen-frontend
 - **운영환경**: `application-prod.properties`
 - **테스트환경**: `application-test.properties`
 
+프론트엔드 환경변수 예시(빌드 시 주입):
+
+```
+# front/.env (또는 .env.production)
+REACT_APP_API_URL=https://api.example.com
+```
+
+백엔드 설정 예시 파일:
+
+```
+backend/thescreen/src/main/resources/application-dev.properties.example
+backend/thescreen/src/main/resources/application-prod.properties.example
+```
+
 ## ⚡ 성능 최적화
 
 ### JVM 튜닝
@@ -295,6 +320,8 @@ sudo systemctl status thescreen-frontend
 # 자동 메모리 정리 (cron job)
 0 3,12,21 * * * root sync && sysctl vm.drop_caches=3
 ```
+
+주의: 운영 환경에서 주기적인 캐시 강제 해제는 일반적으로 권장되지 않습니다. 일시적 진단 목적으로만 사용하고, 근본 원인 분석과 애플리케이션/쿼리 최적화를 우선하세요.
 
 ### 데이터베이스 최적화
 

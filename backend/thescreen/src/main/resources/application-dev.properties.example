@@ -1,0 +1,24 @@
+# Spring Boot application-dev.properties example
+# Copy to application-dev.properties and adjust values.
+
+spring.application.name=thescreen
+server.port=8080
+
+# DataSource (MariaDB)
+spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
+spring.datasource.url=jdbc:mariadb://localhost:3306/thescreen
+spring.datasource.username=thescreen_user
+spring.datasource.password=change_me
+
+# JPA / Hibernate
+spring.jpa.hibernate.ddl-auto=none
+spring.jpa.open-in-view=false
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=true
+
+# CORS
+app.cors.allowed-origins=http://localhost:3000
+
+# Logging
+logging.level.root=INFO
+logging.level.org.springframework=INFO
