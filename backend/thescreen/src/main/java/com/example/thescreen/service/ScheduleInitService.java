@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Slf4j
@@ -39,7 +40,7 @@ public class ScheduleInitService implements CommandLineRunner {
         try {
             long currentScheduleCount = scheduleRepository.count();
             long screenCount = screenRepository.count();
-            long expectedSchedules = screenCount * 2 * 5 * 10; // 상영관 × 2일 × 5시간 × 10개영화
+            long expectedSchedules = screenCount * 3 * 5 * 10; // 상영관 × 3일 × 5시간 × 10개영화
             
             if (currentScheduleCount < expectedSchedules) {
                 log.info("스케줄 데이터 생성 중...");
@@ -53,8 +54,10 @@ public class ScheduleInitService implements CommandLineRunner {
                 
                 List<Screen> screens = screenRepository.findAll();
                 
-                LocalDate today = LocalDate.now();
+                // 한국 시간 기준으로 날짜 생성
+                LocalDate today = LocalDate.now(ZoneId.of("Asia/Seoul"));
                 LocalDate tomorrow = today.plusDays(1);
+                LocalDate dayAfterTomorrow = today.plusDays(2);
                 
                 int scheduleCount = 0;
                 
@@ -63,10 +66,10 @@ public class ScheduleInitService implements CommandLineRunner {
                     Movie currentMovie = topMovies.get(movieIndex);
                     
                     for (Screen screen : screens) {
-                        for (LocalDate date : List.of(today, tomorrow)) {
+                        for (LocalDate date : List.of(today, tomorrow, dayAfterTomorrow)) {
                             for (int hour : List.of(10, 13, 16, 19, 21)) {
                                 int screenIndex = screens.indexOf(screen) + 1;
-                                int dayOffset = (date.equals(today)) ? 0 : 1;
+                                int dayOffset = date.equals(today) ? 0 : (date.equals(tomorrow) ? 1 : 2);
                                 String scheduleId = String.format("SCH%03d%d%02d%02d", screenIndex, dayOffset, hour, movieIndex + 1);
                                     
                                 // 중복 체크
@@ -101,7 +104,7 @@ public class ScheduleInitService implements CommandLineRunner {
     private void checkScheduleInitStatus() {
         try {
             long scheduleCount = scheduleRepository.count();
-            long expectedSchedules = screenRepository.count() * 2 * 5 * 10; // 상영관 × 2일 × 5시간 × 10개영화
+            long expectedSchedules = screenRepository.count() * 3 * 5 * 10; // 상영관 × 3일 × 5시간 × 10개영화
             
             if (scheduleCount >= expectedSchedules) {
                 log.info("박스오피스 1~10위 영화 스케줄 데이터 로드 완료: {}개", scheduleCount);
